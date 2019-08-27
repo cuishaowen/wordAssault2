@@ -73,7 +73,6 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		chapterExample.setChapterId(chapterId);
 		List<ChapterExample> chapterExamples = chapterExampleService.findList(chapterExample);
 
-
 		// 获取章节相关的例子信息
 		for (ChapterExample chapterExampleInf : chapterExamples){
 			WordInformation wordInformation = new WordInformation();

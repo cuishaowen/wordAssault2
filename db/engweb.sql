@@ -259,24 +259,26 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户章节表';
 -- Table structure for user_chapter_word
 -- ----------------------------
 DROP TABLE IF EXISTS `user_chapter_word`;
+-- auto-generated definition
 create table user_chapter_word
 (
-    ID_ varchar(64) not null,
-    USER_ID_ varchar(64) null comment '用户id',
-    CHAPTER_WORD_ID_ varchar(64) null comment '章节单词id',
-    STUDY_STATUS_ varchar(2) null comment '用户章节单词的学习状态 1.待学习 2.待复习 3.已完成',
-    MEMORY_STATUS_ varchar(2) null comment '记忆状态 1.生词 2.熟词',
-    IS_MEMO_ boolean null comment '是否备忘 true 是 false 不是',
-    IS_WRONG_ boolean null comment '是否错词 true 是  flase 不是',
-    WRONG_TIME_ int null comment '错误次数',
-    CREATE_DATE_ datetime null comment '创建时间',
-    UPDATE_DATE_ datetime null comment '修改时间',
-    REMARKS_ varchar(255) null comment '备注',
-    DEL_FLAG_ char(1) null comment '删除标识 1 正常 2 删除',
-    BLANK_ONE_ text null,
-    BLANK_TWO_ text null,
-    constraint user_chapter_word_pk
-        primary key (ID_)
+    ID_           varchar(64)      not null
+        primary key,
+    USER_ID_      varchar(64)      null comment '用户id',
+    COURSE_ID_    varchar(64)      null comment '课程id',
+    CHAPTER_ID_   varchar(64)      null comment '章节id',
+    WORD_ID_      varchar(64)      null comment '单词id',
+    STUDY_STATUS_ char             null comment '学习状态 1 待学习 2 待复习 3 已完成',
+    STRANGE_WORD_ char default 'F' null comment '生词状态 T 是 F 不是',
+    SKILLED_WORD_ char default 'F' null comment '熟词状态 T 是 F 不是',
+    IS_MEMO_      char default 'F' null comment '是否备忘 T 是 F 不是',
+    WRONG_TIME_   int              null comment '错误次数',
+    CREATE_DATE_  datetime         null comment '创建时间',
+    UPDATE_DATE_  datetime         null comment '修改时间',
+    REMARKS_      varchar(255)     null comment '备注',
+    DEL_FLAG_     char             null comment '删除标识 1 正常 2 删除',
+    BLANK_ONE_    text             null,
+    BLANK_TWO_    text             null
 )
     ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户章节单词表';
 -- ----------------------------

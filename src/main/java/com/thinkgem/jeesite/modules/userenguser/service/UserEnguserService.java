@@ -3,15 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.userenguser.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.thinkgem.jeesite.modules.course.entity.Course;
-import com.thinkgem.jeesite.modules.course.service.CourseService;
-import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
-import com.thinkgem.jeesite.modules.usercourse.pojo.CourseIsOpen;
-import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

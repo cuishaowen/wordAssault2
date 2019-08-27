@@ -121,9 +121,10 @@ public class UserCourseService extends CrudService<UserCourseDao, UserCourse> {
         chapter.setParentId(courseId);
         List<Chapter> chapters = chapterService.findList(chapter);
 
-        // 遍历所有章节,为第一章节开通，其余不开通
+        // 遍历所有章节,为第一章节开通，其余不开通,
         for (Chapter chapter1 : chapters) {
             UserChapter userChapter = new UserChapter();
+			userChapter.setStudyStatus("1");
             if (chapter1 == chapters.get(0)){
                 userChapter.setIsOpen("1");
                 userChapter.setChapterId(chapter1.getId());
