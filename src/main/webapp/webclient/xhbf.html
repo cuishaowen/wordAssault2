@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>循环播放</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /*body{background: url("images/dcllbg.png") no-repeat center; background-size: 100% 100%;}*/
+        body{background-color: #F5F5F5;}
+        .dc{background: none !important; background-color: #F5F5F5;}
+        .kong{margin: 20px 0;}
+        .kong img{height: 100%; width: 100%; padding-top: 10px;}
+        .center1{height: 260px;}
+        .xq{height: 180px; padding: 15px; box-sizing: border-box;}
+        .lj{    width: 100%;
+            height: 344px;}
+        .lj_dis{display: none;}
+.btns{display: flex; justify-content: space-around; align-items: center;}
+        a.wordvoice{height: 18px !important;width: 20px !important;margin-top: 0!important;}
+    </style>
+</head>
+<body>
+    <div class="dc">
+  <a><cite>单词浏览</cite></a>
+</span>
+        <div class="dc-content">
+            <div class="dc-left">
+                <ul id="chapterWord"></ul>
+            </div>
+            <div class="ll_right">
+                <div class="top">
+                    <div class="top1">
+                        <div class="top1_left">
+                            <div class="fayin"></div>
+                            <div class="yb"></div>
+                            <a href="javascript:void(0)" class="wordvoice" id="fayin">
+                                <audio class="voicebox" controls="" autoplay="" preload="auto" style="display: none;">
+                                    <source src="">
+                                </audio>
+                            </a>
+                        </div>
+                        <div class="form_kg">
+                            <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">加入备忘</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">标为熟词</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="top2">
+                        <p>解释</p>
+                        <div class="jieshi"></div>
+                    </div>
+                    <div class="top3">
+                        <p>例句</p>
+                        <div class="liju">
+                            <div class="lj1"></div>
+                            <div class="lj2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rg_center">
+                    <!--<div class="jieshi"></div>-->
+                    <div class="dc_img">
+                        <img src="images/567681.jpg">
+                    </div>
+                    <div class="btns">
+                        <audio controls  preload="auto" style="display: none;">
+                            <source src="" type="audio/mpeg">
+                            您的浏览器不支持 audio 元素。
+                        </audio>
+                        <a class="kt" href="javascript:void(0);">上一个</a>
+                        <a class="play" href="javascript:void(0);" onclick="bofang();">自动播放</a>
+                        <a class="kj" href="javascript:void(0);" onclick="next();">下一个</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
+<script>
+    function asd(){
+        $(document).ready(function(){
+            var el=$('.dc-left ul').find('.li-active');
+            var a = $(el).find('i').text();
+            var b = $(el).find('span').text();
+            var yb = $(el).find('.yinbiao_dis').text();
+            var e = $(el).find('.lj_dis').find('.lj_dis1').text();
+            var f = $(el).find('.lj_dis').find('.lj_dis2').text();
+            var c = $(el).index();
+            var d = $(el).find('audio source').attr('src');
+            $('.fayin').text(a);
+            $('.yb').text(yb);
+            $('.jieshi').text(b);
+            $('.lj1').text(e);
+            $('.lj2').text(f);
+            $('.gj span b').text(c+1);
+            $('.btns audio ').attr('src',d);
+            var f = $('.btns audio ').attr('src');
+            var audio=new Audio(f);
+            audio.play();
+            $('.wordvoice audio source').attr('src',d);
+            $('.kj').removeAttr("disabled");
+            $('.kt').removeAttr("disabled");
+            if($(this).index() == 0){
+                $('.kt').attr("disabled", true);
+                $('.kj').removeAttr("disabled");
+            }
+            if($(this).index() == i-1){
+                $('.kj').attr("disabled", true);
+                $('.kt').removeAttr("disabled");
+            }
+        })}
+
+    var play=true;
+    var bfindex=0;
+    layui.use(['form', 'layedit','element'], function(){
+        var form = layui.form
+            ,layedit = layui.layedit
+            ,element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+        form.on('switch(switchTest)', function(data){
+//            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+//                offset: '6px'
+//            });
+        });
+    });
+    //发音图标
+    $('#fayin').on('click',function () {
+        var f = $('.wordvoice audio source').attr('src');
+        var audio=new Audio(f);
+        audio.play();
+    })
+    //自动播放
+    function bofang(){
+        timeoutindex=  setInterval('bobo()',1500);
+    }
+    function bobo(){
+        if(!play)
+        {
+            next();
+            if(bfindex>=$('.dc-left ul li').length){
+                $('.play').attr("onclick",'bofang()');
+                index = 0;
+                clearInterval(timeoutindex);
+            }
+        }
+        else {clearInterval(timeoutindex);}
+
+    }
+    //播放按事件
+    $('.play').on('click',function () {
+        if(play)
+        {
+            $(this).text("暂停播放");
+        }
+        else
+        {
+            $(this).text("自动播放");
+        }
+        play=!play;
+    })
+    var i = $('.dc-left ul li').length;
+    $('.gj span i').text(i);
+    $('.dc-left ul li span').hide();
+    $(document).on('click','.dc-left ul li',function(){
+        $(this).addClass('li-active');
+        $(this).siblings().removeClass('li-active');
+        var a = $(this).find('i').text();
+        var b = $(this).find('span').text();
+        var yb = $(this).find('.yinbiao_dis').text();
+        var e = $(this).find('.lj_dis').find('.lj_dis1').text();
+        var f = $(this).find('.lj_dis').find('.lj_dis2').text();
+        var c = $(this).index();
+        var d = $(this).find('audio source').attr('src');
+        $('.fayin').text(a);
+        $('.yb').text(yb);
+        $('.jieshi').text(b);
+        $('.lj1').text(e);
+        $('.lj2').text(f);
+        $('.gj span b').text(c+1);
+        $('.btns audio ').attr('src',d);
+        var f = $('.btns audio ').attr('src');
+        var audio=new Audio(f);
+        audio.play();
+        $('.wordvoice audio source').attr('src',d);
+        $('.kj').removeAttr("disabled");
+        $('.kt').removeAttr("disabled");
+        if($(this).index() == 0){
+            $('.kt').attr("disabled", true);
+            $('.kj').removeAttr("disabled");
+        }
+        if($(this).index() == i-1){
+            $('.kj').attr("disabled", true);
+            $('.kt').removeAttr("disabled");
+        }
+    });
+
+
+    function next() {
+
+        var ii= $('.li-active').index();
+
+        $('.kt').removeAttr("disabled");
+
+        if($('.dc-left ul li').hasClass('li-active')){
+
+            ii++;
+
+            $('.dc-left ul li').eq(ii).addClass('li-active');
+            $('.dc-left ul li').eq(ii).siblings().removeClass('li-active');
+            var a = $('.dc-left ul li').eq(ii).find('i').text();
+            var yb = $('.dc-left ul li').eq(ii).find('.yinbiao_dis').text();
+            var b = $('.dc-left ul li').eq(ii).find('span').text();
+            var e = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis1').text();
+            var f = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis2').text();
+            var d = $('.dc-left ul li').eq(ii).find('audio source').attr('src');
+            $('.btns audio ').attr('src',d);
+            $('.wordvoice audio source').attr('src',d);
+            $('.fayin').text(a);
+            $('.yb').text(yb);
+            $('.jieshi').text(b);
+            $('.lj1').text(e);
+            $('.lj2').text(f);
+            $('.gj span b').text(ii+1);
+            var f = $('.btns audio ').attr('src');
+            var audio=new Audio(f);
+            audio.play();
+
+            if(ii>=i-1){
+
+                $('.kj').attr("disabled",true);
+            }
+            bfindex=ii;
+        }
+    }
+
+
+    //    $(document).on('click','.kj',function(){
+    //       var ii= $('.li-active').index();
+    //
+    //        $('.kt').removeAttr("disabled");
+    //
+    //        if($('.dc-left ul li').hasClass('li-active')){
+    //
+    //            ii++;
+    //
+    //            $('.dc-left ul li').eq(ii).addClass('li-active');
+    //            $('.dc-left ul li').eq(ii).siblings().removeClass('li-active');
+    //            var a = $('.dc-left ul li').eq(ii).find('i').text();
+    //            var yb = $('.dc-left ul li').eq(ii).find('.yinbiao_dis').text();
+    //            var b = $('.dc-left ul li').eq(ii).find('span').text();
+    //            var e = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis1').text();
+    //            var f = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis2').text();
+    //            var d = $('.dc-left ul li').eq(ii).find('audio source').attr('src');
+    //            $('.btns audio ').attr('src',d);
+    //            $('.wordvoice audio source').attr('src',d);
+    //            $('.fayin').text(a);
+    //            $('.yb').text(yb);
+    //            $('.jieshi').text(b);
+    //            $('.lj1').text(e);
+    //            $('.lj2').text(f);
+    //            $('.gj span b').text(ii+1);
+    //            var f = $('.btns audio ').attr('src');
+    //            var audio=new Audio(f);
+    //            audio.play();
+    //
+    //            if(ii>=i-1){
+    //
+    //                $('.kj').attr("disabled",true);
+    //            }
+    //        }
+    //
+    //
+    //
+    //
+    //            console.log(ii)
+    //    })
+
+
+    $(document).on('click','.kt',function(){
+        if($('.dc-left ul li').hasClass('li-active')) {
+            var ii= $('.li-active').index();
+            $('.kj').removeAttr("disabled");
+            ii--;
+
+            $('.dc-left ul li').eq(ii).addClass('li-active');
+            $('.dc-left ul li').eq(ii).siblings().removeClass('li-active')
+            var a = $('.dc-left ul li').eq(ii).find('i').text();
+            var yb = $('.dc-left ul li').eq(ii).find('.yinbiao_dis').text();
+            var b = $('.dc-left ul li').eq(ii).find('span').text();
+            var e = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis1').text();
+            var f = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis2').text();
+            var d = $('.dc-left ul li').eq(ii).find('audio source').attr('src');
+            $('.btns audio ').attr('src',d);
+            $('.wordvoice audio source').attr('src',d);
+            $('.fayin').text(a);
+            $('.yb').text(yb);
+            $('.jieshi').text(b);
+            $('.lj1').text(e);
+            $('.lj2').text(f);
+            $('.gj span b').text(ii+1);
+            var f = $('.btns audio ').attr('src');
+            var audio=new Audio(f);
+            audio.play();
+            if (ii <= 0) {
+                $('.kt').attr("disabled", true);
+
+            }
+        }
+        console.log(ii)
+    })
+</script>
+<script>
+    function chapterWord(){
+        var chapterId = GetQueryString("chapterId");
+        console.log('chapterId:',chapterId);
+        var url = getContextPath() + '/userchapterword/getWordInformation';
+        var data = {};
+        data.chapterId = chapterId;
+        $.post(
+            url,
+            data,
+            function(res){
+                var myDate = new Date;
+                var year = myDate.getFullYear(); //获取当前年
+                var mon = myDate.getMonth() + 1; //获取当前月
+                var DateStr = year+ '/' + mon +'/';
+                for (var i = 0; i < res.length; i++ ){
+                    var english = res[i].word.english;
+                    var phoneticTranscription = res[i].word.phoneticTranscription;
+                    var chinese = res[i].word.chinese;
+                    var exampleArr = res[i].wordExample.example.split("$$$");
+                    var exampleEng = exampleArr[0];
+                    var exampleCh  = exampleArr[1];
+                    if (i == 0){
+                        $('#chapterWord').append('<li class="li-active">\n' +
+                            '<i>'+ english + '</i>\n' +
+                            '<p class="yinbiao_dis">' + phoneticTranscription +'</p>\n' +
+                            '<span style="display: none">'+ chinese +'</span>\n' +
+                            '<div class="lj_dis">\n' +
+                            '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
+                            '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
+                            '</div>\n' +
+                            '<audio controls preload="auto" style="display: none;">\n' +
+                            // '<source src="/wordassault/userfiles/engVoice/"' + DateStr + english + '".mp3" type="audio/mpeg">\n' +
+                            '您的浏览器不支持 audio 元素。\n' +
+                            '</audio>\n' +
+                            '</li>')
+                    }else {
+                        $('#chapterWord').append('<li>\n' +
+                            '<i>'+ english + '</i>\n' +
+                            '<p class="yinbiao_dis">' + phoneticTranscription +'</p>\n' +
+                            '<span style="display: none">'+ chinese +'</span>\n' +
+                            '<div class="lj_dis">\n' +
+                            '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
+                            '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
+                            '</div>\n' +
+                            '<audio controls preload="auto" style="display: none;">\n' +
+                            // '<source src="/wordassault/userfiles/engVoice/"' + DateStr + english + '".mp3" type="audio/mpeg">\n' +
+                            '您的浏览器不支持 audio 元素。\n' +
+                            '</audio>\n' +
+                            '</li>')
+                    }
+                }
+                asd();
+            }
+        )
+    }
+
+
+
+    chapterWord();
+</script>
+
+</html>

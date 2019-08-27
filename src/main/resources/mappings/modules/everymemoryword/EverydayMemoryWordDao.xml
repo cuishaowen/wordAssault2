@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.everymemoryword.dao.EverydayMemoryWordDao">
+    
+	<sql id="everydayMemoryWordColumns">
+		a.id_ AS "id",
+		a.everyday_ AS "everyday",
+		a.user_id_ AS "enguserId",
+		a.course_id_ AS "courseId",
+		a.chapter_id_ AS "chapterId",
+		a.word_id_ AS "wordId",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="everydayMemoryWordJoins">
+		LEFT JOIN sys_user u3 ON u3.id = a.user_id_
+	</sql>
+    
+	<select id="get" resultType="EverydayMemoryWord">
+		SELECT 
+			<include refid="everydayMemoryWordColumns"/>
+		FROM everyday_memory_word a
+		<include refid="everydayMemoryWordJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="EverydayMemoryWord">
+		SELECT 
+			<include refid="everydayMemoryWordColumns"/>
+		FROM everyday_memory_word a
+		<include refid="everydayMemoryWordJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id_ = #{id}
+			</if>
+			<if test="everyday != null and everyday != ''">
+				AND a.everyday_ = #{everyday}
+			</if>
+			<if test="enguserId != null and enguserId != ''">
+				AND a.user_id_ = #{enguserId}
+			</if>
+			<if test="courseId != null and courseId != ''">
+				AND a.course_id_ = #{courseId}
+			</if>
+			<if test="chapterId != null and chapterId != ''">
+				AND a.chapter_id_ = #{chapterId}
+			</if>
+			<if test="wordId != null and wordId != ''">
+				AND a.word_id_ = #{wordId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="EverydayMemoryWord">
+		SELECT 
+			<include refid="everydayMemoryWordColumns"/>
+		FROM everyday_memory_word a
+		<include refid="everydayMemoryWordJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO everyday_memory_word(
+			id_,
+			everyday_,
+			user_id_,
+			course_id_,
+			chapter_id_,
+			word_id_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{everyday},
+			#{enguserId},
+			#{courseId},
+			#{chapterId},
+			#{wordId},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE everyday_memory_word SET 	
+			id_ = #{id},
+			everyday_ = #{everyday},
+			user_id_ = #{enguserId},
+			course_id_ = #{courseId},
+			chapter_id_ = #{chapterId},
+			word_id_ = #{wordId},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM everyday_memory_word
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

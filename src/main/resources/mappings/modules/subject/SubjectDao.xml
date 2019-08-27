@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.subject.dao.SubjectDao">
+    
+	<sql id="subjectColumns">
+		a.id_ AS "id",
+		a.version_ as "version",
+        a.sort_ AS "sort",
+		a.question_ AS "question",
+		a.select_a_ AS "selectA",
+		a.select_b_ AS "selectB",
+		a.select_c_ AS "selectC",
+		a.select_d_ AS "selectD",
+		a.answer_ AS "answer",
+		a.analysis_ AS "analysis",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="subjectJoins">
+	</sql>
+    
+	<select id="get" resultType="Subject">
+		SELECT 
+			<include refid="subjectColumns"/>
+		FROM subject a
+		<include refid="subjectJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="Subject">
+		SELECT 
+			<include refid="subjectColumns"/>
+		FROM subject a
+		<include refid="subjectJoins"/>
+		<where>
+			<if test="version != null and version != ''">
+				and a.version_ like
+				<if test="dbName == 'oracle'">'%'||#{version}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{version}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{version},'%')</if>
+			</if>
+			<if test="sort != null and sort != ''">
+				and a.sort_ = #{sort}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Subject">
+		SELECT 
+			<include refid="subjectColumns"/>
+		FROM subject a
+		<include refid="subjectJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO subject(
+			id_,
+		    VERSION_,
+		    SORT_,
+			QUESTION_,
+			select_a_,
+			select_b_,
+			select_c_,
+			select_d_,
+			answer_,
+			analysis_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+		    #{version},
+		    #{sort},
+			#{question},
+			#{selectA},
+			#{selectB},
+			#{selectC},
+			#{selectD},
+			#{answer},
+			#{analysis},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE subject SET 	
+			id_ = #{id},
+		    VERSION_ = #{version},
+		    SORT_ = #{sort},
+			question_ = #{question},
+			select_a_ = #{selectA},
+			select_b_ = #{selectB},
+			select_c_ = #{selectC},
+			select_d_ = #{selectD},
+			answer_ = #{answer},
+			analysis_ = #{analysis},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM subject
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

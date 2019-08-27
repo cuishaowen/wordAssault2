@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.chapter.dao.ChapterDao">
+    
+	<sql id="chapterColumns">
+		a.id_ AS "id",
+		a.parent_id_ AS "parentId",
+		a.sort_ as "sort",
+		a.name_ AS "name",
+		a.detail_ AS "detail",
+		a.status_ AS "status",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="chapterJoins">
+	</sql>
+    
+	<select id="get" resultType="Chapter">
+		SELECT 
+			<include refid="chapterColumns"/>
+		FROM chapter a
+		<include refid="chapterJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="Chapter">
+		SELECT 
+			<include refid="chapterColumns"/>
+		FROM chapter a
+		<include refid="chapterJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name_ LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status_ = #{status}
+			</if>
+			<if test="parentId != null and parentId != ''">
+				AND a.parent_id_ = #{parentId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.sort_ ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Chapter">
+		SELECT 
+			<include refid="chapterColumns"/>
+		FROM chapter a
+		<include refid="chapterJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO chapter(
+			id_,
+			parent_id_,
+			name_,
+			detail_,
+			status_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{parentId},
+			#{name},
+			#{detail},
+			#{status},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE chapter SET 	
+			id_ = #{id},
+			parent_id_ = #{parentId},
+			name_ = #{name},
+			detail_ = #{detail},
+			status_ = #{status},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM chapter
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.wordexample.dao.WordExampleDao">
+    
+	<sql id="WordExampleColumns">
+		a.id_ AS "id",
+		a.word_id_ AS "wordId",
+		a.example_ AS "example",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="WordExampleJoins">
+	</sql>
+    
+	<select id="get" resultType="WordExample">
+		SELECT 
+			<include refid="WordExampleColumns"/>
+		FROM word_example a
+		<include refid="WordExampleJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="WordExample">
+		SELECT 
+			<include refid="WordExampleColumns"/>
+		FROM word_example a
+		<include refid="WordExampleJoins"/>
+		<where>
+			<if test="wordId != null and wordId != ''">
+				and a.word_id_ = #{wordId}
+			</if>
+			<if test="example != null and example != ''">
+				and a.example_ = #{example_}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="WordExample">
+		SELECT 
+			<include refid="WordExampleColumns"/>
+		FROM word_example a
+		<include refid="WordExampleJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO word_example(
+			id_,
+			word_id_,
+			example_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{wordId},
+			#{example},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE word_example SET
+			id_ = #{id},
+			word_id_ = #{wordId},
+			example_ = #{example},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM word_example
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

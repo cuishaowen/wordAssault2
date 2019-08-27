@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.enguseroption.dao.EnguserOptionDao">
+    
+	<sql id="enguserOptionColumns">
+		a.id_ AS "id",
+		a.user_id_ AS "engUserId",
+		a.login_in_time_ AS "loginInTime",
+		a.login_out_time_ AS "loginOutTime",
+		a.current_time_ AS "currentTime",
+		a.auto_login_out_ AS "autoLoginOut",
+		a.current_study_time_ AS "currentStudyTime",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="enguserOptionJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id_
+	</sql>
+    
+	<select id="get" resultType="EnguserOption">
+		SELECT 
+			<include refid="enguserOptionColumns"/>
+		FROM enguser_option a
+		<include refid="enguserOptionJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="EnguserOption">
+		SELECT 
+			<include refid="enguserOptionColumns"/>
+		FROM enguser_option a
+		<include refid="enguserOptionJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id_ = #{id}
+			</if>
+			<if test="engUserId != null and engUserId != ''">
+				AND a.user_id_ = #{engUserId}
+			</if>
+			<if test="loginInTime != null and loginInTime != ''">
+				AND a.login_in_time_ = #{loginInTime}
+			</if>
+			<if test="loginOutTime != null and loginOutTime != ''">
+				AND a.login_out_time_ = #{loginOutTime}
+			</if>
+			<if test="currentTime != null and currentTime != ''">
+				AND a.current_time_ = #{currentTime}
+			</if>
+			<if test="autoLoginOut != null and autoLoginOut != ''">
+				AND a.auto_login_out_ = #{autoLoginOut}
+			</if>
+			<if test="currentStudyTime != null and currentStudyTime != ''">
+				AND a.current_study_time_ = #{currentStudyTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="EnguserOption">
+		SELECT 
+			<include refid="enguserOptionColumns"/>
+		FROM enguser_option a
+		<include refid="enguserOptionJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO enguser_option(
+			id_,
+			user_id_,
+			login_in_time_,
+			login_out_time_,
+			current_time_,
+			auto_login_out_,
+			current_study_time_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{engUserId},
+			#{loginInTime},
+			#{loginOutTime},
+			#{currentTime},
+			#{autoLoginOut},
+			#{currentStudyTime},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE enguser_option SET 	
+			id_ = #{id},
+			user_id_ = #{engUserId},
+			login_in_time_ = #{loginInTime},
+			login_out_time_ = #{loginOutTime},
+			current_time_ = #{currentTime},
+			auto_login_out_ = #{autoLoginOut},
+			current_study_time_ = #{currentStudyTime},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM enguser_option
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

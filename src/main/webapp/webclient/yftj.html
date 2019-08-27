@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>语法突击</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .layui-bg-green{background-color:#1d8183!important;}
+    .layui-nav-item{cursor: pointer;width:10%;text-align: center;}
+    .layui-nav{min-width: 1360px;}
+    .layui-nav * { font-size: 16px;}
+    .layui-form-label{width:120px;!important;}
+    .layui-input-block {margin-left: 150px;}
+    .dc_active{border-bottom: 2px solid #43A3E8;}
+    .dc-tab-content{padding-top: 30px; background-color: #f5f5f5; position: relative;
+      }
+    .dc-tab-title{padding:20px 0 0 0;}
+    .dc-tab-title li:first-child .img1:hover{background: url("images/yftj_select1.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title li:last-child .img2:hover{background: url("images/yftj_select2.png") no-repeat center; background-size: 100% 100%;}
+
+.dc_tab{height: 653px;}
+    .dc_active p{padding-bottom: 10px;}
+    .img1{background: url("images/yftj_ico1.png") no-repeat center; background-size: 100% 100%;}
+    .img2{background: url("images/yftj_ico2.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title .dc_active .img1{background: url("images/yftj_select1.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title .dc_active .img2{background: url("images/yftj_select2.png") no-repeat center; background-size: 100% 100%;}
+    .hasbuy{border:1px solid #22A9FB; color:#22A9FB;}
+    .btn11-active{background-color: #22A9FB; color: #fff;}
+    .xt-content{text-align: center; padding: 10px 0; margin-bottom: 20px;}
+    .xt-content .layui-input-block{display: inline-block; margin-left: 50px;}
+    .tab_img{width:120px;height:116px}
+    .bg1{padding: 0;}
+</style>
+<body class="bgbody">
+<ul class="layui-nav layui-bg-blue">
+    <div class="logobg">
+        <img class="logo" src="images/logo.png">
+    </div>
+    <li class="layui-nav-item "><a href="index.html">音标</a></li>
+    <li class="layui-nav-item "><a href="dcxl.html">单词训练</a></li>
+    <li class="layui-nav-item"><a href="llkNew.html">连连看</a></li>
+    <!--<li class="layui-nav-item "><a href="dchg.html">单词回顾</a></li>-->
+    <li class="layui-nav-item"><a href="chl.html">刷题测试</a></li>
+    <li class="layui-nav-item layui-this"><a href="" >语法突击</a></li>
+    <li class="layui-nav-item"><a href="xxbg.html">学习报告</a></li>
+    <li class="layui-nav-item tc" lay-unselect="">
+        <a href="javascript:;">
+            <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
+            张三</a>
+        <dl class="layui-nav-child">
+            <dd><a href="jbsz.html">个人设置</a></dd>
+            <dd><a href="Login.html">退出登陆</a></dd>
+        </dl>
+    </li>
+</ul>
+<div class="bg">
+    <div class="bg-content">
+        <div class="bg-left">
+            <div class="tx">
+                <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
+                <div class="nickname">
+                    <strong>张三</strong>同学
+                    <p>您是第<span class="red">44444</span>位学员</p>
+                    <p>欢迎您第<span class="red">44444</span>次登陆系统</p>
+                </div>
+                <div class="kc">
+                    <span onclick="kczx()">
+                        <i class="img"></i>
+                        <i>课程中心</i>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="gm">
+                <div class="title">
+                    <div class="title">已经购买课程 <i></i></div>
+                </div>
+                <div class="gm-kc">
+                    <ul>
+                        <li>小学体验课程<i></i></li>
+                        <li>初中体验课程<i></i></li>
+                        <li>高中体验课程<i></i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-title">
+            <span style="background:url('images/102.png')no-repeat center;background-size:100% 100%;width:30px; height: 30px;"></span> 刷题测试
+            </div>
+           <div class="bg1">
+               <form class="layui-form" action="">
+
+                   <div class="dc_tab">
+                       <div class="layui-form-item">
+                           <label class="layui-form-label">选择版本</label>
+                           <div class="layui-input-block" style="width: 80%;">
+                               <select name="interest" lay-filter="aihao">
+                                   <option value=""></option>
+                                   <option value="0" selected="">版本1</option>
+                                   <option value="1" >2</option>
+                                   <option value="2">3</option>
+                                   <option value="3">4</option>
+                                   <option value="4">5</option>
+                               </select>
+                           </div>
+                       </div>
+                       <ul class="dc-tab-title">
+                           <li class="dc_active">
+                               <div class="tab_img img1"></div>
+                               <p>语法突击</p>
+                           </li>
+                           <li>
+                               <div class="tab_img img2"></div>
+                               <p>错题本</p>
+                           </li>
+                       </ul>
+                       <div class="dc-tab-content">
+                           <div class="dc_tab_item dc_item_active">
+
+                               <div class="layui-form-item" style="height:140px;">
+                                   <label class="layui-form-label" style="height:60px;">专项语法</label>
+                                   <div class="layui-input-block">
+                                       <button type="button" class="btn11 hasbuy btn11-active float-shadow">名词</button>
+                                       <button type="button" class="btn11 hasbuy float-shadow">代词</button>
+                                       <button type="button" class="btn11 hasbuy float-shadow">形容词</button>
+                                       <button type="button" class="btn11 float-shadow">动词</button>
+                                       <button type="button" class="btn11 float-shadow" disabled="disabled">语法5</button>
+                                       <button type="button" class="btn11 float-shadow" disabled="disabled">语法6</button>
+                                       <button type="button" class="btn11 float-shadow" disabled="disabled">语法7</button>
+                                       <button type="button" class="btn11 float-shadow" disabled="disabled">语法8</button>
+                                   </div>
+                               </div>
+                               <div class="layui-form-item" style="height:60px;">
+
+                                   <div class="layui-input-block" >
+                                       <a href="cs.html" class="faguanbtn" style="margin-left: 212px;">开始测试</a>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="dc_tab_item" style="height: 316px;">
+                              <div class="timu">
+                                  <p class="yufa">1) An  old <span></span> wants  to  see  you</p>
+                                  <span class="beizhu"> 【名词】</span>
+                              </div>
+                               <div class="xt-content">
+                                   <form class="layui-form layui-form-pane" action="">
+                                       <div class="layui-form-item">
+                                           <div class="layui-input-block">
+                                               <input type="radio" name="xt" value="1" title="people"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>people</div></div>
+                                           </div>
+                                           <div class="layui-input-block">
+                                               <input type="radio" name="xt" value="2" title="person"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>person</div></div>
+                                           </div>
+                                           <div class="layui-input-block">
+                                               <input type="radio" name="xt" value="3" title="the people"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>the people</div></div>
+                                           </div>
+                                           <div class="layui-input-block">
+                                               <input type="radio" name="xt" value="4" title="the person"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>the person</div></div>
+                                           </div>
+                                       </div>
+                                   </form>
+                               </div>
+                               <div class="tj_da">
+                                   <p>答案正确</p>
+                                   <p>【解析】解析内容解析内容解析内容</p>
+                               </div>
+                               <div class="newbtns">
+                                   <a class="faguanbtn">移出错题本</a>
+                                   <a class="faguanbtn">下一题</a>
+                               </div>
+                               <div class="jdt">
+                               <div class="zj">
+                                   <span>第2题 共计：10题</span>
+                               </div>
+                               <div class="layui-progress">
+                                   <div class="layui-progress-bar layui-bg-blue" lay-percent="50%" style="background-color:#22A9FB !important; "></div>
+                               </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+               </form>
+           </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script>
+    $('.dc-tab-title li').on('click', function () {
+        $(this).addClass('dc_active').siblings('.dc_active').removeClass('dc_active');
+        //内容切换
+        var index = $(this).index();
+        $(".dc_tab_item").eq(index).addClass("dc_item_active").siblings(".dc_item_active").removeClass("dc_item_active");
+    });
+
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+    function sp(){
+        $('.bg').height($(window).height() - 120);
+        $('.gm').height($('.bg-left').height() - 300);
+        $('.gm-kc').height($('.gm').height() - 71);
+        $('.dc-tab-content').height($('.bg-right').height() - 355)
+    };
+    sp();
+    window.onresize = sp;
+    $(document).on('click','.gm-kc ul li',function(){
+        $(this).css('background-color','#E7F5FC');
+        $(this).siblings().css('background-color','#fff');
+        $(this).find('i').css({'background':'url(images/221.png)no-repeat center','background-size':'100% 100%'})
+        $(this).siblings().find('i').css({'background':'url(images/ico8.png)no-repeat center','background-size':'100% 100%'})
+    });
+    function kczx() {
+        var idx = layer.open({
+            title: '课程中心',
+            type: 2,
+            area: ['900px', '550px'],
+            content: 'kczx.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+
+    $('.btn11').on('click',function(){
+        $(this).addClass('btn11-active').siblings().removeClass('btn11-active')
+
+    });
+    $('.btn12').on('click',function(){
+
+        if($(this).hasClass('btn11-active')){
+            $(this).removeClass('btn11-active')
+        }else{
+            $(this).addClass('btn11-active')
+        }
+    })
+    $('#fayin2').on('click',function(){
+        var f = $(this).find('audio source').attr('src');
+        var audio=new Audio(f);
+        audio.play();
+    })
+
+</script>
+</html>

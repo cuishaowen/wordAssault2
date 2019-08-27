@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>单词训练</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+</head>
+<style>
+    body{
+        height: 440px;
+    }
+    button {
+        height: 40px;
+        margin-top: 5px;
+    }
+    .layui-input-block{margin-left:0!important;}
+    .pinxie{display: none;}
+    .btn2{margin-top: 150px;}
+    .da{margin-top: 10px;}
+    .xt{
+        background: none !important;
+        margin-bottom: 30px;
+    }
+    input[type=radio]{
+        margin-left: 20px;
+        margin-right: 5px
+    }
+</style>
+
+<body>
+    <div class="xt xuanyi" id="xuanyiBox">
+        <div class="container" id="xt-container">
+            <div class="xt-title">
+                <span id="eng-word" class="word"></span>
+                <span id="phoneticTranscription" class="yinbiao"></span>
+                <a href="javascript:void(0)" class="wordvoice" id="fayin">
+                    <audio class="voicebox" controls autoplay preload="auto" style="display: none;">
+                        <source src="音频/anyone.mp3">
+                    </audio>
+                </a>
+            </div>
+            <div style="margin-top: 10px" class="xt-content" id="xt-form">
+                <button id="radio-1" type="button" style="height: 40px;text-align: left;" class="btn btn-default" value=""></button>
+                <button id="radio-2" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
+                <button id="radio-3" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
+                <button id="radio-4" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
+            </div>
+            <div class="da">
+                <b id="ch-error">选择错误</b><br>
+                <span>正确答案：<i id="ch-right"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="xt pinxie" id="pinxieBox">
+        <div class="xt-title">
+        <span class="word" style="font-weight: normal;font-size: 16px;color:#fff;background-color:#1d8183;display: block;
+        width:80px;height:40px;border-radius: 5px;text-align: center;cursor: pointer;">词义显示</span>
+
+            <a href="javascript:void(0)" class="wordvoice" id="fayin2">
+                <audio class="voicebox" controls autoplay preload="auto" style="display: none;">
+                    <source src="音频/anyone.mp3">
+                </audio>
+            </a>
+            <span id="ch-word" class="yinbiao pinxie_yb" style="margin-left:10px;"></span>
+        </div>
+        <div class="xt-content">
+            <div class="xt1">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input type="radio" name="sex" value="1" title="硬键盘" checked="">
+                            <input type="radio" name="sex" value="2" title="软键盘">
+                        </div>
+                    </div>
+                    <div class="layui-form-item lfi">
+                        <div class="layui-input-block">
+                            <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
+                        </div>
+                    </div>
+                    <div class="layui-form-item lfii">
+                        <div class="layui-input-block">
+                            <ul id="a-word" class="ul"></ul>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item lfiii">
+                        <div class="layui-input-block" style="font-size: 18px;color:#1d8183;line-height: 38px;font-weight: 600;text-align: center;">
+                            <ul  id="a-word-click" style="text-align: center;"></ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="da pingxie_da">
+                <span>正确答案：<i id="eng-right"></i></span>
+                <b id="eng-error">答案错误</b>
+            </div>
+        </div>
+    </div>
+    <div class="btn2">
+        <div class="btn21">
+            <!--<a href="javascript:void(0)">上一题</a>-->
+            <a id="nextsub" href="javascript:void(0)" style="margin-right: 85px;display: none" >下一题</a>
+        </div>
+    </div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+
+    $('.da span').hide();
+    $('.da b').hide();
+
+
+    layui.use(['form', 'jquery'], function(){
+        var form = layui.form
+            ,$= layui.$;
+
+        form.on('radio', function(data){
+            var a = $(this).parent('.layui-input-block').find('.layui-unselect div');
+            var b = $('#ch-right').text();
+            $('.sub').on('click',function(){
+                console.log(data.elem); //得到radio原始DOM对象
+                console.log(data.value); //被点击的radio的value值
+                console.log('atext:',a);
+                if(a.text() != b){
+                    $('.da b').show();
+                    $('.da span').hide();
+                }else  {  //答案正确
+                    $('.da span').show();
+                    $('.da b').hide();
+
+                    $(".pinxie").show();
+                    $(".xuanyi").hide();
+                }
+
+            });
+            if(data.value ==1){
+                $('.lfi').show();
+                $('.lfii').hide();
+                $('.lfiii').hide();
+            };
+            if(data.value ==2){
+                $('.lfi').hide();
+                $('.lfii').show();
+                $('.lfiii').show();
+            };
+        });
+    });
+
+    $('.pingxie_da span').hide();
+    $('.pingxie_da b').hide();
+    $('.lfii').hide();
+    $('.lfiii').hide();
+    $('.pinxie_yb').hide();
+    $(document).on('click','.pinxie .word',function(){
+        if($('.pinxie_yb').is(':hidden')){
+            $('.pinxie_yb').show();
+            $('.pinxie .word').text('词义隐藏')
+        }else{
+            $('.pinxie_yb').hide();
+            $('.pinxie .word').text('词义显示')
+        }
+    });
+    
+    var index = 0;
+
+    /**
+     *
+     */
+    $('.lfii .layui-input-block ul li').on('click',function () {
+        var engRight = $('#eng-right').text();
+        var word = "";
+        var a = $(this).text();
+        $('.lfiii .layui-input-block ul li').eq(index).text(a);
+        word += a;
+        console.log('word:',word);
+        index++;
+        if (index == engRight.length){
+            if (word == engRight){
+
+            }
+        } 
+    })
+
+    $('#aaaa').on('enter',function(e){
+        e.preventDefault();
+        var a =$('#aaaa').val() ;
+        var b = $('.pingxie_da span i').text();
+        var c = $('.lfiii .layui-input-block ul li').text();
+        if(a== b || c ==b){
+            $('.pingxie_da b').hide();
+            $('.pingxie_da span').show();
+        }else  {
+            $('.pingxie_da span').hide();
+            $('.pingxie_da b').show();
+        }
+    });
+    
+    
+</script>
+<script>
+
+    // 设置缓存
+    u.setStorage('result','');
+    var result = u.getStorage('result');
+
+    // 设置一个公共变量，用于遍历数组
+    var pageNum = 0;
+
+    // 请求后台数据，并将数据存储进缓存
+    function chapterWord(){
+        var chapterId = GetQueryString("chapterId");
+        var url = getContextPath() + '/userchapterword/getWordInformation';
+        var data = {};
+        data.chapterId = chapterId;
+        data.pageNum = pageNum;
+        var myDate = new Date;
+        var year = myDate.getFullYear(); //获取当前年
+        var mon = myDate.getMonth() + 1; //获取当前月
+        var DateStr = year+ '/' + mon +'/';
+        if (result == null || result == undefined || result == ''){
+            $.post(
+                url,
+                data,
+                function(res) {
+                    u.setStorage('result',res);
+                    console.log('result',u.getStorage('result'));
+                    page(res);
+                    page2(res);
+                }
+            )
+        }
+    }
+
+    // 获取当前点击按钮的值
+    $('#radio-1').on('click',function(){
+        console.log(':',$(this).val());
+        var select = $(this).val();
+        nextSubject(select);
+    });
+    $('#radio-2').on('click',function(){
+        console.log(':',$(this).val());
+        var select = $(this).val();
+        nextSubject(select);
+    });
+    $('#radio-3').on('click',function(){
+        console.log(':',$(this).val());
+        var select = $(this).val();
+        nextSubject(select);
+    });
+    $('#radio-4').on('click',function(){
+        console.log(':',$(this).val());
+        var select = $(this).val();
+        nextSubject(select);
+    });
+
+    /**
+     * 点击选项，如果选择正确 直接进入下一题 选择错误弹出正确答案 和下一题
+     * 选择正确则影藏当前的，显示下一题
+     * 选择错误 则将所有选项disabled
+     */
+    function nextSubject(select) {
+        var right = $('#ch-right').text();
+        if (select == right){
+            $('#xuanyiBox').hide();
+            $('#pinxieBox').show();
+        }else{
+            $('#radio-1').attr('disabled',true);
+            $('#radio-2').attr('disabled',true);
+            $('#radio-3').attr('disabled',true);
+            $('#radio-4').attr('disabled',true);
+            $('.da span').show();
+            $('.da b').show();
+            $('#nextsub').show();
+        }
+    }
+
+    chapterWord();
+</script>
+<script>
+
+    /**
+     * 加载第一个页面数据
+     * @param res
+     */
+    function page(res) {
+        var result = u.getStorage('result');
+        if (result == ''){
+            result = res;
+        }
+        var object = result[pageNum];
+        console.log('object:',object);
+        var english = object.word.english;
+        var phoneticTranscription = object.word.phoneticTranscription;
+        var chinese = object.word.chinese;
+        var exampleArr = object.wordExample.example.split("$$$");
+        var exampleEng = exampleArr[0];
+        var exampleCh = exampleArr[1];
+        var errorCh = object.errorCh;
+        errorCh.push(chinese);
+        shuffle(errorCh);
+        $('#ch-right').text(chinese);
+        $('#eng-word').text(english);
+        $('#eng-right').text(chinese);
+        $('#ch-word').text(chinese);
+        $('#radio-1').val(errorCh[0]);
+        $('#radio-1').text('A. '+ errorCh[0]);
+        $('#radio-2').val(errorCh[1]);
+        $('#radio-2').text('B. '+ errorCh[1]);
+        $('#radio-3').val(errorCh[2]);
+        $('#radio-3').text('C. '+ errorCh[2]);
+        $('#radio-4').val(errorCh[3]);
+        $('#radio-4').text('D. '+ errorCh[3]);
+    }
+
+    /**
+     * 加载第二个页面数据
+     */
+    function page2(res) {
+        var result = u.getStorage('result');
+        if (result == ''){
+            result = res;
+        }
+        var object = result[pageNum];
+        var english = object.word.english;
+        var phoneticTranscription = object.word.phoneticTranscription;
+        var chinese = object.word.chinese;
+        var exampleArr = object.wordExample.example.split("$$$");
+        var exampleEng = exampleArr[0];
+        var exampleCh = exampleArr[1];
+        var errorCh = object.errorCh;
+        errorCh.push(chinese);
+        shuffle(errorCh);
+
+        $('#ch-word').text(chinese);
+        $('#eng-right').text(english);
+        var arr = [];
+
+        for(var i=0;i<english.length;i++) {
+            arr.push(english.charAt(i))
+        }
+        arr.join(',');
+        shuffle(arr);
+        console.log(arr);
+
+        for (var j = 0; j < arr.length; j++){
+            $('#a-word').append('<li class="lfi1">'+ arr[j] +'</li>\n');
+            $('#a-word-click').append('<li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
+        }
+
+    }
+</script>
+
+
+</html>

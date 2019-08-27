@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>听词拼写</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .layui-input-block{margin-left:0!important;}
+</style>
+
+<body>
+<div class="xt">
+    <div class="xt-title">
+        <span class="word" style="font-weight: normal;font-size: 16px;color:#fff;background-color:#1d8183;display: block;
+        width:80px;height:40px;border-radius: 5px;text-align: center;cursor: pointer;">词义显示</span>
+
+        <a href="javascript:void(0)" class="wordvoice" id="fayin">
+            <audio class="voicebox" controls autoplay preload="auto" style="display: none;">
+                <source src="音频/anyone.mp3">
+            </audio>
+        </a>
+        <span class="yinbiao" style="margin-left:10px;">pron.任何人，无论谁</span>
+    </div>
+    <div class="xt-content">
+        <div class="xt1">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="1" title="硬键盘" checked="">
+                        <input type="radio" name="sex" value="2" title="软键盘">
+                    </div>
+                </div>
+                <div class="layui-form-item lfi">
+                    <div class="layui-input-block">
+                        <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
+                    </div>
+                </div>
+                <div class="layui-form-item lfii">
+                    <div class="layui-input-block">
+                        <ul class="ul">
+                            <li class="lfi1">o</li>
+                            <li class="lfi1">a</li>
+                            <li class="lfi1">n</li>
+                            <li class="lfi1">e</li>
+                            <li class="lfi1">y</li>
+                            <li class="lfi1">n</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="layui-form-item lfiii">
+                    <div class="layui-input-block" style="font-size: 18px;color:#1d8183;line-height: 38px;font-weight: 600;text-align: center;">
+                        <ul style="text-align: center;">
+                            <li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>
+                            <li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>
+                            <li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>
+                            <li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>
+                            <li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>
+                            <li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="da">
+            <span>正确答案：<i>anyone</i></span>
+            <b>答案错误</b>
+        </div>
+    </div>
+
+    <div class="btn2">
+        <div class="btn21">
+            <!--<a href="javascript:void(0)">上一题</a>-->
+            <a class="sub" href="javascript:void(0)">确定</a>
+            <a href="javascript:void(0)">下一题</a>
+        </div>
+    </div>
+</div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+
+    $('.da span').hide();
+    $('.da b').hide();
+
+    $('.yinbiao').hide();
+        $(document).on('click','.word',function(){
+            if($('.yinbiao').is(':hidden')){
+                $('.yinbiao').show();
+                $('.word').text('词义隐藏')
+            }else{
+                $('.yinbiao').hide();
+                $('.word').text('词义显示')
+            }
+        });
+
+    $('.lfii').hide();
+    $('.lfiii').hide();
+
+
+    layui.use(['form', 'jquery'], function(){
+        var form = layui.form
+            ,$= layui.$;
+
+        form.on('radio', function(data){
+//            var a = $(this).parent('.layui-input-block').find('.layui-unselect div');
+//            var b = $('.da span i').text();
+
+            if(data.value ==1){
+                $('.lfi').show();
+                $('.lfii').hide();
+                $('.lfiii').hide();
+            };
+            if(data.value ==2){
+              $('.lfi').hide();
+                $('.lfii').show();
+                $('.lfiii').show();
+            };
+        });
+    });
+    var index = 0;
+    $(document).on('click','.lfii .layui-input-block ul li',function(){
+        var a = $(this).text();
+        $('.lfiii .layui-input-block ul li').eq(index).text(a);
+        index++;
+
+    })
+    $(document).on('click','.sub',function(){
+
+        var a =$('#aaaa').val() ;
+        var b = $('.da span i').text();
+        var c = $('.lfiii .layui-input-block ul li').text()
+        if(a== b || c ==b){
+            $('.da b').hide();
+            $('.da span').show();
+
+        }else  {
+            $('.da span').hide();
+            $('.da b').show();
+
+        }
+
+    })
+</script>
+</html>

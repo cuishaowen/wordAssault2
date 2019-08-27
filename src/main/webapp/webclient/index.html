@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>首页</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .layui-bg-green{background-color:#1d8183!important;}
+    .layui-nav-item{cursor: pointer;width:10%;text-align: center;}
+    .layui-nav{min-width: 1360px;}
+    .layui-nav * { font-size: 16px;}
+    .layui-tab{padding: 0 20px;}
+</style>
+<body class="bgbody">
+<ul class="layui-nav layui-bg-blue">
+   <div class="logobg">
+       <img class="logo" src="images/logo.png">
+   </div>
+    <li class="layui-nav-item layui-this"><a href="#">音标</a></li>
+    <li class="layui-nav-item "><a href="dcxl.html">单词训练</a></li>
+    <li class="layui-nav-item"><a href="llkNew.html">连连看</a></li>
+    <li class="layui-nav-item"><a href="chl.html">刷题测试</a></li>
+    <li class="layui-nav-item"><a href="yftj.html">语法突击</a></li>
+    <li class="layui-nav-item"><a href="xxbg.html">学习报告</a></li>
+    <li class="layui-nav-item tc" lay-unselect="">
+        <a href="javascript:;">
+            <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
+            张三</a>
+        <dl class="layui-nav-child">
+            <dd><a href="jbsz.html">个人设置</a></dd>
+            <dd><a href="Login.html">退出登陆</a></dd>
+        </dl>
+    </li>
+</ul>
+<div class="bg">
+    <div class="bg-content">
+        <div class="bg-left">
+            <div class="tx">
+                <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
+                <div class="nickname">
+                    <strong id="userName"></strong>同学
+                    <p>您是第<span class="red" >44444</span>位学员</p>
+                    <p>欢迎您第<span class="red" id="loginTime">44444</span>次登陆系统</p>
+                </div>
+                <div class="kc">
+                    <span onclick="kczx()">
+                        <i class="img"></i>
+                        <i>课程中心</i>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="gm">
+                <div class="title">
+                    <div class="title">已经购买课程 <i></i></div>
+                </div>
+                <div class="gm-kc">
+                    <ul id="alreadyPurchase"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-title">
+               <span></span> 音标学习
+            </div>
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this"><span class="li1"></span> 发音演示</li>
+                    <li ><span class="li2"></span>渐进教程</li>
+                    <li><span class="li3"></span>发音技巧</li>
+
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+                            <legend style="font-size: 16px;">48个音标</legend>
+                        </fieldset>
+                        <div class="layui-form">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+
+                                <tbody>
+                                <tr>
+                                    <td class="bgtd" rowspan="5">元音</td>
+                                    <td rowspan="3">
+                                        单元音
+                                    </td>
+                                    <td>前元音</td>
+                                    <td><a class="a1">[iː]</a></td>
+                                    <td><a class="a2">[i]</a></td>
+                                    <td><a>[e]</a></td>
+                                    <td><a>[æ]</a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td >中元音</td>
+                                    <td><a></a></td>
+                                    <td><a>[əː]</a></td>
+                                    <td><a>[ə]</a></td>
+                                    <td><a>[ʌ]</a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td >后元音</td>
+                                    <td><a> [uː]</a></td>
+                                    <td><a>[u]</a></td>
+                                    <td><a>[ɔː]</a></td>
+                                    <td><a>[ɔ]</a></td>
+                                    <td><a>[ɑː]</a></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">双元音</td>
+                                    <td>开合双元音</td>
+                                    <td><a>[ei]</a></td>
+                                    <td><a>[ai]</a></td>
+                                    <td><a>[ɔi]</a></td>
+                                    <td><a>[aʊ]</a></td>
+                                    <td><a>[əʊ]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>集中双元音</td>
+                                    <td><a>[iə]</a></td>
+                                    <td><a>[eə]</a></td>
+                                    <td><a>[ʊə]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td class="bgtd" rowspan="9">辅音</td>
+                                    <td rowspan="2">爆破音</td>
+                                    <td>清辅音</td>
+                                    <td><a>[p]</a></td>
+                                    <td><a>[t]</a></td>
+                                    <td><a>[k]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td>浊辅音</td>
+                                    <td><a>[b]</a></td>
+                                    <td><a>[d]</a></td>
+                                    <td><a>[ɡ]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">摩擦音</td>
+                                    <td>清辅音</td>
+                                    <td><a>[f]</a></td>
+                                    <td><a>[s]</a></td>
+                                    <td><a>[ʃ]</a></td>
+                                    <td><a>[θ]</a></td>
+                                    <td><a>[h]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>浊辅音</td>
+                                    <td><a>[v]</a></td>
+                                    <td><a>[z]</a></td>
+                                    <td><a>[ʒ]</a></td>
+                                    <td><a>[ð]</a></td>
+                                    <td><a></a></td>
+                                </tr>
+
+                                <tr>
+                                    <td rowspan="2">破擦音</td>
+                                    <td>清辅音</td>
+                                    <td><a>[tʃ]</a></td>
+                                    <td><a>[tr]</a></td>
+                                    <td><a>[ts]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td>浊辅音</td>
+                                    <td><a>[dʒ]</a></td>
+                                    <td><a>[dr]</a></td>
+                                    <td><a>[dz]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td>鼻音</td>
+                                    <td>浊辅音</td>
+                                    <td><a>[m]</a></td>
+                                    <td><a>[n]</a></td>
+                                    <td><a>[ŋ]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td>舌则音</td>
+                                    <td>浊辅音</td>
+                                    <td><a>[l]</a></td>
+                                    <td><a>[r]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td>半元音</td>
+                                    <td>浊辅音</td>
+                                    <td><a>[j]</a></td>
+                                    <td><a>[w]</a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                    <td><a></a></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        注：国际音标有不同版本，本表为最新的美式音标
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item" >
+                        <div style="display: flex!important; justify-content:space-around; min-height: 460px; margin: 15px;">
+                        <div class="jjjc">
+                            <ul>
+                                <li class="jj_active">元音 [i:]，[e]</li>
+                                <li>辅音 [p]，[b]，[t]，[d]</li>
+                                <li>辅音 [m],[n]</li>
+                                <li>[e],[p],[b],[t],[m],[n]总结</li>
+                                <li>字母 e,p,b,t,m,n随堂练习（一）</li>
+                                <li>字母 e,p,b,t,m,n随堂练习（二）</li>
+                                <li>双元音 [eɪ]，元音 [æ]</li>
+                                <li>元音 [ə] 辅音 [s]，[z]</li>
+                                <li>辅音 [ts]，[dz]</li>
+                                <li>辅音 [l]</li>
+                                <li>字母 a，c，l，s随堂练习</li>
+                                <li>音节单词注音讲解</li>
+                                <li>重音讲解</li>
+                                <li>音节单词注音讲解</li>
+                            </ul>
+                        </div>
+                        <div class="jj_right">
+                            <div class="img-box">
+                                <img src="images/567681.jpg" alt="">
+                                <audio controls preload="auto">
+                                    <source src="音频/i-sound2.mp3" type="audio/mpeg">
+                                    您的浏览器不支持 audio 元素。
+                                </audio>
+                            </div>
+                            <div class="jj_btn">
+                                <a class="jj_up" href="javascript:void(0);">上一个</a>
+                                <a class="jj_next" href="javascript:void(0);">下一个</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="layui-tab-item">
+
+                        <p class="fyjq_title">  一、下列这些读音与汉语拼音的声母发音基本一致。</p>
+                        <div class="fyjq_content">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/p/=p&nbsp; /b/=b&nbsp; /m/=m&nbsp; /t/=t&nbsp;&nbsp; /d/=d&nbsp;&nbsp; /n/=n&nbsp; /k/=k</p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/g/=g&nbsp; /f/=f&nbsp;&nbsp; /s/=s&nbsp;&nbsp; /ts/=c&nbsp;&nbsp;&nbsp; /dz/=z&nbsp;&nbsp; /ʃ/=sh&nbsp; /tʃ/=ch</p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/dʒ/=zh&nbsp; /h/=h&nbsp; /l/=l&nbsp; /r/=r&nbsp; /j/=y&nbsp; /w/=w</p>
+                        </div>
+
+                        <p class="fyjq_title">二、单元音：[i:]、[ɪ]、[ɔ:]、[ɒ]、[u:]、[ʊ]、[ɜː]、[ə]、[ɑ:]、[ʌ]、[e]、[æ]</p>
+                        <div class="fyjq_content">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [i:]――谐音为：易（yi）；像数字1,记忆真容易.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ɔ:]――谐音为：哦（0）；噢,这个音标就像个o.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [u:]――谐音为：屋（wu）；屋外起雾了.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ɜː]――谐音为：鹅（e）；鹅倒立着行走就容易饿.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ɜː]――谐音为：鹅（e）；鹅倒立着行走就容易饿.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [e]――谐音为：诶（ai）；我们认识诶</p>
+                        </div>
+                        &nbsp;
+                        <p class="fyjq_title">三、双元音：[eɪ]、[aɪ]、[ɔɪ]、[eə]、[ʊə]、[ɪə]、[aʊ]、[əʊ]</p>
+                        <div class="fyjq_content">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [eɪ]――谐音为：诶一（mei）.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [aɪ]――谐音为：爱（ai）；音标的读音跟拼音一样.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ɔɪ]――这个音标找不到拼音的谐音,可以按照字母o、i连读来进行谐音记忆.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ɪə]――谐音和外形都像：12</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [eə]――谐音为：挨饿；外形像3只鹅；三只鹅都在挨饿.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [aʊ]――谐音为：傲（ao）；一个杯子很骄傲,不让人拿它喝水.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [əʊ]――谐音为：鸥（ou）；一只鹅在杯子里找海鸥.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ʊə]――谐音为：屋鹅；一屋子的鹅都装在杯子里.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
+<script>
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+    function sp(){
+        $('.bg').height($(window).height() - 120);
+        $('.gm').height($('.bg-left').height() - 300);
+        $('.gm-kc').height($('.gm').height() - 71);
+        $('.layui-tab-content').height($('.bg-right').height() - 132)
+    };
+    sp();
+    window.onresize = sp;
+
+    $(document).on('click','.gm-kc ul li',function(){
+        $(this).css('background-color','#E7F5FC');
+        $(this).siblings().css('background-color','#fff');
+        $(this).find('i').css({'background':'url(images/221.png)no-repeat center','background-size':'100% 100%'})
+        $(this).siblings().find('i').css({'background':'url(images/ico8.png)no-repeat center','background-size':'100% 100%'})
+    });
+
+    $(document).on('click','.layui-tab-title  li:first-child',function(){
+        $('.li1').css({'background':'url(images/4.png)no-repeat center','background-size':'100% 100%'});
+        $('.li2').css({'background':'url(images/31.png)no-repeat center','background-size':'100% 100%'});
+        $('.li3').css({'background':'url(images/2.png)no-repeat center','background-size':'100% 100%'})
+    });
+    $(document).on('click','.layui-tab-title  li:nth-child(2)',function(){
+        $('.li1').css({'background':'url(images/41.png)no-repeat center','background-size':'100% 100%'});
+        $('.li2').css({'background':'url(images/3.png)no-repeat center','background-size':'100% 100%'});
+        $('.li3').css({'background':'url(images/2.png)no-repeat center','background-size':'100% 100%'})
+    });
+
+    $(document).on('click','.layui-tab-title  li:last-child',function(){
+        $('.li1').css({'background':'url(images/41.png)no-repeat center','background-size':'100% 100%'});
+        $('.li2').css({'background':'url(images/31.png)no-repeat center','background-size':'100% 100%'});
+        $('.li3').css({'background':'url(images/21.png)no-repeat center','background-size':'100% 100%'})
+    });
+
+    $(document).on('click','.a1',function(){
+        new Audio('音频/i-sound.mp3').play();
+    });
+
+    $(document).on('click','.a2',function(){
+        new Audio('音频/i-sound2.mp3').play();
+    });
+
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+
+
+    function detail() {
+        var idx = layer.open({
+            title: '元音 [i:]，[e]',
+            type: 2,
+            area: ['520px', '480px'],
+            content: 'jjjc.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+    function kczx() {
+        var idx = layer.open({
+            title: '课程中心',
+            type: 2,
+            area: ['900px', '550px'],
+            content: 'kczx.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+    $('.jjjc ul li').on('click', function () {
+        $(this).addClass('jj_active').siblings('.jj_active').removeClass('jj_active');
+    });
+    $('.jj_up').on('click',function () {
+        var i= $('.jj_active').index();
+        i--;
+        $('.jjjc ul li').eq(i).addClass('jj_active');
+        $('.jjjc ul li').eq(i).siblings().removeClass('jj_active')
+    })
+    $('.jj_next').on('click',function () {
+        var i= $('.jj_active').index();
+        i++;
+        $('.jjjc ul li').eq(i).addClass('jj_active');
+        $('.jjjc ul li').eq(i).siblings().removeClass('jj_active')
+    })
+</script>
+</html>

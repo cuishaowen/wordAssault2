@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.word.dao.WordDao">
+    
+	<sql id="wordColumns">
+		a.id_ AS "id",
+		a.english_ AS "english",
+		a.phonetic_transcription_ AS "phoneticTranscription",
+		a.eng_voice_ AS "engVoice",
+		a.ame_voice_ AS "ameVoice",
+		a.img_ AS "img",
+		a.chinese_ AS "chinese",
+		a.create_date_ AS "createDate",
+		a.create_by_ AS "createBy.id",
+		a.update_date_ AS "updateDate",
+		a.update_by_ AS "updateBy.id",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo",
+		a.blank_three_ AS "blankThree",
+		a.blank_four_ AS "blankFour"
+	</sql>
+	
+	<sql id="wordJoins">
+	</sql>
+    
+	<select id="get" resultType="Word">
+		SELECT 
+			<include refid="wordColumns"/>
+		FROM word a
+		<include refid="wordJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+
+	<select id="selectRandWordWithoutThis" resultType="Word">
+		SELECT
+		<include refid="wordColumns"/>
+		FROM word a
+		where a.ID_ != #{id}
+		ORDER BY RAND() LIMIT 3
+	</select>
+
+	<select id="findList" resultType="Word">
+		SELECT 
+			<include refid="wordColumns"/>
+		FROM word a
+		<include refid="wordJoins"/>
+		<where>
+			
+			<if test="english != null and english != ''">
+				AND a.english_ LIKE 
+					<if test="dbName == 'oracle'">'%'||#{english}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{english}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{english},'%')</if>
+			</if>
+			<if test="chinese != null and chinese != ''">
+				AND a.chinese_ LIKE 
+					<if test="dbName == 'oracle'">'%'||#{chinese}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{chinese}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{chinese},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Word">
+		SELECT 
+			<include refid="wordColumns"/>
+		FROM word a
+		<include refid="wordJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO word(
+			id_,
+			english_,
+			phonetic_transcription_,
+			eng_voice_,
+			ame_voice_,
+			img_,
+			chinese_,
+			create_date_,
+			create_by_,
+			update_date_,
+			update_by_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_,
+			blank_three_,
+			blank_four_
+		) VALUES (
+			#{id},
+			#{english},
+			#{phoneticTranscription},
+			#{engVoice},
+			#{ameVoice},
+			#{img},
+			#{chinese},
+			#{createDate},
+			#{createBy.id},
+			#{updateDate},
+			#{updateBy.id},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo},
+			#{blankThree},
+			#{blankFour}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE word SET 	
+			id_ = #{id},
+			english_ = #{english},
+			phonetic_transcription_ = #{phoneticTranscription},
+			eng_voice_ = #{engVoice},
+			ame_voice_ = #{ameVoice},
+			img_ = #{img},
+			chinese_ = #{chinese},
+			create_date_ = #{createDate},
+			create_by_ = #{createBy.id},
+			update_date_ = #{updateDate},
+			update_by_ = #{updateBy.id},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo},
+			blank_three_ = #{blankThree},
+			blank_four_ = #{blankFour}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM word
+		WHERE id_ = #{id}
+	</update>
+
+
+</mapper>

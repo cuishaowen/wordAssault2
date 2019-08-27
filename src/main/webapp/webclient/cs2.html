@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>测试</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .xt{margin:0 auto;height:auto;overflow: hidden;zoom: 1;background-color:#f5f5f5;border-radius: 5px;margin-bottom:10px;}
+    .dc{background:#fff!important;height:auto;overflow: hidden;zoom: 1;width:calc(100% - 40px);}
+</style>
+<body>
+<div class="zz">
+    <div class="zz1">
+        <div class="zz-title">
+            <img class="cha1" src="images/cha1.png" alt="">
+        </div>
+        <div class="zz-img">
+            <img src="images/cha.png" alt="">
+        </div>
+        <div class="fs">
+            <span>不及格！</span><i>0分</i>
+        </div>
+        <div class="tm">
+            <div class="tm1">
+                 <span style="width: 100%; line-height: 2px;">
+                上次测试成绩 90分
+                 </span>
+            </div>
+            <div class="tm1">
+                <span>题目：   100</span><i>答对：   0</i>
+            </div>
+
+        </div>
+        <div class="ck">
+            <div class="ck1">
+                <button type="button" class="layui-btn lb">查看错题</button>
+                <button type="button" class="layui-btn layui-btn-danger">关闭窗口</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dc">
+    <fieldset class="layui-elem-field site-demo-button" style='border-color:#1d8183;padding:20px 0;'>
+        <legend >测试</legend>
+        <div class="xt">
+            <div class="xt-title">
+                <i style="float:left;line-height: 40px;font-size: 18px;font-weight: 600!important;color:#666;">1）</i>
+                <span class="word1"> anyone</span>
+                <span class="yinbiao1">['eniwʌn]</span>
+                <a href="javascript:void(0)" class="wordvoice" id="fayin2">
+                    <audio class="voicebox" controls autoplay preload="auto" style="display: none;">
+                        <source src="音频/anyone.mp3">
+                    </audio>
+                </a>
+            </div>
+            <div class="xt-content">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input type="radio" name="xt" value="1" title="pron.任何人，无论谁">
+                        </div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="xt" value="2" title="猪">
+                        </div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="xt" value="3" title="牛">
+                        </div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="xt" value="4" title="羊">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="xt">
+            <div class="xt-title">
+                <i style="float:left;line-height: 40px;font-size: 18px;font-weight: 600!important;color:#666;">2）</i>
+                <span class="word" style="font-weight: normal;font-size: 16px;color:#fff;background-color:#00a2e9;display: block;
+        width:80px;height:40px;border-radius: 5px;text-align: center;cursor: pointer;"> 词义显示</span>
+
+                <a href="javascript:void(0)" class="wordvoice" id="fayin">
+                    <audio class="voicebox" controls autoplay preload="auto" style="display: none;">
+                        <source src="音频/anyone.mp3">
+                    </audio>
+                </a>
+                <span class="yinbiao" style="margin-left:10px;">pron.任何人，无论谁</span>
+            </div>
+            <div class="xt-content">
+                <div class="xt1">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="margin-left:0;">
+                                <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </fieldset>
+    <div class="btn2" style="margin-top:20px;">
+        <div class="btn21" style="text-align: center;">
+            <button class="btn3" type="button">交卷</button>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+    $('.da span').hide();
+    $('.da b').hide();
+
+    $('.yinbiao').hide();
+    $(document).on('click','.word',function(){
+        if($('.yinbiao').is(':hidden')){
+            $('.yinbiao').show();
+            $('.word').text('词义隐藏')
+        }else{
+            $('.yinbiao').hide();
+            $('.word').text('词义显示')
+        }
+    });
+
+    function sp(){
+        $('.zz').height($(window).height());
+        $('.zz').width($(window).width());
+        var a = $('.zz').height();
+        $('.zz1').css('margin-top',(a-454)/2);
+    }
+    sp();
+    window.onresize = sp;
+
+    $('.zz').hide();
+    $('.btn3').on('click',function(){
+        $('.zz').fadeIn(300);
+    });
+    $('.cha1').on('click',function(){
+        $('.zz').fadeOut(300);
+    });
+
+    $('.layui-btn-danger').on('click',function(){
+        $('.zz').fadeOut(300);
+    });
+    $('.lb').on('click',function(){
+        window.location.href='ct.html'
+    })
+</script>
+</html>

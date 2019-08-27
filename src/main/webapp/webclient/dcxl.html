@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>单词训练</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .layui-bg-green{background-color:#1d8183!important;}
+    .layui-nav-item{cursor: pointer;width:10%;text-align: center;}
+    .layui-nav{min-width: 1360px;}
+    .layui-nav * { font-size: 16px;}
+    .newbtn .btn1{height: 130px;}
+    .newbtn .btn1 a{height: 100px; width: 160px; line-height: 100px;}
+    .newbtn .btn1 a img{height: 30px; width: 30px;}
+    /*.layui-tab-title{display: flex; justify-content: space-between; align-items: center; height: 110px !important;}*/
+    /*.layui-tab-title li{height: 110px; flex: 1; padding: 10px 0 !important;}*/
+    /*.layui-tab-title .layui-this:after{height: 121px !important;}*/
+    .dc-tab-title{padding: 20px 0 0 0;}
+    .tab_img{height: 60px; width: 60px;}
+    .layui-tab-item{position: relative;}
+    .bg-right{height: 100% !important; padding: 0;}
+    .layui-layer-title{text-align: center; height: 50px; line-height: 50px;}
+    .tab_img {width: 120px;height: 116px;}
+    .dc_active{border-bottom:2px solid #43A3E8 }
+    .dc_active p{padding-bottom: 10px;}
+    .img1{background: url("images/xxbf.png") no-repeat center; background-size: 100% 100%;}
+    .img2{background: url("images/dccg.png") no-repeat center; background-size: 100% 100%;}
+    .img3{background: url("images/dchg.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title li:first-child .img1:hover{background: url("images/xxbf2.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title li:nth-child(2) .img2:hover{background: url("images/dccg2.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title li:last-child .img3:hover{background: url("images/dchg1.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title .dc_active .img1{background: url("images/xxbf2.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title .dc_active .img2{background: url("images/dccg2.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-title .dc_active .img3{background: url("images/dchg1.png") no-repeat center; background-size: 100% 100%;}
+    .dc-tab-content{background-color: #f5f5f5;}
+    .dc_tab_item{position: relative;}
+    .dc_tab_item{min-height: calc(100% - 20px);}
+    /*.layui-layer-title{background: url("images/dclltop.png") no-repeat center; background-size: 100% 100%; color: #fff !important; border-bottom: none !important;}*/
+
+</style>
+<body class="bgbody">
+<ul class="layui-nav layui-bg-blue">
+    <div class="logobg">
+        <img class="logo" src="images/logo.png">
+    </div>
+    <li class="layui-nav-item "><a href="index.html">音标</a></li>
+    <li class="layui-nav-item layui-this"><a href="#">单词训练</a></li>
+    <li class="layui-nav-item"><a href="llkNew.html">连连看</a></li>
+    <!--<li class="layui-nav-item"><a href="dchg.html">单词回顾</a></li>-->
+    <li class="layui-nav-item"><a href="chl.html">刷题测试</a></li>
+    <li class="layui-nav-item"><a href="yftj.html">语法突击</a></li>
+    <li class="layui-nav-item"><a href="xxbg.html">学习报告</a></li>
+    <li class="layui-nav-item tc" lay-unselect="">
+        <a href="javascript:;">
+            <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
+            张三</a>
+        <dl class="layui-nav-child">
+            <dd><a href="jbsz.html">个人设置</a></dd>
+            <dd><a href="Login.html">退出登陆</a></dd>
+        </dl>
+    </li>
+</ul>
+<div class="bg">
+    <div class="bg-content">
+        <div class="bg-left">
+            <div class="tx">
+                <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
+                <div class="nickname">
+                    <strong id="userName">张三</strong>同学
+                    <p>您是第<span class="red" id="num">44444</span>位学员</p>
+                    <p>欢迎您第<span class="red" id="loginTime">44444</span>次登陆系统</p>
+                </div>
+                <div class="kc">
+                    <span onclick="kczx()">
+                        <i class="img"></i>
+                        <i>课程中心</i>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="gm">
+                <div class="title">
+                    <div class="title">已经购买课程 <i></i></div>
+                </div>
+                <div class="gm-kc">
+                    <ul id="alreadyPurchase"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="bg-right">
+            <div class="tab_bg">
+                <div class="bg-title">
+                    <span style="background:url('images/103.png')no-repeat center;background-size:100% 100%;width:20px; height: 20px;"></span> 单词训练
+                </div>
+            <!--<div class="bg-title">-->
+                <!--<span></span> 音标学习-->
+            <!--</div>-->
+            <div class="dc_tab">
+                <ul class="dc-tab-title">
+                    <li class="dc_active">
+                        <div class="tab_img img1"></div>
+                        <p>循环播放</p>
+                        </li>
+                    <li >
+                        <div class="tab_img img2"></div>
+                        <p>单词闯关</p>
+                        </li>
+                    <!--<li>-->
+                        <!--<img class="tab_img" src="images/8-1.png">-->
+                        <!--<p>连连看</p>-->
+                        <!--</li>-->
+                    <li class="dchg_btn" onclick="dchg(this)">
+                        <div class="tab_img img3"></div>
+                        <p>单词回顾</p>
+                        </li>
+                </ul>
+                <div class="dc-tab-content">
+                    <div id="Loop" class="dc_tab_item dc_item_active">
+                        <div class="state">
+                            <div>
+                                <div class="ico ico1"></div>
+                                <span>已学习</span>
+                            </div>
+                            <div>
+                                <div class="ico ico2"></div>
+                                <span>正在学习</span>
+                            </div>
+                            <div>
+                                <div class="ico ico3"></div>
+                                <span>未开放</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="shaoguan" class="dc_tab_item">
+
+                        <div class="beizu">
+                            <span>本书已学单词: </span><strong id="completeWord"></strong>
+                            <span>未学单词: </span><strong id="waitLearn"></strong>
+                            <span>现有生词: </span><strong id="hardWord"></strong>
+                            <span>熟词: </span><strong id="skilledWord"></strong>
+                            <span>备忘单词: </span><strong id="getStrengthenMemory"></strong>
+                            <span>已消灭生词: </span><strong id="killHardWord"></strong>
+                            <p><span>点击</span><a href="javascript:void(0)" onclick="linkdchg();">单词回顾</a><span>了解学习详情</span></p>
+                        </div>
+                        <div class="state">
+                            <div>
+                                <div class="ico ico1"></div>
+                                <span>闯关成功</span>
+                            </div>
+                            <div>
+                                <div class="ico ico2"></div>
+                                <span>继续闯关</span>
+                            </div>
+                            <div>
+                                <div class="ico ico3"></div>
+                                <span>未开放</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dc_tab_item">
+                        <div class="btn newbtn">
+                            <div class="btn1"><a style="background-color: #FB5D74;" href="njch.html"><img src="images/251.png" alt=""> 难记词汇</a></div>
+                            <!--<div class="btn1"><a href="javascript:void(0)" onclick="detail()"><img src="images/251.png" alt=""> 每日记忆</a></div>-->
+                            <div class="btn1"><a style="background-color: #C3BAAA;" href="mrjy.html" ><img src="images/251.png" alt=""> 每日记忆</a></div>
+                            <div class="btn1"><a style="background-color: #BCB3B0;" href="beiwang.html" ><img src="images/251.png" alt=""> 备忘词汇</a></div>
+
+                        </div>
+                        <div class="btn newbtn">
+                            <div class="btn1"><a style="background-color: #9BC8CC;" href="beiwang.html"><img src="images/251.png" alt=""> 熟记词汇</a></div>
+                            <div class="btn1"><a style="background-color: #787F84;" href="jyhg.html"><img src="images/251.png" alt=""> 未学词汇</a></div>
+                            <div class="btn1"><a style="background-color: #AAC3AC;" href="jyhg.html"><img src="images/251.png" alt=""> 已学词汇</a></div>
+                            <span style="float:right;display: block;width:auto;height:43px;line-height: 43px;"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
+<script src="js/niceHover.js"></script>
+<script>
+    $(".xl_btn").niceHover({weight:2,color:"#167B74"});
+
+    //跳转单词回顾
+    function linkdchg() {
+        dchg($(".dchg_btn"));
+    }
+    $('.dc-tab-title li').on('click', function () {
+        $(this).addClass('dc_active').siblings('.dc_active').removeClass('dc_active');
+        //内容切换
+        var index = $(this).index();
+        $(".dc_tab_item").eq(index).addClass("dc_item_active").siblings(".dc_item_active").removeClass("dc_item_active");
+    });
+        layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+    function sp(){
+        $('.bg').height($(window).height() - 120);
+        $('.gm').height($('.bg-left').height() - 300);
+        $('.gm-kc').height($('.gm').height() - 71);
+        $('.dc-tab-content').height($('.bg-right').height() - 300)
+    };
+    sp();
+    window.onresize = sp;
+
+    $(document).on('click','.gm-kc ul li',function(){
+        $(this).css('color','#1d8183');
+        $(this).siblings().css('color','#333');
+        $(this).find('i').css({'background':'url(images/221.png)no-repeat center','background-size':'100% 100%'})
+        $(this).siblings().find('i').css({'background':'url(images/22.png)no-repeat center','background-size':'100% 100%'})
+    });
+
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+    function detail(chapterId) {
+        var idx = layer.open({
+            title: '看词选义',
+            type: 2,
+            area: ['940px', '500px'],
+            content: 'kcxy.html?chapterId='+ chapterId //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+
+    function detail1() {
+        var idx = layer.open({
+            title: '听词拼写',
+            type: 2,
+            area: ['940px', '450px'],
+            content: 'tcpx.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+    function detail2() {
+        var idx = layer.open({
+            title: '单词连连看',
+            type: 2,
+            area: ['900px', '650px'],
+            content: 'llkNew.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+    function detail3(chapterId) {
+        var idx = layer.open({
+            title: '单词训练',
+            type: 2,
+            area: ['900px', '650px'],
+            content: 'xhbf.html?chapterId='+ chapterId //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+        if ($(this).is('')){
+
+        }
+            }
+    function kczx() {
+        var idx = layer.open({
+            title: '课程中心',
+            type: 2,
+            area: ['900px', '550px'],
+            content: 'kczx.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+    $(document).on('click','.dc-tab-title  li:first-child',function(){
+        $(".dc-tab-title  li:first-child img").attr("src", "images/6.png");
+        $(".dc-tab-title  li:nth-child(2) img").attr("src", "images/7-1.png");
+        $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
+        $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9-1.png");
+    });
+    $(document).on('click','.dc-tab-title  li:nth-child(2)',function(){
+        $(".dc-tab-title  li:first-child img").attr("src", "images/6-1.png");
+        $(".dc-tab-title  li:nth-child(2) img").attr("src", "images/7.png");
+        $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
+        $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9-1.png");
+    });
+
+    $(document).on('click','.dc-tab-title  li:nth-child(3)',function(){
+        $(".dc-tab-title  li:first-child img").attr("src", "images/6-1.png");
+        $(".dc-tab-title  li:nth-child(2) img").attr("src", "images/7-1.png");
+        $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8.png");
+        $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9-1.png");
+    });
+    function dchg(el) {
+        $(el).addClass('dc_active').siblings('.dc_active').removeClass('dc_active');
+        //内容切换
+        var index = $(el).index();
+        $(".dc_tab_item").eq(index).addClass("dc_item_active").siblings(".dc_item_active").removeClass("dc_item_active");
+        $(".dc-tab-title  li:first-child img").attr("src", "images/6-1.png");
+        $(".dc-tab-title  li:nth-child(2) img").attr("src", "images/7-1.png");
+        $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
+        $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9.png");
+    }
+//    $(document).on('click','.dc-tab-title  li:last-child',function(){
+//        $(".dc-tab-title  li:first-child img").attr("src", "images/6-1.png");
+//        $(".dc-tab-title  li:nth-child(2) img").attr("src", "images/7-1.png");
+//        $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
+//        $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9.png");
+//    });
+
+</script>
+<script>
+    /**
+     * 获取课程下的所有章节
+     */
+    function addLoop() {
+        var courseId = GetQueryString('courseId');
+        var url =  getContextPath() + '/userChapter/userChapter/getUserChapterList';
+        var data = {};
+        data.courseId = courseId;
+        data.userId = sessionId;
+        $.post(
+            url,
+            data,
+            function(res){
+                var j = 1;
+                var k = 0;
+                console.log('res:',res);
+                for (var m = 0; m < res.length; m++){
+                    if ( m % 2 != 1){ // 如果 i 是偶数  i = 0 i = 2
+                        $('#Loop').append('<div id="xl'+ j +'" class="xl_btns"></div>');
+                        $('#shaoguan').append('<div id="xxl'+ j +'" class="xl_btns"></div>')
+                        j++;
+                    }
+                }
+                for (var i = 0; i < res.length; i++){
+                    if (i % 2 != 1){
+                        k++;
+                    }
+                    var chapter = res[i].chapter;
+                    console.log('chapter:',chapter);
+                    var userChapter = res[i].userChapter;
+                    // 如果是开通状态
+                    if (userChapter.isOpen == 1){
+                        if (userChapter.studyStatus == 1){  // 未开始
+                            $('#xl' + k).append(
+                                '<a class="xl_btn state3 outline-outward" href="javascript:void (0);" onclick="detail3('+chapter.id +')">\n' +
+                                '<span class="dy">'+ chapter.name + '</span>\n' +
+                                '<span class="remark">可开始</span>\n' +
+                                '</a>\n');
+                            $('#xxl' + k).append(
+                                '<a class="xl_btn state3 outline-outward" href="javascript:void (0);" onclick="detail('+chapter.id +')">\n' +
+                                '<span class="dy">'+ chapter.name + '</span>\n' +
+                                '<span class="remark">准备闯关</span>\n' +
+                                '</a>\n');
+                        }else if (userChapter.studyStatus == 2 ) { // 学习中
+                            $('#xl' + k).append('<a class="xl_btn state2 outline-outward" href="javascript:void (0);" onclick="detail3('+chapter.id +')">\n' +
+                                '<span class="dy">'+ chapter.name + '</span>\n' +
+                                '<span class="remark">学习中</span>\n' +
+                                '</a>');
+                            $('#xxl' + k).append(
+                                '<a class="xl_btn state2 outline-outward" href="javascript:void (0);" onclick="detail('+chapter.id +'">\n' +
+                                '<span class="dy">'+ chapter.name + '</span>\n' +
+                                '<span class="remark">继续闯关</span>\n' +
+                                '</a>\n');
+                        }else if(userChapter.studyStatus == 3) {  // 已完成
+                            $('#xl' + k).append('<a class="xl_btn state1 outline-outward" href="javascript:void (0);" onclick="detail3('+chapter.id +')">\n' +
+                                '<span class="dy">'+ chapter.name + '</span>\n' +
+                                '<span class="remark">已完成</span>\n' +
+                                '</a>');
+                            $('#xxl' + k).append(
+                                '<a class="xl_btn state1 outline-outward" href="javascript:void (0);" onclick="detail('+chapter.id +')">\n' +
+                                '<span class="dy">'+ chapter.name + '</span>\n' +
+                                '<span class="remark">闯关成功</span>\n' +
+                                '</a>\n');
+                        }
+                    }else {
+                        $('#xl' + k).append('<a class="xl_btn state3 outline-outward" href="javascript:void (0);">\n' +
+                            '<span class="dy">'+ chapter.name + '</span>\n' +
+                            '<span class="remark">未开放</span>\n' +
+                            '</a>');
+                        $('#xxl' + k).append(
+                            '<a class="xl_btn state3 outline-outward" href="javascript:void (0);">\n' +
+                            '<span class="dy">'+ chapter.name + '</span>\n' +
+                            '<span class="remark">等待闯关</span>\n' +
+                            '</a>\n');
+                        console.log('id:' ,'#xl'+k );
+                        console.log(i);
+                    }
+
+                }
+
+            }
+        )
+    }
+
+    /**
+     * 本书已学单词
+     */
+    function completeWord() {
+        var url = getContextPath() + '/userchapterword/completeword';
+        var data = {};
+        data.courseId = GetQueryString("courseId");
+        data.userId = sessionId;
+        $.post(
+            url,
+            data,
+            function (res) {
+                if (res == undefined || res == null || res == '') {
+                        res.length = 0;
+                }
+                $('#completeWord').text(res.length);
+            }
+        )
+    }
+
+    /**
+     * 未学单词
+     */
+    function waitLearn() {
+        var url = getContextPath() + '/userchapterword/waitLearning';
+        var data ={};
+        data.courseId = GetQueryString("courseId");
+        data.userId = sessionId;
+        $.post(
+            url,
+            data,
+            function (res) {
+                if (res == undefined || res == null || res == '') {
+                    res.length = 0;
+                }
+                $('#waitLearn').text(res.length);
+            }
+        )
+    }
+
+    /**
+     * 生词
+     */
+    function getCourseHard() {
+        var url = getContextPath() + '/userchapterword/getCourseHard';
+        var data ={};
+        data.courseId = GetQueryString("courseId");
+        data.userId = sessionId;
+        $.post(
+            url,
+            data,
+            function (res) {
+                if (res == undefined || res == null || res == '') {
+                    res.length = 0;
+                }
+                $('#hardWord').text(res.length);
+            }
+        )
+    }
+
+    /**
+     *  消灭生词
+     */
+    function getKillCourseHard() {
+        var url = getContextPath() + '/userchapterword/getKillCourseHard';
+        var data ={};
+        data.courseId = GetQueryString("courseId");
+        data.userId = sessionId;
+        $.post(
+            url,
+            data,
+            function (res) {
+                if (res == undefined || res == null || res == '') {
+                    res.length = 0;
+                }
+                $('#killHardWord').text(res.length);
+            }
+        )
+    }
+
+    /**
+     * 备忘词汇
+     */
+    function getStrengthenMemoryWord() {
+        var url = getContextPath() + '/userchapterword/getStrengthenMemory';
+        var data ={};
+        data.courseId = GetQueryString("courseId");
+        data.userId = sessionId;
+        $.post(
+            url,
+            data,
+            function (res) {
+                if (res == undefined || res == null || res == '') {
+                    res.length = 0;
+                }
+                $('#getStrengthenMemory').text(res.length);
+            }
+        )
+    }
+
+    /**
+     * 熟记
+     */
+    function getSkilled() {
+        var url = getContextPath() + '/userchapterword/getSkilled';
+        var data ={};
+        data.courseId = GetQueryString("courseId");
+        data.userId = sessionId;
+        $.post(
+            url,
+            data,
+            function (res) {
+                if (res == undefined || res == null || res == '') {
+                    res.length = 0;
+                }
+                $('#skilledWord').text(res.length);
+            }
+        )
+    }
+
+    getCourseHard();
+    getKillCourseHard();
+    getStrengthenMemoryWord();
+    getSkilled();
+    waitLearn();
+    addLoop();
+    completeWord();
+
+</script>
+</html>

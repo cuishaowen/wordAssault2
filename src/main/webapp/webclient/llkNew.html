@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content=""/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge"/>
+    <title>连连看</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<style>
+    .layui-bg-green{background-color:#1d8183!important;}
+    .layui-nav-item{cursor: pointer;width:10%;text-align: center;}
+    .layui-nav{min-width: 1360px;}
+    .layui-nav * { font-size: 16px;}
+   .llk{position: static; width: 100%;}
+   .container{width: 100%;}
+   #mytime{width: 800px; top:18px !important;}
+    #pppp{position: relative;}
+   .jia, .sha{top: 50%; left: 50%; margin-left: -75px; margin-top: -25px;}
+   .over_1{width: 850px;}
+    .over_c{height: 300px; width: 500px; background-color: #fafcfc;}
+   .over_3,.over_4{color: #000;}
+   .over_c span{color: #F75F5D;}
+</style>
+
+<body class="bgbody">
+<ul class="layui-nav layui-bg-blue">
+    <div class="logobg">
+        <img class="logo" src="images/logo.png">
+    </div>
+    <li class="layui-nav-item"><a href="index.html">音标</a></li>
+    <li class="layui-nav-item "><a href="dcxl.html">单词训练</a></li>
+    <li class="layui-nav-item layui-this"><a href="#">连连看</a></li>
+    <li class="layui-nav-item"><a href="chl.html">刷题测试</a></li>
+    <li class="layui-nav-item"><a href="yftj.html">语法突击</a></li>
+    <li class="layui-nav-item"><a href="xxbg.html">学习报告</a></li>
+    <li class="layui-nav-item tc" lay-unselect="">
+        <a href="javascript:;">
+            <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
+            张三</a>
+        <dl class="layui-nav-child">
+            <dd><a href="jbsz.html">个人设置</a></dd>
+            <dd><a href="Login.html">退出登陆</a></dd>
+        </dl>
+    </li>
+</ul>
+<div class="bg">
+    <div class="bg-content">
+        <div class="bg-left">
+            <div class="tx">
+                <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
+                <div class="nickname">
+                    <strong>张三</strong>同学
+                    <p>您是第<span class="red">44444</span>位学员</p>
+                    <p>欢迎您第<span class="red">44444</span>次登陆系统</p>
+                </div>
+                <div class="kc">
+                    <span onclick="kczx()">
+                        <i class="img"></i>
+                        <i>课程中心</i>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="gm">
+                <div class="title">
+                    <div class="title">已经购买课程 <i></i></div>
+                </div>
+                <div class="gm-kc">
+                    <ul>
+                        <li>小学体验课程<i></i></li>
+                        <li>初中体验课程<i></i></li>
+                        <li>高中体验课程<i></i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-title">
+                <span style="background:url('images/101.png')no-repeat center;background-size:100% 100%;width:30px;"></span> 单词连连看
+            </div>
+            <div id="llk" class="llk" >
+                <div id="pppp" class="body_page">
+                    <audio id="bgaudio" src="images/bg_music.mp3" style="display: none;" loop=""
+                           class="audio_bg"></audio>
+                    <audio id="audio" controls="" src="images/xaiochuyinxiao.mp3" style="display: none;"
+                           class="audio_audio"></audio>
+                    <audio id="audiof" controls="" src="images/false.mp3" style="display: none;"
+                           class="audio_audiof"></audio>
+                    <img class="jia" style="display: none;"><img class="sha" style="display: none;">
+                    <div id="mytime"><span class="time" id="m">0 0</span><span style="margin-left: 3px;border:none;">:</span><span
+                            class="time" id="s">2 7</span>
+
+                    </div>
+                    <div class="contain">
+                        <div class="container">
+                            <div class="box color1" onclick="box($(this))"><span data-src="27">wait</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="5">most</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="3">wonderful</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="18">activity</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="21">bird</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="7">nothing</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="10">yourself</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="28">umbrella</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="4">few</span></div>
+                            <div class="box color1" onclick="box($(this))"><span data-src="9">everyone</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="21">n.鸟</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="7">pron.没有什么</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="3">a.了不起的</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="18">n.活动</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="28">n.伞</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="27">v.等，等候</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="5">adj.最多</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="4">a.很少的，不多的</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="9">pron.每人，人人</span></div>
+                            <div class="box color2 " onclick="box($(this))"><span class="" data-src="10">pron.你自己</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script src="js/llk.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+    $(document).on('click','.gm-kc ul li',function(){
+        $(this).css('background-color','#E7F5FC');
+        $(this).siblings().css('background-color','#fff');
+        $(this).find('i').css({'background':'url(images/221.png)no-repeat center','background-size':'100% 100%'})
+        $(this).siblings().find('i').css({'background':'url(images/ico8.png)no-repeat center','background-size':'100% 100%'})
+    });
+    function sp(){
+        $('.bg').height($(window).height() - 120);
+        $('.gm').height($('.bg-left').height() - 300);
+        $('.gm-kc').height($('.gm').height() - 71);
+        $('.layui-tab-content').height($('.bg-right').height() - 132)
+    };
+    sp();
+    window.onresize = sp;
+    var maxtime = 3 * 60; //
+    function CountDown() {
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = minutes + ":" + seconds;
+            $('#mytime').text("0" + msg);
+            --maxtime;
+        } else {
+            gameover();
+            clearInterval(timer);
+//            $('#mytime').text("时间结束");
+        }
+    }
+
+    timer = setInterval("CountDown()", 1000);
+
+//    function closewin() {
+//        var index = parent.layer.getFrameIndex(window.name);
+//        parent.layer.close(index);
+//    }
+
+</script>
+</html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.usercourse.dao.UserCourseDao">
+    
+	<sql id="userCourseColumns">
+		a.id_ AS "id",
+		a.user_id_ AS "engUserId",
+		a.course_id_ AS "courseId",
+		a.is_open_ AS "isOpen",
+		a.status_ AS "status",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.end_date_ AS "endDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="userCourseJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id_
+	</sql>
+    
+	<select id="get" resultType="UserCourse">
+		SELECT 
+			<include refid="userCourseColumns"/>
+		FROM user_course a
+		<include refid="userCourseJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserCourse">
+		SELECT 
+			<include refid="userCourseColumns"/>
+		FROM user_course a
+		<include refid="userCourseJoins"/>
+		<where>
+			
+			<if test="engUserId != null and engUserId != ''">
+				AND a.user_id_ = #{engUserId}
+			</if>
+			<if test="courseId != null and courseId != ''">
+				AND a.course_id_ = #{courseId}
+			</if>
+			<if test="isOpen != null and isOpen != ''">
+				AND a.is_open_ = #{isOpen}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status_ = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserCourse">
+		SELECT 
+			<include refid="userCourseColumns"/>
+		FROM user_course a
+		<include refid="userCourseJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO user_course(
+			id_,
+			user_id_,
+			course_id_,
+			is_open_,
+			status_,
+			create_date_,
+			update_date_,
+			end_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{engUserId},
+			#{courseId},
+			#{isOpen},
+			#{status},
+			#{createDate},
+			#{updateDate},
+			#{endDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE user_course SET 	
+			id_ = #{id},
+			user_id_ = #{engUserId},
+			course_id_ = #{courseId},
+			is_open_ = #{isOpen},
+			status_ = #{status},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			end_date_ = #{endDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM user_course
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

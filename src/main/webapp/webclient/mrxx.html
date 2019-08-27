@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>每日学习</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .layui-input-block{margin-left:0!important;}
+</style>
+<body>
+<div class="xt">
+    <div class="xt-title">
+        
+    </div>
+    <div class="xt-content">
+        <ul>
+            <li>
+                <div>
+                    <i></i>
+                    <span>anyone</span>
+                    <a href="javascript:void(0)" class="wordvoice" >
+                    <audio class="voicebox" controls  preload="auto" style="display: none;">
+                        <source src="音频/anyone.mp3">
+                    </audio>
+                </a></div>
+                <div>
+                    pron.任何人，无论谁
+                </div>
+            </li>
+            <li>
+                <div>
+                    <i></i>
+                    <span>anyone</span>
+                    <a href="javascript:void(0)" class="wordvoice" >
+                        <audio class="voicebox" controls  preload="auto" style="display: none;">
+                            <source src="音频/anyone.mp3">
+                        </audio>
+                    </a></div>
+                <div>
+                    pron.任何人，无论谁
+                </div>
+            </li>
+            <li>
+                <div>
+                    <i></i>
+                    <span>anyone</span>
+                    <a href="javascript:void(0)" class="wordvoice" >
+                        <audio class="voicebox" controls  preload="auto" style="display: none;">
+                            <source src="音频/anyone.mp3">
+                        </audio>
+                    </a></div>
+                <div>
+                    pron.任何人，无论谁
+                </div>
+            </li>
+            <li>
+                <div>
+                    <i></i>
+                    <span>anyone</span>
+                    <a href="javascript:void(0)" class="wordvoice" >
+                        <audio class="voicebox" controls  preload="auto" style="display: none;">
+                            <source src="音频/anyone.mp3">
+                        </audio>
+                    </a></div>
+                <div>
+                    pron.任何人，无论谁
+                </div>
+            </li>
+            <li>
+                <div>
+                    <i></i>
+                    <span>anyone</span>
+                    <a href="javascript:void(0)" class="wordvoice" >
+                        <audio class="voicebox" controls  preload="auto" style="display: none;">
+                            <source src="音频/i-sound2.mp3">
+                        </audio>
+                    </a></div>
+                <div>
+                    pron.任何人，无论谁
+                </div>
+            </li>
+            <li>
+                <div>
+                    <i></i>
+                    <span>anyone</span>
+                    <a href="javascript:void(0)" class="wordvoice" >
+                        <audio class="voicebox" controls  preload="auto" style="display: none;">
+                            <source src="音频/anyone.mp3">
+                        </audio>
+                    </a></div>
+                <div>
+                    pron.任何人，无论谁
+                </div>
+            </li>
+        </ul>
+       
+    </div>
+    <div id="demo0" style="text-align: right;"></div>
+    <div class="btn2">
+        <div class="btn21">
+            <!--<a href="javascript:void(0)">上一题</a>-->
+            <a class="sub"  onclick="bofang()" style="margin:0 auto;float:inherit;">自动跟读</a>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+
+        //总页数低于页码总数
+        laypage.render({
+            elem: 'demo0'
+            ,count: 50 //数据总数
+        });
+    });
+
+
+    $(document).on('click','.wordvoice',function(){
+        var b = $(this).find('.voicebox source').attr('src');
+        var c = new Audio(b);
+        c.play();
+    })
+    var timeoutindex;
+    var index =0;
+    function bofang(){
+
+        timeoutindex=  setInterval('bobo()',1000);
+    }
+    function bobo(){
+//        $('.sub').unbind('click');
+
+        $('.sub').removeAttr('onclick');
+            index++;
+
+            var a = $('.voicebox source').eq(index-1).attr("src");
+            var audio=new Audio(a);
+            audio.play();
+            console.log(index-1);
+        if(index>=$('.voicebox source').length){
+            $('.sub').attr("onclick",'bofang()');
+            index = 0;
+            clearInterval(timeoutindex);
+        }
+
+
+    }
+
+
+</script>
+</html>

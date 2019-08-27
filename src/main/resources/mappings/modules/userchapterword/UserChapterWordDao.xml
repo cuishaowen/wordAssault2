@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.userchapterword.dao.UserChapterWordDao">
+    
+	<sql id="userChapterWordColumns">
+		a.id_ AS "id",
+		a.user_id_ AS "engUserId",
+		a.course_id_ AS "courseId",
+		a.chapter_id_ AS "chapterId",
+		a.word_id_ AS "wordId",
+		a.strange_word_ AS "strangeWord",
+		a.skilled_word_ AS "skilledWord",
+		a.study_status_ AS "studyStatus",
+		a.is_memo_ AS "isMemo",
+		a.wrong_time_ AS "wrongTime",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="userChapterWordJoins">
+		LEFT JOIN enguser u2 ON u2.id_ = a.user_id_
+	</sql>
+    
+	<select id="get" resultType="UserChapterWord">
+		SELECT 
+			<include refid="userChapterWordColumns"/>
+		FROM user_chapter_word a
+		<include refid="userChapterWordJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserChapterWord">
+		SELECT 
+			<include refid="userChapterWordColumns"/>
+		FROM user_chapter_word a
+		<include refid="userChapterWordJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id_ = #{id}
+			</if>
+			<if test="engUserId != null and engUserId != ''">
+				AND a.user_id_ = #{engUserId}
+			</if>
+			<if test="courseId != null and courseId != ''">
+				AND a.course_id_ = #{courseId}
+			</if>
+			<if test="chapterId != null and chapterId != ''">
+				AND a.chapter_id_ = #{chapterId}
+			</if>
+			<if test="wordId != null and wordId != ''">
+				AND a.word_id_ = #{wordId}
+			</if>
+			<if test="strangeWord != null and strangeWord != ''">
+				AND a.strange_word_ = #{strangeWord}
+			</if>
+			<if test="skilledWord != null and skilledWord != ''">
+				AND a.skilled_word_ = #{skilledWord}
+			</if>
+			<if test="isMemo != null and isMemo != ''">
+				AND a.is_memo_ = #{isMemo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserChapterWord">
+		SELECT 
+			<include refid="userChapterWordColumns"/>
+		FROM user_chapter_word a
+		<include refid="userChapterWordJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO user_chapter_word(
+			id_,
+			user_id_,
+		    COURSE_ID_,
+		    CHAPTER_ID_,
+		    WORD_ID_,
+		    STRANGE_WORD_,
+		    SKILLED_WORD_,
+		    STUDY_STATUS_,
+			is_memo_,
+			wrong_time_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{engUserId},
+			#{courseId},
+			#{chapterId},
+			#{wordId},
+			#{strangeWord},
+			#{skilledWord},
+		    #{studyStatus},
+			#{isMemo},
+			#{wrongTime},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE user_chapter_word SET 	
+			id_ = #{id},
+			user_id_ = #{engUserId},
+			COURSE_ID_ = #{courseId},
+			CHAPTER_ID_ = #{chapterId},
+			WORD_ID_ = #{wordId},
+			STRANGE_WORD_ = #{strangeWord},
+			SKILLED_WORD_ = #{skilledWord},
+			STUDY_STATUS_ = #{studyStatus},
+			is_memo_ = #{isMemo},
+			wrong_time_ = #{wrongTime},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM user_chapter_word
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

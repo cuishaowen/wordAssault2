@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.enguser.dao.EnguserDao">
+    
+	<sql id="enguserColumns">
+		a.id_ AS "id",
+		a.img_ AS "img",
+		a.name_ AS "name",
+		a.sex_ AS "sex",
+		a.age_ AS "age",
+		a.tel_ AS "tel",
+		a.we_chat_ AS "weChat",
+		a.login_name_ AS "loginName",
+		a.password_ AS "password",
+		a.school_ AS "school",
+		a.class_r AS "classR",
+		a.city_ AS "city",
+		a.province AS "province",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="enguserJoins">
+	</sql>
+
+	<select id="getEnguser" resultType="Enguser">
+		SELECT
+		<include refid="enguserColumns"/>
+		FROM enguser a
+		<include refid="enguserJoins"/>
+		<where>
+			<if test="loginName != null and loginName != ''">
+				and a.login_name_ = #{loginName}
+			</if>
+			<if test="password != null and password != ''">
+				and a.password_ = #{password}
+			</if>
+		</where>
+	</select>
+
+	<select id="get" resultType="Enguser">
+		SELECT 
+			<include refid="enguserColumns"/>
+		FROM enguser a
+		<include refid="enguserJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="Enguser">
+		SELECT 
+			<include refid="enguserColumns"/>
+		FROM enguser a
+		<include refid="enguserJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name_ LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Enguser">
+		SELECT 
+			<include refid="enguserColumns"/>
+		FROM enguser a
+		<include refid="enguserJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO enguser(
+			id_,
+			img_,
+			name_,
+			sex_,
+			age_,
+			tel_,
+			we_chat_,
+			login_name_,
+			password_,
+			school_,
+			class_r,
+			city_,
+			province,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{img},
+			#{name},
+			#{sex},
+			#{age},
+			#{tel},
+			#{weChat},
+			#{loginName},
+			#{password},
+			#{school},
+			#{classR},
+			#{city},
+			#{province},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE enguser SET 	
+			id_ = #{id},
+			img_ = #{img},
+			name_ = #{name},
+			sex_ = #{sex},
+			age_ = #{age},
+			tel_ = #{tel},
+			we_chat_ = #{weChat},
+			login_name_ = #{loginName},
+			password_ = #{password},
+			school_ = #{school},
+			class_r = #{classR},
+			city_ = #{city},
+			province = #{province},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM enguser
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

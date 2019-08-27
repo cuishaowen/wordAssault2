@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.chapterexample.dao.ChapterExampleDao">
+    
+	<sql id="chapterExampleColumns">
+		a.id_ AS "id",
+		a.course_id_ AS "courseId",
+		a.chapter_id_ AS "chapterId",
+		a.word_example_id_ AS "wordExampleId",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="chapterExampleJoins">
+	</sql>
+    
+	<select id="get" resultType="ChapterExample">
+		SELECT 
+			<include refid="chapterExampleColumns"/>
+		FROM chapter_example a
+		<include refid="chapterExampleJoins"/>
+		WHERE a.id_ = #{id}
+	</select>
+	
+	<select id="findList" resultType="ChapterExample">
+		SELECT 
+			<include refid="chapterExampleColumns"/>
+		FROM chapter_example a
+		<include refid="chapterExampleJoins"/>
+		<where>
+			<if test="chapterId != null and chapterId != ''">
+				a.chapter_id_ = #{chapterId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ChapterExample">
+		SELECT 
+			<include refid="chapterExampleColumns"/>
+		FROM chapter_example a
+		<include refid="chapterExampleJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO chapter_example(
+			id_,
+			course_id_,
+			chapter_id_,
+			word_example_id_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{courseId},
+			#{chapterId},
+			#{wordExampleId},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE chapter_example SET 	
+			id_ = #{id},
+			course_id_ = #{courseId},
+			chapter_id_ = #{chapterId},
+			word_example_id_ = #{wordExampleId},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id_ = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM chapter_example
+		WHERE id_ = #{id}
+	</update>
+	
+</mapper>

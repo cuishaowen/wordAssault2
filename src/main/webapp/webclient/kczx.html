@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <title>课程中心</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="../static/common/website.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<style>
+ .content{display: flex; justify-content: center;}
+    .left{width: 140px; background-color: #f2f2f2; border-right: 1px solid #ddd; height: 507px;}
+ .left ul li{height: 50px; line-height: 50px; padding: 10px; text-align: center; border-bottom: 1px solid #ddd;}
+ .left ul li:hover{background-color: #D0F1FF;}
+ .right{flex: 1; padding: 20px; display: none;}
+    .btn_search{height: 38px; line-height: 38px; width: 38px; margin: 0; padding: 0 10px;color: #fff;
+        background: linear-gradient( right,#0083B0,#00B4DB);  background: -ms-linear-gradient( right,#0083B0,#00B4DB);
+        background: -webkit-linear-gradient(right,#0083B0,#00B4DB); background: -o-linear-gradient(right,#0083B0,#00B4DB); border-top-right-radius: 8px; border-bottom-right-radius: 8px;}
+    .search_btn .layui-input-inline{margin-right: 0;}
+ .book_list{padding: 0 10px;}
+    .book_list .layui-col-md2{ text-align:center;background: url("images/best.png") no-repeat; height: 120px; width: 90px; display: inline-block; margin: 20px; padding: 15px; color: #fff;}
+.kc_active{ background-color: #00a2e9;color: #fff;}
+    .tab_active{display: block;}
+ .layui-layer{text-align: center!important;}
+ .layui-layer-btn{text-align: center !important;}
+ .layui-layer-btn .layui-layer-btn0{background-color: #009688;}
+ .layui-layer-page .layui-layer-content{font-size: 20px;}
+ .layui-layer-page .layui-layer-content img{height: 40px; width: 50px; display: block; margin: 15px auto; margin-bottom: 20px !important;}
+ .layui-layer-title{background: none !important;}
+</style>
+<body>
+  <div class="content">
+      <div class="left">
+          <ul>
+              <li class="kc_active">小学英语</li>
+              <li>初中英语</li>
+              <li>高中英语</li>
+              <li>大学英语</li>
+          </ul>
+      </div>
+      <div class="right tab_active">
+          <div class="search layui-form">
+              <div class="layui-form-item">
+                  <!--<div class="layui-inline">-->
+                      <!--<div class="layui-input-inline">-->
+                          <!--<select name="quiz">-->
+                              <!--<option value="2">人教版（PEP）</option>-->
+                              <!--<option value="3">人教精通版（三年级起点）</option>-->
+                              <!--<option value="4">人教版（新起点）</option>-->
+                          <!--</select>-->
+                      <!--</div>-->
+                  <!--</div>-->
+                  <div class="layui-inline search_btn">
+                      <div class="layui-input-inline">
+                          <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                      </div>
+                      <a class="layui-btn btn_search"><i class="layui-icon">&#xe615;</i></a>
+                  </div>
+              </div>
+          </div>
+          <div id="primary_school" class="book_list"></div>
+      </div>
+      <div class="right">
+          <div class="search layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline">
+                      <div class="layui-input-inline">
+                          <select name="quiz">
+                              <option value="2">人教版（PEP）</option>
+                              <option value="3">人教精通版（三年级起点）</option>
+                              <option value="4">人教版（新起点）</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="layui-inline search_btn">
+                      <div class="layui-input-inline">
+                          <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                      </div>
+                      <a class="layui-btn btn_search"><i class="layui-icon">&#xe615;</i></a>
+                  </div>
+              </div>
+          </div>
+          <div id="junior_school" class="book_list"></div>
+      </div>
+      <div class="right">
+          <div class="search layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline">
+                      <div class="layui-input-inline">
+                          <select name="quiz">
+                              <option value="2">人教版（PEP）</option>
+                              <option value="3">人教精通版（三年级起点）</option>
+                              <option value="4">人教版（新起点）</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="layui-inline search_btn">
+                      <div class="layui-input-inline">
+                          <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                      </div>
+                      <a class="layui-btn btn_search"><i class="layui-icon">&#xe615;</i></a>
+                  </div>
+              </div>
+          </div>
+          <div id="high_school" class="book_list"></div>
+      </div>
+      <div class="right">
+          <div class="search layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline">
+                      <div class="layui-input-inline">
+                          <select name="quiz">
+                              <option value="2">人教版（PEP）</option>
+                              <option value="3">人教精通版（三年级起点）</option>
+                              <option value="4">人教版（新起点）</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="layui-inline search_btn">
+                      <div class="layui-input-inline">
+                          <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                      </div>
+                      <a class="layui-btn btn_search"><i class="layui-icon">&#xe615;</i></a>
+                  </div>
+              </div>
+          </div>
+          <div id="university" class="book_list"></div>
+      </div>
+  </div>
+  <script src="layui/layui.js"></script>
+  <script src="js/jquery-2.1.4.js"></script>
+  <script src="../static/common/website.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+      /**
+       * 获取所有课程,并对所有课程进行分类
+       */
+      function getCourses() {
+          $.post(
+              getContextPath() + '/course/course/allCourses',
+              {},
+              function(data){
+                  for (var i = 0; i < data.length; i++){
+                      var name = data[i].name;
+                      if (name.indexOf('一年级') !== -1 || name.indexOf('二年级') !== -1 || name.indexOf('三年级') !== -1 || name.indexOf('四年级') !== -1 || name.indexOf('五年级') !== -1 || name.indexOf('六年级') !== -1 || name.indexOf('小学') !== -1){
+                          $('#primary_school').append('<div class="layui-col-md2" onclick="note(' + data[i].id +')">'+ name + '</a> </div>');
+                      }
+                      if (name.indexOf('七年级') !== -1 || name.indexOf('八年级') !== -1 || name.indexOf('九年级') !== -1 || name.indexOf('初中') !== -1){
+                          $('#junior_school').append('<div class="layui-col-md2" onclick="note('+ data[i].id +')">'+ name + '</div>');
+                      }
+                      if (name.indexOf('高中') !== -1 || name.indexOf('高考') !== -1){
+                          $('#high_school').append('<div class="layui-col-md2" onclick="note('+ data[i].id +')">'+ name + '</div>');
+                          $('#primary_school').append('<div class="layui-col-md2 layui-hide courseId">'+ data[i].id + '</div>');
+                      }
+                      if (name.indexOf('四级') !== -1 || name.indexOf('六级') !== -1 || name.indexOf('大学') !== -1){
+                          $('#university').append('<div class="layui-col-md2" onclick="note('+ data[i].id +')">'+ name + '</div>');
+                          $('#primary_school').append('<div class="layui-col-md2 layui-hide courseId">'+ data[i].id + '</div>');
+                      }
+                      if (name.indexOf('新概念') !== -1 || name.indexOf('其他') !== -1){
+                          $('#other').append('<div class="layui-col-md2" onclick="note('+ data[i].id +')">'+ name + '</div>');
+                          $('#primary_school').append('<div class="layui-col-md2 layui-hide courseId">'+ data[i].id + '</div>');
+                      }
+                  }
+              }
+          );
+      };
+
+      /**
+       * 获取用户已开通课程和未开通课程
+       * @param id
+       */
+      function note(courseId){
+          console.log('sessionId',sessionId);
+          var url = getContextPath() + '/usercourse/usercourse/getCourseOpenOrClose?enguserId=' + sessionId;
+          $.post(
+              url,
+              function (res) {
+                var openCourses = res.openCourseList;
+                var arr = [];
+                for (var i = 0; i < openCourses.length; i++){
+                    arr.push(openCourses[i].id);
+                }
+                var str = arr.toString();
+                var patt1 = new RegExp(courseId);
+                var result = patt1.test(str);
+                if (result){
+                    layer.open({
+                        type: 1,
+                        title:false,
+                        area: ['250px', '180px'],
+                        content: "<img src='images/ico3.png' />你已开通此课程",
+                        btn:['马上学习'],
+                        yes:function () {
+                            layer.closeAll();
+                            window.parent.parent.location.replace("dcxl.html");
+                        }
+                    });
+                } else{
+                   layer.open({
+                       type: 1,
+                       title:false,
+                       area: ['250px', '180px'],
+                       content: "<img src='images/ico3.png' />开通课程请联系老师",
+                       btn:['我知道了']
+                   });
+                }
+              }
+          );
+      };
+      $('.courseId').on('click',function () {
+          console.log(111)
+      });
+
+      getCourses();
+      // note(sessionId);
+  </script>
+  <script>
+      layui.use(['form', 'layedit', 'layer'], function () {
+          var form = layui.form
+              , layer = layui.layer
+              , layedit = layui.layedit;
+      });
+
+      $('.left ul li').on('click', function () {
+          $(this).addClass('kc_active').siblings('.kc_active').removeClass('kc_active');
+          //内容切换
+          var index = $(this).index();
+          $(".right").eq(index).addClass("tab_active").siblings(".tab_active").removeClass("tab_active");
+      });
+  </script>
+
+</body>
+</html>

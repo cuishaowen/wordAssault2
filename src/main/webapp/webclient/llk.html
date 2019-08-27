@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content=""/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge"/>
+    <title>连连看</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<style>
+    .layui-input-block {
+        margin-left: 0 !important;
+    }
+</style>
+
+<body>
+<!--<div class="xt">-->
+
+<!--<div class="xt-content">-->
+<!--<div class="djs"></div>-->
+<!--<div class="llk">-->
+<!--<div class="llk1">-->
+<!--<ul>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">anyone</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">1231231</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--anyone-->
+<!--<span class="sp" style="display: none;">pron.任何人，无论谁</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--1232312313123123164645645645-->
+<!--<span class="sp" style="display: none;">1231231</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">4353453</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">312312</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">42342</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">5435</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">321312</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="lli">-->
+<!--123-->
+<!--<span class="sp" style="display: none;">3123</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<div class="llk2">-->
+<!--<ul>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--pron.任何人，无论谁-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--1232312313123123164645645645-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div class="llii">-->
+<!--123-->
+
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+
+<div id="llk" class="llk">
+    <div id="pppp" class="body_page">
+        <!--<audio id="bgaudio" src="component/llk/media/bg_music.mp3" style="display: none;" loop=""-->
+               <!--class="audio_bg"></audio>-->
+        <!--<audio id="audio" controls="" src="component/llk/media/xaiochuyinxiao.mp3" style="display: none;"-->
+               <!--class="audio_audio"></audio>-->
+        <!--<audio id="audiof" controls="" src="component/llk/media/false.mp3" style="display: none;"-->
+               <!--class="audio_audiof"></audio>-->
+        <img class="jia"><img class="sha">
+        <div id="mytime"></div>
+        <div class="contain"><img class="title">
+            <div class="container">
+                <div class="box color1" onclick="box($(this))"><span data-src="12">bored</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="23">building</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="3">wonderful</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="24">wonder</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="17">quite</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="22">bicycle</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="2">anywhere</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="1">anyone</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="29">wet</span></div>
+                <div class="box color1" onclick="box($(this))"><span data-src="19">decide</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="12">a.烦闷的，厌倦的</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="2">adv.任何地方</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="23">n.大楼</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="3">a.了不起的</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="long" data-src="1">pron.任何人，无论谁</span>
+                </div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="24">n.能人</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="29">a.湿的，潮的</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="22">n.自行车</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="17">adv.相当</span></div>
+                <div class="box color2 " onclick="box($(this))"><span class="" data-src="19">v.决定</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-2.1.4.js"></script>
+<script src="js/llk.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , laypage = layui.laypage;
+    });
+
+
+    var maxtime = 3 * 60; //
+    function CountDown() {
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = minutes + ":" + seconds;
+            $('#mytime').text("0" + msg);
+            --maxtime;
+        } else {
+            clearInterval(timer);
+            $('#mytime').text("时间结束");
+        }
+    }
+
+    timer = setInterval("CountDown()", 1000);
+
+
+
+
+
+</script>
+</html>
