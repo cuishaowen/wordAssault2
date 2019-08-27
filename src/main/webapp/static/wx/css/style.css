@@ -1,0 +1,50 @@
+html,body{padding: 0; margin: 0; height: 100%;}
+/*.login{background: url(../image/loginbg.jpg) no-repeat center; background-size: 100% 100%;}*/
+.loginbox{width: 360px; height: 460px; position: absolute; top:50%; left: 50%; margin-left: -180px; margin-top: -230px; }
+.loginbox .logo{height: 60px; width: 276px; margin: 0 auto; padding-bottom: 40px;}
+.loginbox .logo img{height: 100%; width: 100%;}
+.loginContent{background-color:rgba(255,255,255,0.5); padding: 10px; height: 320px; border-radius: 15px;}
+.loginContent .title{text-align: center; color: #3097B8; font-size: 24px; font-weight: 700; padding: 20px 0;}
+.login_input .item{margin: 20px 0; position: relative; text-align: center;}
+.login_input .item input{height: 35px; border-radius: 5px; line-height: 35px; border:none; width: 80%; padding-left: 40px;}
+.login_input .item img{position: absolute; height: 28px; width: 28px; margin-top: 4px;}
+.login_btn{display: block; text-decoration: none; background-color: #3097B8; text-align: center; height: 40px; line-height: 40px; border-radius: 10px; width: 90%; color: #fff; margin: 40px auto;}
+
+.top{position: relative;}
+/*.touxiang{background: url(../image/index_top.png) no-repeat center; background-size: 100% 100%; height: 150px; text-align: center; padding: 15px 0;}*/
+.touxiang img{height: 80px; width: 80px; border-radius: 50%;}
+.touxiang p{color: #fff; margin: 0;}
+.touxiang p span{font-weight: 700; margin-right: 10px;}
+.info{position: absolute; top: 140px;border-radius: 10px; width: 96%; margin: 0 10px; box-sizing: border-box; background-color: #fff;display: flex; justify-content: space-around; align-items: center; padding: 10px;}
+.info .info_item{border-right: 1px solid #ddd;}
+.info .info_item:last-child{border:none;}
+.info .info_item div{padding: 5px; text-align: center;}
+.blank{height: 50px;}
+.block_item{margin: 10px;}
+.block_item .bg_title{padding: 5px 10px; color: #636363;}
+.bg_item{border-radius: 10px; box-shadow: 2px 2px 5px #ddd; background-color: #fff; }
+.bg_item ul{padding: 0; margin: 0;}
+.bg_item ul li{list-style: none;padding: 10px; border-bottom: 1px solid #ddd;}
+.bg_item ul li span{color: #F34925; padding: 0 5px; font-weight: 700; font-size: 18px;}
+.hz_item{display: flex; justify-content: space-between; align-items: center;}
+.hz_item p{margin: 0;}
+.bg_item .list{display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;}
+.bg_item .list:first-child{background-color: #D0EAF3;}
+.bg_item .firt_list span:first-child{width: 180px;}
+.bg_item .newlist span:last-child{flex: 1; text-align: center;}
+
+
+
+
+@media screen and (max-width: 375px) {
+    .loginbox{width: 320px; margin-left: -160px;}
+    .info{top: 140px; width: 94%;}
+}
+@media screen and (max-width: 320px) {
+    .loginbox{width: 280px; margin-left: -140px;}
+    .touxiang{height: 120px;}
+    .touxiang img{height: 60px; width: 60px;}
+    .info{top: 110px; width: 94%;}
+}
+
+
