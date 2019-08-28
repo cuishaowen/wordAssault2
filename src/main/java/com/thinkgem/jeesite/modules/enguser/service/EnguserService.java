@@ -6,9 +6,11 @@ package com.thinkgem.jeesite.modules.enguser.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.modules.course.entity.Course;
 import com.thinkgem.jeesite.modules.course.service.CourseService;
@@ -138,6 +140,8 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 			enguser.setLoginName(login);
 			enguser.setPassword(password);
 			enguser.setId(id);
+			enguser.setCreateDate(new Date());
+			enguser.setUpdateDate(new Date());
 			enguserDao.insert(enguser);
 
 			// 新增校长用户关联表

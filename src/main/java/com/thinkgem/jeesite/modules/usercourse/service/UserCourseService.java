@@ -4,16 +4,23 @@
 package com.thinkgem.jeesite.modules.usercourse.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import com.thinkgem.jeesite.modules.chapter.entity.Chapter;
 import com.thinkgem.jeesite.modules.chapter.service.ChapterService;
+import com.thinkgem.jeesite.modules.chapterword.entity.ChapterWord;
+import com.thinkgem.jeesite.modules.chapterword.service.ChapterWordService;
 import com.thinkgem.jeesite.modules.course.entity.Course;
 import com.thinkgem.jeesite.modules.course.service.CourseService;
 import com.thinkgem.jeesite.modules.userchapter.entity.UserChapter;
 import com.thinkgem.jeesite.modules.userchapter.service.UserChapterService;
+import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
+import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
 import com.thinkgem.jeesite.modules.usercourse.pojo.CourseIsOpen;
+import com.thinkgem.jeesite.modules.word.entity.Word;
+import com.thinkgem.jeesite.modules.word.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +45,12 @@ public class UserCourseService extends CrudService<UserCourseDao, UserCourse> {
     private ChapterService chapterService;
     @Autowired
     private UserChapterService userChapterService;
+    @Autowired
+	private ChapterWordService chapterWordService;
+    @Autowired
+	private WordService wordService;
+    @Autowired
+	private UserChapterWordService userChapterWordService;
 
 	public UserCourse get(String id) {
 		return super.get(id);
@@ -106,10 +119,11 @@ public class UserCourseService extends CrudService<UserCourseDao, UserCourse> {
     public void openCourse(UserCourse userCourse){
         this.save(userCourse);
         this.openChapter(userCourse.getCourseId(),userCourse.getEngUserId());
+        this.openChapterWord(userCourse.getCourseId(),userCourse.getEngUserId());
     }
 
     /**
-     * 开通章节
+     * 开通章节与单词
      * @param courseId
      * @param userId
      */
@@ -136,4 +150,31 @@ public class UserCourseService extends CrudService<UserCourseDao, UserCourse> {
             userChapterService.save(userChapter);
         }
     }
+
+	/**
+	 * 为用户新增该课程下的所有单词
+	 * @param courseId
+	 * @param userId
+	 */
+	@Transactional(readOnly = false)
+    public void openChapterWord(String courseId, String userId){
+    	ChapterWord chapterWord = new ChapterWord();
+    	chapterWord.setCourseId(courseId);
+		List<ChapterWord> list = chapterWordService.findList(chapterWord);
+		for (ChapterWord chapterWordInf : list){
+			String wordIds = chapterWordInf.getWordIds();
+			String[] arr = wordIds.split(",");
+			for (int i = 0; i < arr.length; i++){
+				UserChapterWord userChapterWord = new UserChapterWord();
+				userChapterWord.setCourseId(courseId);
+				userChapterWord.setEngUserId(userId);
+				userChapterWord.setChapterId(chapterWordInf.getChapterId());
+				userChapterWord.setWordId(arr[i]);
+				userChapterWord.setStudyStatus("1"); // 待学习
+				userChapterWord.setCreateDate(new Date());
+				userChapterWordService.save(userChapterWord);
+			}
+		}
+
+	}
 }

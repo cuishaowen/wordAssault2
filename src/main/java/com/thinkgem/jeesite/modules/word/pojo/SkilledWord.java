@@ -3,6 +3,8 @@ package com.thinkgem.jeesite.modules.word.pojo;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.word.entity.Word;
 
+import java.util.Date;
+
 public class SkilledWord {
 
     private Word word;

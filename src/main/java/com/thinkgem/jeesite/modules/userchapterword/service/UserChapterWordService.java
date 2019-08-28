@@ -40,6 +40,8 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 	private ChapterExampleService chapterExampleService;
 	@Autowired
 	private WordExampleService wordExampleService;
+	@Autowired
+	private UserChapterWordDao userChapterWordDao;
 
 	public UserChapterWord get(String id) {
 		return super.get(id);
@@ -102,11 +104,13 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 			HardWord hardWord = new HardWord();
 
 			// 如果错误次数大于两次，且记忆状态为生词
-			if (Integer.parseInt(userChapterWordInf.getWrongTime()) >= 2 && userChapterWordInf.getStrangeWord().equals("T")) {
-				Word word = wordService.get(userChapterWordInf.getWordId());
-				hardWord.setWord(word);
-                hardWord.setUserChapterWord(userChapterWordInf);
-                hardWordList.add(hardWord);
+			if (userChapterWordInf.getWrongTime() != null && userChapterWordInf.getStrangeWord() != null) {
+				if (userChapterWordInf.getWrongTime() >= 2 && userChapterWordInf.getStrangeWord().equals("T")) {
+					Word word = wordService.get(userChapterWordInf.getWordId());
+					hardWord.setWord(word);
+					hardWord.setUserChapterWord(userChapterWordInf);
+					hardWordList.add(hardWord);
+				}
 			}
 		}
 		return hardWordList;
@@ -119,17 +123,17 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
         for (UserChapterWord userChapterWordInf: userChapterWords){
             HardKilledWord hardKilledWord = new HardKilledWord();
 
-            // 如果错误次数大于两次，且记忆状态为生词
-            if (Integer.parseInt(userChapterWordInf.getWrongTime()) >= 2 && userChapterWordInf.getStrangeWord().equals("F")) {
-                Word word = wordService.get(userChapterWordInf.getWordId());
-                hardKilledWord.setWord(word);
-                hardKilledWord.setUserChapterWord(userChapterWordInf);
-                hardWordList.add(hardKilledWord);
-            }
+            // 如果错误次数大于两次，且记忆状态不为生词
+			if ( userChapterWordInf.getWrongTime() != null && userChapterWordInf.getStrangeWord() != null) {
+				if (userChapterWordInf.getWrongTime() >= 2 && userChapterWordInf.getStrangeWord().equals("F")) {
+					Word word = wordService.get(userChapterWordInf.getWordId());
+					hardKilledWord.setWord(word);
+					hardKilledWord.setUserChapterWord(userChapterWordInf);
+					hardWordList.add(hardKilledWord);
+				}
+			}
         }
         return hardWordList;
-
-
     }
 
 	// 备忘词汇
@@ -138,7 +142,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		List<UserChapterWord> userChapterWords = this.getUserChapterWordList(userId, courseId);
 		for (UserChapterWord userChapterWordInf : userChapterWords){
             StrengthenMemoryWord strengthenMemoryWord = new StrengthenMemoryWord();
-			if (userChapterWordInf.getIsMemo().equals("true")){
+			if (userChapterWordInf.getIsMemo() != null && userChapterWordInf.getIsMemo().equals("T")){
                 Word word = wordService.get(userChapterWordInf.getWordId());
                 strengthenMemoryWord.setWord(word);
                 strengthenMemoryWord.setUserChapterWord(userChapterWordInf);
@@ -153,8 +157,8 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
         List<SkilledWord> list = new ArrayList<SkilledWord>();
         List<UserChapterWord> userChapterWords = this.getUserChapterWordList(userId, courseId);
         for (UserChapterWord userChapterWordInf : userChapterWords){
-            SkilledWord skilledWord = new SkilledWord();
-            if (userChapterWordInf.getSkilledWord().equals("T")){
+            if (userChapterWordInf.getSkilledWord() != null && userChapterWordInf.getSkilledWord().equals("T")){
+            	SkilledWord skilledWord = new SkilledWord();
                 Word word = wordService.get(userChapterWordInf.getWordId());
                 skilledWord.setWord(word);
                 skilledWord.setUserChapterWord(userChapterWordInf);
@@ -170,7 +174,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
         List<UserChapterWord> userChapterWords = this.getUserChapterWordList(userId, courseId);
         for (UserChapterWord userChapterWordInf : userChapterWords){
             CompletionWord completionWord = new CompletionWord();
-            if (!userChapterWordInf.getStudyStatus().equals("1")){
+            if (userChapterWordInf.getStudyStatus() != null && !userChapterWordInf.getStudyStatus().equals("1")){
                 Word word = wordService.get(userChapterWordInf.getWordId());
                 completionWord.setWord(word);
                 completionWord.setUserChapterWord(userChapterWordInf);
@@ -185,12 +189,12 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
         List<WaitLearningWord> list = new ArrayList<WaitLearningWord>();
         List<UserChapterWord> userChapterWords = this.getUserChapterWordList(userId,courseId);
         for (UserChapterWord userChapterWordInf : userChapterWords){
-            WaitLearningWord completionWord = new WaitLearningWord();
-            if (userChapterWordInf.getStudyStatus().equals("1")){
+            WaitLearningWord waitLearningWord = new WaitLearningWord();
+            if (userChapterWordInf.getStudyStatus() != null && userChapterWordInf.getStudyStatus().equals("1")){
                 Word word = wordService.get(userChapterWordInf.getWordId());
-                completionWord.setWord(word);
-                completionWord.setUserChapterWord(userChapterWordInf);
-                list.add(completionWord);
+				waitLearningWord.setWord(word);
+				waitLearningWord.setUserChapterWord(userChapterWordInf);
+                list.add(waitLearningWord);
             }
         }
         return list;

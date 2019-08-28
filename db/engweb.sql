@@ -259,7 +259,6 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户章节表';
 -- Table structure for user_chapter_word
 -- ----------------------------
 DROP TABLE IF EXISTS `user_chapter_word`;
--- auto-generated definition
 create table user_chapter_word
 (
     ID_           varchar(64)      not null

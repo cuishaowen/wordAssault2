@@ -1,13 +1,14 @@
 package com.thinkgem.jeesite.modules.userchapterword.web;
 
 import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
 import com.thinkgem.jeesite.modules.word.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -16,6 +17,20 @@ public class UserChapterWordWebController {
 
     @Autowired
     private UserChapterWordService userChapterWordService;
+
+    @ResponseBody
+    @RequestMapping(value = "getUserChapterWordList")
+    public List<UserChapterWord> getUserChapterWord(UserChapterWord userChapterWord){
+        return userChapterWordService.findList(userChapterWord);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateWord", method = RequestMethod.POST)
+    public void updateWord(UserChapterWord userChapterWord){
+        System.out.println(userChapterWord);
+        userChapterWord.setUpdateDate(new Date());
+        userChapterWordService.save(userChapterWord);
+    }
 
     /**
      * 已学词汇

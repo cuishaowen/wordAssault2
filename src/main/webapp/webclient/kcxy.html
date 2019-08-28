@@ -51,9 +51,9 @@
                 <button id="radio-3" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
                 <button id="radio-4" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
             </div>
-            <div class="da">
-                <b id="ch-error">选择错误</b><br>
-                <span>正确答案：<i id="ch-right"></i></span>
+            <div class="da" style="display: none">
+                <b id="ch-error" style="display: none">选择错误</b><br>
+                <span style="display: none">正确答案：<i id="ch-right"></i></span>
             </div>
         </div>
     </div>
@@ -122,11 +122,6 @@
             , laydate = layui.laydate
             , laypage = layui.laypage;
     });
-
-    $('.da span').hide();
-    $('.da b').hide();
-    $('.pingxie_da').hide();
-
 
     layui.use(['form', 'jquery'], function(){
         var form = layui.form

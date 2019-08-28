@@ -79,12 +79,13 @@ public class EnguserController extends BaseController {
 		String userId = user.getId();
 		List<Enguser> enguserList = new ArrayList<Enguser>();
 		List<Enguser> engusers = enguserService.getAllEnguserByUserId(userId);
-		for (Enguser enguserInf : engusers){
-			CourseIsOpen courseIsOpen = userCourseService.getUserOpenCoursesAndNot(enguserInf.getId());
-			enguserInf.setCourseIsOpen(courseIsOpen);
-			enguserList.add(enguserInf);
+		if (engusers != null && engusers.size() >= 1 ) {
+			for (Enguser enguserInf : engusers) {
+				CourseIsOpen courseIsOpen = userCourseService.getUserOpenCoursesAndNot(enguserInf.getId());
+				enguserInf.setCourseIsOpen(courseIsOpen);
+				enguserList.add(enguserInf);
+			}
 		}
-
 		Page<Enguser> page = new Page<Enguser>(request,response);
 		page.setList(enguserList);
 		model.addAttribute("page", page);

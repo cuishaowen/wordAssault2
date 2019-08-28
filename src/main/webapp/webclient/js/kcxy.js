@@ -1,9 +1,9 @@
 // 公共变量
 u.setStorage('result','');
 var result = [];
+var userChapterWord = {};
 // 设置一个公共变量，用于遍历数组
 var pageNum = 0;
-
 // 请求后台数据，并将数据存储进缓存
 function chapterWord(){
     var chapterId = GetQueryString("chapterId");
@@ -29,10 +29,84 @@ function chapterWord(){
         )
     }
 }
+
+/**
+ *  获取用户该章节下所有的单词信息
+ */
+function getUserChapterWords() {
+    var url = getContextPath() + '/userchapterword/getUserChapterWordList';
+    var chapterId = GetQueryString("chapterId");
+    var data = {};
+    data.engUserId = sessionId;
+    data.chapterId = chapterId;
+    $.post(
+        url,
+        data,
+        function (res) {
+            u.setStorage('userChapterWords',res);
+            console.log('userChapterWords',res);
+        }
+    )
+}
+
+// 获取当前操作对象
+function getUserChapterWord(){
+    var result = u.getStorage('result');
+    var wordId = result[pageNum].word.id;
+    var userChapterWords = u.getStorage('userChapterWords');
+    console.log('getUserChapterWordRes:',userChapterWords);
+    for (i = 0; i < userChapterWords.length; i++){
+        if (wordId == userChapterWords[i].wordId) {
+            return userChapterWords[i];
+        }
+    }
+}
+
+// 是否生词
+function HardWord() {
+    userChapterWord.studyStatus = '2';
+    userChapterWord.strangeWord = 'T';
+    if (userChapterWord.wrongTime == null || userChapterWord.wrongTime == undefined || userChapterWord.wrongTime == ''){
+        userChapterWord.wrongTime = 0;
+    }
+    userChapterWord.wrongTime += 1;
+    return userChapterWord;
+}
+
+// 学习状态
+function alreadyLearn() {
+    var userChapterWord = getUserChapterWord();
+    userChapterWord.studyStatus = '2';
+    return userChapterWord;
+}
+
+function updateWord(userChapterWord) {
+    var url = getContextPath() + '/userchapterword/updateWord';
+    var data = {};
+    data.id = userChapterWord.id;
+    data.chapterId = userChapterWord.chapterId;
+    data.courseId = userChapterWord.courseId;
+    data.wordId = userChapterWord.wordId;
+    data.engUserId = userChapterWord.engUserId;
+    data.studyStatus = userChapterWord.studyStatus;
+    data.wrongTime = userChapterWord.wrongTime;
+    data.strangeWord = userChapterWord.strangeWord;
+    data.skilledWord = userChapterWord.skilledWord;
+    data.isMemo = userChapterWord.isMemo;
+    console.log('update:',userChapterWord);
+    $.post(
+        url,
+        data,
+        function (res) {
+            console.log('updateUserChapterWord:','success');
+        }
+    )
+}
+
 chapterWord();
+getUserChapterWords();
 
 // ----------------------------------------------------第一页逻辑--------------------------------------------
-
 /**
  * 加载第一个页面数据
  * @param res
@@ -53,6 +127,8 @@ function page(res) {
     var errorCh = object.errorCh;
     errorCh.push(chinese);
     shuffle(errorCh);
+    xuanyiAnsHide();
+    userChapterWord = getUserChapterWord();
     $('#ch-right').text(chinese);
     $('#eng-word').text(english);
     $('#eng-right').text(chinese);
@@ -99,13 +175,15 @@ function nextSubject(select) {
     if (select == right){
         $('#xuanyiBox').hide();
         $('#pinxieBox').show();
+        var userChapterWord = alreadyLearn();
+        console.log('userChapterWord',userChapterWord);
+        updateWord(userChapterWord);
     }else{
         $('#radio-1').attr('disabled',true);
         $('#radio-2').attr('disabled',true);
         $('#radio-3').attr('disabled',true);
         $('#radio-4').attr('disabled',true);
-        $('.da span').show();
-        $('.da b').show();
+        xuanyiAnsShow();
         $('#nextsub').show();
     }
 }
@@ -117,14 +195,16 @@ $('#nextsub').on('click',function(){
     $(this).hide();
     $('#xuanyiBox').hide();
     $('#pinxieBox').show();
+    pinxieAnsHide();
+    var userChapterWord = HardWord();
+    updateWord(userChapterWord);
 });
-
 //    ------------------------------------------------- 第二页逻辑  --------------------------------------------------
-
 /**
  * 加载第二个页面数据
  */
 function page2(res) {
+    index = 0;
     var result = u.getStorage('result');
     if (result == '') {
         result = res;
@@ -166,37 +246,51 @@ function page2(res) {
 $('#aaaa').on('keypress',function(e){
     if(e.keyCode==13){
         e.preventDefault();
-        if(e.keyCode==13) {
-            var a = $('#aaaa').val();
-            var b = $('.pingxie_da span i').text();
-            var c = $('.lfiii .layui-input-block ul li').text();
-            if (a == b || c == b) {
-                $('.pingxie_da b').hide();
-                $('.pingxie_da span').show();
-                nextPage();
-            } else {
-                $('#aaaa').attr('disabled', true);
-                $('.pingxie_da').show();
-                $('#next-page').show();
-            }
+        var a = $('#aaaa').val();
+        var b = $('.pingxie_da span i').text();
+        var c = $('.lfiii .layui-input-block ul li').text();
+        if (a == b || c == b) {
+            var userChapterWord = alreadyLearn();
+            updateWord(userChapterWord);
+            nextPage();
+        } else {
+            pinxieAnsShow();
+            $('#aaaa').attr('disabled', true);
+            $('#next-page').show();
         }
     }
 });
 
-// 隐藏答案
-$('#key-1').on('click',function(){
-    $('.pingxie_da span i').hide();
-    $('.pingxie_da b').hide();
-});
-$('#key-2').on('click',function(){
-    $('.pingxie_da span i').hide();
-    $('.pingxie_da b').hide();
-});
-
 // 点击进入下一特
 $('#next-page').on('click',function () {
+    HardWord();
+    updateWord(userChapterWord);
     nextPage();
 });
+
+// 显示答案
+function pinxieAnsShow(){
+    $('.pingxie_da').show();
+    $('.pingxie_da span').show();
+    $('.pingxie_da b').show();
+}
+function xuanyiAnsShow() {
+    $('.da').show();
+    $('.da span').show();
+    $('.da b').show();
+}
+
+// 隐藏答案
+function pinxieAnsHide(){
+    $('.pingxie_da span').hide();
+    $('.pingxie_da b').hide();
+    $('.pingxie_da').hide();
+}
+function xuanyiAnsHide(){
+    $('.da').hide();
+    $('.da span').hide();
+    $('.da b').hide();
+}
 
 /**
  * 点击进入下一页
@@ -216,7 +310,7 @@ function nextPage(){
     $('.da b').hide();
     $('#pinxieBox').hide();
     $('#xuanyiBox').show();
-    $('.pingxie_da').hide();
+    pinxieAnsHide();
     $('#nextsub').hide();
     $('#next-page').hide();
 }

@@ -6,9 +6,6 @@ package com.thinkgem.jeesite.modules.userchapterword.entity;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
-import org.joda.time.DateTime;
-
-import java.util.Date;
 
 /**
  * userchapterwordEntity
@@ -16,7 +13,6 @@ import java.util.Date;
  * @version 2019-08-06
  */
 public class UserChapterWord extends DataEntity<UserChapterWord> {
-	
 	private static final long serialVersionUID = 1L;
 	private String engUserId;		// 用户id
 	private String courseId;   		// 课程id
@@ -25,9 +21,8 @@ public class UserChapterWord extends DataEntity<UserChapterWord> {
 	private String studyStatus;		// 用户章节单词的学习状态 1.待学习 2.待复习 3.已完成
 	private String strangeWord;     // 生词状态 T 是 F 不是
 	private String skilledWord;     // 熟词状态 T 是 F 不是
-	private String isMemo;		    // 是否备忘 true 是 false 不是
-	private String isWrong;		    // 是否错词 true 是  flase 不是
-	private String wrongTime;		// 错误次数
+	private String isMemo;		    // 是否备忘 T 是 F 不是
+	private Integer wrongTime;		// 错误次数
 	private String blankOne;		// blank_one_
 	private String blankTwo;		// blank_two_
 	
@@ -39,7 +34,7 @@ public class UserChapterWord extends DataEntity<UserChapterWord> {
 		super(id);
 	}
 
-    public String getStrangeWord() {
+	public String getStrangeWord() {
         return strangeWord;
     }
 
@@ -105,25 +100,15 @@ public class UserChapterWord extends DataEntity<UserChapterWord> {
 	public void setIsMemo(String isMemo) {
 		this.isMemo = isMemo;
 	}
-	
-	@Length(min=0, max=1, message="是否错词 true 是  flase 不是长度必须介于 0 和 1 之间")
-	public String getIsWrong() {
-		return isWrong;
-	}
 
-	public void setIsWrong(String isWrong) {
-		this.isWrong = isWrong;
-	}
-	
-	@Length(min=0, max=11, message="错误次数长度必须介于 0 和 11 之间")
-	public String getWrongTime() {
+	public Integer getWrongTime() {
 		return wrongTime;
 	}
 
-	public void setWrongTime(String wrongTime) {
+	public void setWrongTime(Integer wrongTime) {
 		this.wrongTime = wrongTime;
 	}
-	
+
 	public String getBlankOne() {
 		return blankOne;
 	}

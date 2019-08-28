@@ -43,6 +43,9 @@
 			<if test="id != null and id != ''">
 				AND a.id_ = #{id}
 			</if>
+			<if test="courseId != null and courseId != ''">
+				and a.course_id_ = #{courseId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
