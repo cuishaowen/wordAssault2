@@ -23,6 +23,14 @@
 		a.blank_one_ AS "blankOne",
 		a.blank_two_ AS "blankTwo"
 	</sql>
+
+	<resultMap type="com.thinkgem.jeesite.modules.wx.pojo.enguserEntity" id="enguserEntity">
+		<result column="ID_" property="id"/>
+		<result column="CREATE_DATE_" property="createDate"/>
+		<result column="NAME_" property="userName"/>
+		<result column="NUM_" property="numNo"/>
+		<result column="course_num" property="courseNum"/>
+	</resultMap>
 	
 	<sql id="enguserJoins">
 	</sql>
@@ -89,7 +97,17 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
+
+	<select id="getEntityByUserId" resultMap="enguserEntity">
+		SELECT a.ID_,
+		a.NAME_,
+		a.CREATE_DATE_,
+		a.NUM_,
+		(select count(1) from user_course uc where uc.USER_ID_ = #{id}) as course_num
+		from enguser a WHERE a.ID_=#{id}
+	</select>
+
 	<insert id="insert">
 		INSERT INTO enguser(
 			id_,

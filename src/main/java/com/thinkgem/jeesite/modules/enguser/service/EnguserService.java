@@ -16,6 +16,7 @@ import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
 import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
 import com.thinkgem.jeesite.modules.userenguser.dao.UserEnguserDao;
 import com.thinkgem.jeesite.modules.userenguser.entity.UserEnguser;
+import com.thinkgem.jeesite.modules.wx.pojo.enguserEntity;
 import org.activiti.engine.impl.util.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -165,5 +166,8 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 	}
 
 
-
+	@Transactional(readOnly = false)
+    public enguserEntity getEntityByUserId(String id) {
+		return enguserDao.getEntityByUserId(id);
+    }
 }

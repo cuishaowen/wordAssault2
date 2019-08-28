@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.enguser.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
+import com.thinkgem.jeesite.modules.wx.pojo.enguserEntity;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -19,5 +20,6 @@ public interface EnguserDao extends CrudDao<Enguser> {
     public void insertUser(Enguser enguser);
 
     public Enguser getEnguser(@Param("loginName") String loginName, @Param("password") String password);
-	
+
+    enguserEntity getEntityByUserId(@Param("id")String id);
 }

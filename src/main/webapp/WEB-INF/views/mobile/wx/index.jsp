@@ -20,20 +20,20 @@
     <div class="top">
         <div class="touxiang">
             <img src="${pageContext.request.contextPath}/static/wx/image/tx.jpeg">
-            <p><span>张某某</span>同学</p>
+            <p><span>${enguserEntity.userName}</span>同学</p>
         </div>
         <div class="info">
             <div class="info_item">
                 <div>当前日期</div>
-                <div>2019/08/15</div>
+                <div><fmt:formatDate value="${enguserEntity.nowDate}" pattern="yyyy/MM/dd"/></div>
             </div>
             <div class="info_item">
                 <div>学习卡号</div>
-                <div>22365454</div>
+                <div>ZHS${enguserEntity.numNo}</div>
             </div>
             <div class="info_item">
                 <div>开卡日期</div>
-                <div>2019/08/12</div>
+                <div><fmt:formatDate value="${enguserEntity.createDate}" pattern="yyyy/MM/dd"/></div>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
         <div class="bg_title"> 综述</div>
         <div class="bg_item">
             <ul>
-                <li>共开通<span>3</span>本课程</li>
+                <li>共开通<span>${enguserEntity.courseNum}</span>本课程</li>
                 <li class="hz_item">
                     <p>学习单词</p>
                     <span>3</span>

@@ -52,7 +52,7 @@
                 success:function (data) {
                    if (data.code==1){
                        //操作成功
-                       window.location.href="${pageContext.request.contextPath}/wx/Common/toIndex"
+                       window.location.href="${pageContext.request.contextPath}/wx/Common/toIndex/"+data.data.id;
                    }else {
                        alert(data.msg);
                    }
