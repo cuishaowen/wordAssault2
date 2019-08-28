@@ -1,6 +1,7 @@
 package com.thinkgem.jeesite.modules.wx.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class enguserEntity {
     private String id;//id
@@ -10,6 +11,16 @@ public class enguserEntity {
     private int courseNum;//开通课程数目
     //当前日期
     private Date nowDate=new Date();
+
+    private List<courseInfoEntity> courseInfoEntityList;//该学员的所有课程学习信息
+
+    public List<courseInfoEntity> getCourseInfoEntityList() {
+        return courseInfoEntityList;
+    }
+
+    public void setCourseInfoEntityList(List<courseInfoEntity> courseInfoEntityList) {
+        this.courseInfoEntityList = courseInfoEntityList;
+    }
 
     public String getId() {
         return id;

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.modules.course.entity.Course;
@@ -169,5 +170,9 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 	@Transactional(readOnly = false)
     public enguserEntity getEntityByUserId(String id) {
 		return enguserDao.getEntityByUserId(id);
+    }
+
+    public List<Map<String,String>> findCourseMapById(String id) {
+		return enguserDao.findCourseMapById(id);
     }
 }

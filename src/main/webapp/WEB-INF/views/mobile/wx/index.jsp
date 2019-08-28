@@ -38,24 +38,50 @@
         </div>
     </div>
     <div class="blank"></div>
+    <%--<div class="block_item">--%>
+        <%--<div class="bg_title"> 综述</div>--%>
+        <%--<div class="bg_item">--%>
+            <%--<ul>--%>
+                <%--<li>共开通<span>${enguserEntity.courseNum}</span>本课程</li>--%>
+                <%--<li class="hz_item">--%>
+                    <%--<p>学习单词</p>--%>
+                    <%--<span>3</span>--%>
+                <%--</li>--%>
+                <%--<li class="hz_item">--%>
+                    <%--<p>生疏单词</p>--%>
+                    <%--<span>3</span>--%>
+                <%--</li>--%>
+                <%--<li class="hz_item">--%>
+                    <%--<p>攻克生词</p>--%>
+                    <%--<span>3</span>--%>
+                <%--</li>--%>
+            <%--</ul>--%>
+        <%--</div>--%>
+    <%--</div>--%>
     <div class="block_item">
-        <div class="bg_title"> 综述</div>
+        <div class="bg_title"> <span class="number">${enguserEntity.courseNum}</span>门课程详情</div>
         <div class="bg_item">
-            <ul>
-                <li>共开通<span>${enguserEntity.courseNum}</span>本课程</li>
-                <li class="hz_item">
-                    <p>学习单词</p>
-                    <span>3</span>
-                </li>
-                <li class="hz_item">
-                    <p>生疏单词</p>
-                    <span>3</span>
-                </li>
-                <li class="hz_item">
-                    <p>攻克生词</p>
-                    <span>3</span>
-                </li>
-            </ul>
+            <div class="list newlist">
+                <span>课本名称</span>
+                <span>学习情况</span>
+            </div>
+            <c:forEach var="course" items="${enguserEntity.courseInfoEntityList}">
+                <div class="list firt_list">
+                    <span>${course.courseName}</span>
+                    <span>
+                        本书已学单词：${course.completeword}；
+                        未学单词：${course.waitLearningword}；
+                        难记词汇：${course.courseHardWord}；
+                        熟词：${course.skilledWord}；
+                        备忘单词：${course.strengthenMemoryWord}；
+                        已消灭生词：${course.killCourseHard}
+                    </span>
+                </div>
+            </c:forEach>
+            <%--<div class="list firt_list">--%>
+                <%--<span>初中体验课</span>--%>
+                <%--<span>本书已学单词：12；未学单词：12；现有生词：12；熟词：12；备忘单词：12；已消灭生词：12</span>--%>
+            <%--</div>--%>
         </div>
     </div>
     <div class="block_item">
@@ -78,23 +104,7 @@
             </div>
         </div>
     </div>
-    <div class="block_item">
-        <div class="bg_title"> 课程详情</div>
-        <div class="bg_item">
-            <div class="list newlist">
-                <span>课本名称</span>
-                <span>学习情况</span>
-            </div>
-            <div class="list firt_list">
-                <span>初中体验课</span>
-                <span>本书已学单词：12；未学单词：12；现有生词：12；熟词：12；备忘单词：12；已消灭生词：12</span>
-            </div>
-            <div class="list firt_list">
-                <span>初中体验课</span>
-                <span>本书已学单词：12；未学单词：12；现有生词：12；熟词：12；备忘单词：12；已消灭生词：12</span>
-            </div>
-        </div>
-    </div>
+
     <div class="block_item">
         <div class="bg_title"> 学习单词数量（近7天）</div>
         <div class="bg_item">

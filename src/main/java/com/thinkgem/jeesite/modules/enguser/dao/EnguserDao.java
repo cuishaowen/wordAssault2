@@ -9,6 +9,9 @@ import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
 import com.thinkgem.jeesite.modules.wx.pojo.enguserEntity;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 用户DAO接口
  * @author cuisw
@@ -22,4 +25,6 @@ public interface EnguserDao extends CrudDao<Enguser> {
     public Enguser getEnguser(@Param("loginName") String loginName, @Param("password") String password);
 
     enguserEntity getEntityByUserId(@Param("id")String id);
+
+    List<Map<String,String>> findCourseMapById(@Param("id")String id);
 }

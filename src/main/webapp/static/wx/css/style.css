@@ -25,6 +25,7 @@ html,body{padding: 0; margin: 0; height: 100%;}
 .bg_item{border-radius: 10px; box-shadow: 2px 2px 5px #ddd; background-color: #fff; }
 .bg_item ul{padding: 0; margin: 0;}
 .bg_item ul li{list-style: none;padding: 10px; border-bottom: 1px solid #ddd;}
+.bg_item ul  span{color: #F34925; padding: 0 5px; font-weight: 700; font-size: 18px;}
 .bg_item ul li span{color: #F34925; padding: 0 5px; font-weight: 700; font-size: 18px;}
 .hz_item{display: flex; justify-content: space-between; align-items: center;}
 .hz_item p{margin: 0;}
@@ -32,9 +33,7 @@ html,body{padding: 0; margin: 0; height: 100%;}
 .bg_item .list:first-child{background-color: #D0EAF3;}
 .bg_item .firt_list span:first-child{width: 180px;}
 .bg_item .newlist span:last-child{flex: 1; text-align: center;}
-
-
-
+.number{color: #F34925; padding: 0 5px; font-weight: 700; font-size: 18px;}
 
 @media screen and (max-width: 375px) {
     .loginbox{width: 320px; margin-left: -160px;}

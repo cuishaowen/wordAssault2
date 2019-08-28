@@ -35,6 +35,24 @@
 	<sql id="enguserJoins">
 	</sql>
 
+	<select id="getEntityByUserId" resultMap="enguserEntity">
+		SELECT a.ID_,
+		a.NAME_,
+		a.CREATE_DATE_,
+		a.NUM_,
+		(select count(1) from user_course uc where uc.USER_ID_ = #{id}) as course_num
+		from enguser a WHERE a.ID_=#{id}
+	</select>
+
+	<select id="findCourseMapById" resultType="Map">
+		SELECT a.NAME_ as courseName,b.COURSE_ID_ as courseId
+		from course a,user_course b
+		WHERE
+		a.ID_=b.COURSE_ID_
+		AND
+		b.USER_ID_=#{id}
+	</select>
+
 	<select id="getEnguser" resultType="Enguser">
 		SELECT
 		<include refid="enguserColumns"/>
@@ -99,14 +117,7 @@
 	</select>
 
 
-	<select id="getEntityByUserId" resultMap="enguserEntity">
-		SELECT a.ID_,
-		a.NAME_,
-		a.CREATE_DATE_,
-		a.NUM_,
-		(select count(1) from user_course uc where uc.USER_ID_ = #{id}) as course_num
-		from enguser a WHERE a.ID_=#{id}
-	</select>
+
 
 	<insert id="insert">
 		INSERT INTO enguser(
