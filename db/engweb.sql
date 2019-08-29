@@ -21,6 +21,8 @@ create table enguser
     UPDATE_DATE_ datetime null comment '修改时间',
     REMARKS_ varchar(255) null comment '备注',
     DEL_FLAG_ char(1) null comment '删除标识 1 正常 2 删除',
+    LOGIN_TIME_  int               null comment '登录次数',
+    NUM_         int default 12530 null comment '编号',
     BLANK_ONE_ text null comment '预留字段1',
     BLANK_TWO_ text null comment '预留字段2',
     constraint enguser_pk
@@ -29,6 +31,57 @@ create table enguser
     ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 -- ----------------------------
 --  Records of  enguser
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for errorExplain
+-- ----------------------------
+DROP TABLE IF EXISTS `everyday_memory_word`;
+create table everyday_memory_word
+(
+    ID_          varchar(64)  not null comment '每日记忆单词'
+        primary key,
+    EVERYDAY_    date         not null comment '每日日期',
+    USER_ID_     varchar(64)  null comment '用户id',
+    COURSE_ID_   varchar(64)  null comment '课程id',
+    CHAPTER_ID_  varchar(64)  null comment '章节id',
+    WORD_ID_     varchar(64)  null comment '单词id',
+    CREATE_DATE_ datetime     null comment '创建时间',
+    UPDATE_DATE_ datetime     null comment '修改时间',
+    REMARKS_     varchar(255) null comment '备注',
+    DEL_FLAG_    char         null comment '删除标识 1 正常 2 删除',
+    BLANK_ONE_   text         null,
+    BLANK_TWO_   text         null
+)
+    comment '每日记忆表';
+
+-- ----------------------------
+--  Records of  everyday_memory_word
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for enguser_option
+-- ----------------------------
+create table enguser_option
+(
+    ID_                 varchar(64)  not null comment '用户操作表id'
+        primary key,
+    USER_ID_            varchar(64)  null comment '用户id',
+    LOGIN_IN_TIME_      datetime     null comment '登入时间',
+    LOGIN_OUT_TIME_     datetime     null comment '登出时间',
+    CURRENT_TIME_       date         null comment '当前时间',
+    AUTO_LOGIN_OUT_     char         null comment 'T 是 F 不是',
+    CURRENT_STUDY_TIME_ int(5)       null comment '本次学习时间',
+    CREATE_DATE_        datetime     null comment '创建时间',
+    UPDATE_DATE_        datetime     null comment '修改时间',
+    REMARKS_            varchar(255) null comment '备注',
+    DEL_FLAG_           char         null comment '删除标识 1 正常 2 删除',
+    BLANK_ONE_          text         null,
+    BLANK_TWO_          text         null
+)
+    comment '用户操作表';
+-- ----------------------------
+--  Records of  enguser_option
 -- ----------------------------
 
 -- ----------------------------
