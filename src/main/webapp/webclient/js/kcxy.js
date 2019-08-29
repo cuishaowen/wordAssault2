@@ -29,26 +29,6 @@ function chapterWord(){
         )
     }
 }
-
-/**
- *  获取用户该章节下所有的单词信息
- */
-function getUserChapterWords() {
-    var url = getContextPath() + '/userchapterword/getUserChapterWordList';
-    var chapterId = GetQueryString("chapterId");
-    var data = {};
-    data.engUserId = sessionId;
-    data.chapterId = chapterId;
-    $.post(
-        url,
-        data,
-        function (res) {
-            u.setStorage('userChapterWords',res);
-            console.log('userChapterWords',res);
-        }
-    )
-}
-
 // 获取当前操作对象
 function getUserChapterWord(){
     var result = u.getStorage('result');
@@ -61,7 +41,6 @@ function getUserChapterWord(){
         }
     }
 }
-
 // 是否生词
 function HardWord() {
     userChapterWord.studyStatus = '2';
@@ -80,28 +59,6 @@ function alreadyLearn() {
     return userChapterWord;
 }
 
-function updateWord(userChapterWord) {
-    var url = getContextPath() + '/userchapterword/updateWord';
-    var data = {};
-    data.id = userChapterWord.id;
-    data.chapterId = userChapterWord.chapterId;
-    data.courseId = userChapterWord.courseId;
-    data.wordId = userChapterWord.wordId;
-    data.engUserId = userChapterWord.engUserId;
-    data.studyStatus = userChapterWord.studyStatus;
-    data.wrongTime = userChapterWord.wrongTime;
-    data.strangeWord = userChapterWord.strangeWord;
-    data.skilledWord = userChapterWord.skilledWord;
-    data.isMemo = userChapterWord.isMemo;
-    console.log('update:',userChapterWord);
-    $.post(
-        url,
-        data,
-        function (res) {
-            console.log('updateUserChapterWord:','success');
-        }
-    )
-}
 
 chapterWord();
 getUserChapterWords();

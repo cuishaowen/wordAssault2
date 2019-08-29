@@ -26,8 +26,8 @@ function getContextPath() {
     // var index = pathName.substr(1).indexOf("/");
     // var result = pathName.substr(0, index + 1);
     // return "http://192.168.1.24:8082/article";
-    // return "http://localhost:8081/wordassault";  // 开发
-    return "http://do.anssy.com/wordassault"    // 生产
+    return "http://localhost:8081/wordassault";  // 开发
+    // return "http://do.anssy.com/wordassault"    // 生产
 }
 
 //获取路径中的参数
