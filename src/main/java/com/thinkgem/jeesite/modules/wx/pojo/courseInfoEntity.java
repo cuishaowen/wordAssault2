@@ -11,7 +11,7 @@ public class courseInfoEntity implements Serializable {
     private String strengthenMemoryWord;//备忘词汇
     private String killCourseHard;//消灭词汇
     private String courseHardWord;//难记词汇
-    
+
     public String getCourseName() {
         return courseName;
     }

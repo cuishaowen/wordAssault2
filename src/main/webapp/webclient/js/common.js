@@ -30,6 +30,7 @@ $.ajax({
 
 // 用户信息
 $('#userName').text(userName);
+$('#loginUserName').text(userName);
 
 // 已购买课程
 function alreadyPurchase() {

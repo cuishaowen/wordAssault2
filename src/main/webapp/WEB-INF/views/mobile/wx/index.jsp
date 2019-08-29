@@ -127,8 +127,8 @@
     var app = {};
     option = null;
     app.title = '柱状图分数划分';
-    var namedate = ['2019-07-21', '2019-07-22', '2019-07-23', '2019-07-24', '2019-07-25', '2019-07-26', '2019-07-27'];
-    var numdate = [10, 20, 30, 40, 50, 60, 100];
+    var namedate = ['2019-08-21', '2019-07-22', '2019-07-23', '2019-07-24', '2019-07-25', '2019-07-26', '2019-07-27'];
+    var numdate = [83, 20, 30, 40, 50, 60, 100];
     var colorlist = [];
     numdate.forEach(element => {
         if (element < 60) {
@@ -208,29 +208,14 @@
                 data: numdate,
                 itemStyle: {
                     normal: {
-                        // color: new echarts.graphic.LinearGradient(
-                        //     0, 0, 0, 1,
-                        //     [
-                        //         {offset: 1, color: 'red'},
-                        //         {offset: 0, color: 'orange'}
-                        //     ]
-                        // )
                         color: function (params) {
-                            // var colorList = colorlist;
-                            // return colorList[params.dataIndex];
                             var colorList = colorlist
-
                             var index = params.dataIndex;
-                            // if(params.dataIndex >= colorList.length){
-                            //         index=params.dataIndex-colorList.length;
-                            // }
                             return new echarts.graphic.LinearGradient(0, 0, 0, 1,
                                 [
                                     { offset: 1, color: colorList[index][0] },
                                     { offset: 0, color: colorList[index][1] }
                                 ]);
-
-
                         }
                     }
                 }

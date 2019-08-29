@@ -465,7 +465,9 @@ a.wordvoice {float: left;line-height: 23px;display: inline-block;width: 25px;hei
 .layui-bg-blue .layui-nav-bar, .layui-bg-blue .layui-nav-itemed:after, .layui-bg-blue .layui-this:after{background-color: transparent; }
 .layui-bg-blue .layui-this a{color: #fff !important;}
 .layui-bg-blue li a:hover{color: #000 !important;}
-.state{position: absolute; bottom: 0; display: flex; justify-content: flex-end; width: 830px; z-index: 999;}
+.state{
+    position: absolute; bottom: 0;
+    display: flex; justify-content: flex-end; width: 100%; z-index: 999;}
 .state div{display: flex; justify-content: space-around; align-items: center; margin: 10px;}
 .ico{ height: 15px; width: 15px;border-radius: 50%;}
 .ico1{ background-color: #43A3E8;}
@@ -497,7 +499,7 @@ a.wordvoice {float: left;line-height: 23px;display: inline-block;width: 25px;hei
 .right-top-border{right: 0px;top: 0px;}
 .right-bottom-border{left: 50%;bottom: 0px;}
 
-.dc-tab-content{padding-top: 30px;}
+/*.dc-tab-content{padding-top: 30px;}*/
 /*.dc_tab_item{position: relative;}*/
 .beizu{text-align: center; margin: 10px 0;}
 .beizu p{margin: 20px 0;}

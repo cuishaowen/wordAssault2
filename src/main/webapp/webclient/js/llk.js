@@ -25,10 +25,7 @@ var usedtime = 0;
 var bodypage = null;
 var music = true;
 
-$(document).ready(function () {
-    var audiomian = document.getElementById('bgaudio');
-    audiomian.play();
-})
+
 
 function lianliankan(data1, data2, t,tit_title) {
 
@@ -45,16 +42,6 @@ function lianliankan(data1, data2, t,tit_title) {
     main.width(document.body.scrollWidth);
 
     bodypage = $("<div id='pppp'></div>");
-
-    // var aud1 = $('<audio id="bgaudio"  src="' + path + 'component/llk/media/bg_music.mp3" style="display: none;" loop></audio>');
-    // aud1.addClass("audio_bg");
-    // var aud2 = $('<audio id="audio" controls="" src="' + path + 'component/llk/media/xaiochuyinxiao.mp3" style="display: none;"></audio>');
-    // aud2.addClass("audio_audio");
-    // var aud3 = $('<audio id="audiof" controls="" src="' + path + 'component/llk/media/false.mp3" style="display: none;"></audio>');
-    // aud3.addClass("audio_audiof");
-    // bodypage.append(aud1);
-    // bodypage.append(aud2);
-    // bodypage.append(aud3);
     var img1 = $('<img />');
     img1.addClass("jia");
     var img2 = $('<img />');
@@ -125,8 +112,7 @@ function two_char(n) {
     return n >= 10 ? n : "0" + n;
 }
 
-function getMin()
-{
+function getMin(){
     m = Math.floor(outtime / 60);
     if (m < 10) {
         m = '0 ' + m;
@@ -138,8 +124,7 @@ function getMin()
     return m;
 
 }
-function getSec()
-{
+function getSec(){
     s = outtime % 60;
     if (s < 10) {
         s = '0 ' + s;
@@ -168,8 +153,7 @@ function time_fun() {
     }, 1000);
 }
 
-function out()
-{
+function out(){
     clearInterval(timeInter111);
     $("#llk").remove();
 }
@@ -178,11 +162,6 @@ function gameover() {
     clearInterval(timeInter111);
 
     var html = ' <div class="over_1">游戏结束</div>';
-    // if ($('.fadeOut').length == list2.length * 2)
-    // { html += '<div class="over_2">太棒了，你已经全部选对了！</div>'; }
-    // else
-    // { html += '<div class="over_2">同学，要继续努力呀！</div>'; }
-
     html+=' <div class="over_split"></div>';
     html+='<div class="over_c">';
     html += '    <div class="over_img"></div>';
@@ -190,11 +169,9 @@ function gameover() {
     html+='    <div class="over_4">总点击次数<span>'+(rightcount+errorcount)+'</span>,点对<span>'+rightcount+'</span>次,点错<span>'+errorcount+'</span>次</div>';
     html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);">继续游戏</a> </div>';
     html+=' </div>';
-    // html+='<div class="over_5">';
-    // html+='    <input class="over_6" onclick="closewin()" type="button" />';
-    // html+='</div>';
 
     $('.container').html(html);
+
 }
 
 function init() {

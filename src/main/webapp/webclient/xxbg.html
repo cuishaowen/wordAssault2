@@ -35,9 +35,9 @@
     <li class="layui-nav-item"><a href="yftj.html" >语法突击</a></li>
     <li class="layui-nav-item layui-this"><a href="#">学习报告</a></li>
     <li class="layui-nav-item tc" lay-unselect="">
-        <a href="javascript:;">
-            <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
-            张三</a>
+        <a href="javascript:;" >
+            <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img" >
+            <strong id="loginUserName">张三</strong></a>
         <dl class="layui-nav-child">
             <dd><a href="jbsz.html">个人设置</a></dd>
             <dd><a href="Login.html">退出登陆</a></dd>
@@ -50,7 +50,7 @@
             <div class="tx">
                 <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
                 <div class="nickname">
-                    <strong>张三</strong>同学
+                    <strong id="userName">张三</strong>同学
                     <p>您是第<span class="red">44444</span>位学员</p>
                     <p>欢迎您第<span class="red">44444</span>次登陆系统</p>
                 </div>
@@ -141,6 +141,8 @@
 <script src="layui/layui.js"></script>
 <script src="js/jquery-2.1.4.js"></script>
 <script src="js/echarts.common.min.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
 <script>
 
     layui.use('element', function(){

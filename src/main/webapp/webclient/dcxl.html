@@ -42,7 +42,7 @@
     .dc-tab-title .dc_active .img1{background: url("images/xxbf2.png") no-repeat center; background-size: 100% 100%;}
     .dc-tab-title .dc_active .img2{background: url("images/dccg2.png") no-repeat center; background-size: 100% 100%;}
     .dc-tab-title .dc_active .img3{background: url("images/dchg1.png") no-repeat center; background-size: 100% 100%;}
-    .dc-tab-content{background-color: #f5f5f5;}
+    .dc-tab-content{background-color: #f5f5f5;overflow-y:auto;}
     .dc_tab_item{position: relative;}
     .dc_tab_item{min-height: calc(100% - 20px);}
     /*.layui-layer-title{background: url("images/dclltop.png") no-repeat center; background-size: 100% 100%; color: #fff !important; border-bottom: none !important;}*/
@@ -198,6 +198,7 @@
 <script src="../static/common/website.js"></script>
 <script src="js/common.js"></script>
 <script src="js/niceHover.js"></script>
+<script src="./js/dcxl.js"></script>
 <script>
     $(".xl_btn").niceHover({weight:2,color:"#167B74"});
 
@@ -225,6 +226,7 @@
         $('.gm').height($('.bg-left').height() - 300);
         $('.gm-kc').height($('.gm').height() - 71);
         $('.dc-tab-content').height($('.bg-right').height() - 300)
+        // $('.dc_tab_item').height($('.dc-tab-content').height()-55)
     };
     sp();
     window.onresize = sp;
@@ -326,5 +328,5 @@
 //    });
 
 </script>
-<script src="./js/dcxl.js"></script>
+
 </html>

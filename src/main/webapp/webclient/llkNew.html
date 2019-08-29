@@ -58,8 +58,8 @@
         <div class="bg-left">
             <div class="tx">
                 <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
-                <div class="nickname">
-                    <strong>张三</strong>同学
+                <div class="nickName">
+                    <strong id="userName">张三</strong>同学
                     <p>您是第<span class="red">44444</span>位学员</p>
                     <p>欢迎您第<span class="red">44444</span>次登陆系统</p>
                 </div>
@@ -100,7 +100,6 @@
                     <img class="jia" style="display: none;"><img class="sha" style="display: none;">
                     <div id="mytime"><span class="time" id="m">0 0</span><span style="margin-left: 3px;border:none;">:</span><span
                             class="time" id="s">2 7</span>
-
                     </div>
                     <div class="contain">
                         <div class="container">
@@ -131,14 +130,18 @@
         </div>
     </div>
 </div>
-
-
-
 </body>
 <script src="layui/layui.js"></script>
 <script src="js/jquery-2.1.4.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
 <script src="js/llk.js"></script>
 <script>
+    $(document).ready(function () {
+        var audiomian = document.getElementById('bgaudio');
+        audiomian.play();
+    })
+
     layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
         var form = layui.form
             , layer = layui.layer
@@ -171,16 +174,10 @@
         } else {
             gameover();
             clearInterval(timer);
-//            $('#mytime').text("时间结束");
         }
     }
 
     timer = setInterval("CountDown()", 1000);
-
-//    function closewin() {
-//        var index = parent.layer.getFrameIndex(window.name);
-//        parent.layer.close(index);
-//    }
 
 </script>
 </html>

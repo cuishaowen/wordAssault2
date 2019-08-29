@@ -50,7 +50,7 @@
             <div class="tx">
                 <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
                 <div class="nickname">
-                    <strong>张三</strong>同学
+                    <strong id="userName">张三</strong>同学
                     <p>您是第<span class="red">44444</span>位学员</p>
                     <p>欢迎您第<span class="red">44444</span>次登陆系统</p>
                 </div>
@@ -82,20 +82,6 @@
             </div>
            <div class="bg1">
                <form class="layui-form" action="">
-                   <!--<div class="layui-form-item" style="height:140px;">-->
-                       <!--<label class="layui-form-label" style="height:60px;">测试范围（单选）</label>-->
-                       <!--<div class="layui-input-block">-->
-                           <!--<button type="button" class="btn11">分册</button>-->
-                           <!--<button type="button" class="btn11">小学段</button>-->
-                           <!--<button type="button" class="btn11">初中段</button>-->
-                           <!--<button type="button" class="btn11">高中段</button>-->
-                           <!--<button type="button" class="btn11" disabled="disabled">大学段</button>-->
-                           <!--<button type="button" class="btn11" disabled="disabled">四级</button>-->
-                           <!--<button type="button" class="btn11" disabled="disabled">六级</button>-->
-                           <!--<button type="button" class="btn11" disabled="disabled">托福雅思</button>-->
-                       <!--</div>-->
-                   <!--</div>-->
-
                    <div class="layui-form-item">
                        <label class="layui-form-label">分册选择</label>
                        <div class="layui-input-block">
@@ -133,13 +119,6 @@
                        </div>
                    </div>
 
-                   <!--<div class="layui-form-item" style="height:60px;">-->
-                       <!--<label class="layui-form-label" style="height:60px;">题目数量（多选）</label>-->
-                       <!--<div class="layui-input-block">-->
-                           <!--<button type="button" class="btn11">100</button>-->
-                       <!--</div>-->
-                   <!--</div>-->
-
                    <div class="layui-form-item" style="height:60px;">
 
                        <div class="layui-input-block" >
@@ -154,6 +133,8 @@
 </body>
 <script src="layui/layui.js"></script>
 <script src="js/jquery-2.1.4.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
 <script>
     $(document).on('click','.gm-kc ul li',function(){
         $(this).css('background-color','#E7F5FC');
