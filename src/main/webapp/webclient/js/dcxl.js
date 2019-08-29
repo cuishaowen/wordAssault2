@@ -1,3 +1,21 @@
+// 点击进入不同的词汇分组页面
+$('#word-page').append(
+    '<div class="btn newbtn">\n' +
+    '    <div class="btn1"><a style="background-color: #FB5D74;" href="njch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 难记词汇</a></div>\n' +
+    '<!--<div class="btn1"><a href="javascript:void(0)" onclick="detail()"><img src="images/251.png" alt=""> 每日记忆</a></div>-->\n' +
+    '<div class="btn1"><a style="background-color: #C3BAAA;" href="mrjy.html?courseId='+ GetQueryString("courseId") +'" ><img src="images/251.png" alt=""> 每日记忆</a></div>\n' +
+    '<div class="btn1"><a style="background-color: #BCB3B0;" href="beiwang.html?courseId='+ GetQueryString("courseId") +'" ><img src="images/251.png" alt=""> 备忘词汇</a></div>\n' +
+    '\n' +
+    '</div>\n' +
+    '<div class="btn newbtn">\n' +
+    '    <div class="btn1"><a style="background-color: #9BC8CC;" href="sjch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 熟记词汇</a></div>\n' +
+    '<div class="btn1"><a style="background-color: #787F84;" href="wxch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 未学词汇</a></div>\n' +
+    '<div class="btn1"><a style="background-color: #AAC3AC;" href="jyhg.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 已学词汇</a></div>\n' +
+    '<span style="float:right;display: block;width:auto;height:43px;line-height: 43px;"></span>\n' +
+    '    </div>'
+);
+
+
 /**
  * 获取课程下的所有章节
  */

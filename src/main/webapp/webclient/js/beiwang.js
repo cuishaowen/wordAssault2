@@ -1,8 +1,5 @@
-/**
- * 获取生词
- */
 $(function() {
-    var url = getContextPath() + '/userchapterword/getCourseHard';
+    var url = getContextPath() + '/userchapterword/getSkilled';
     var data ={};
     data.courseId = GetQueryString("courseId");
     data.userId = sessionId;
@@ -10,7 +7,6 @@ $(function() {
         url,
         data,
         function (res) {
-            console.log('hardwords',res);
             for (i = 0; i < res.length; i++){
                 $('tbody').append('<tr>\n' +
                     '                        <td>\n' +
@@ -24,7 +20,6 @@ $(function() {
                     '                        <td>'+res[i].word.chinese+'</td>\n' +
                     '                    </tr>')
             }
-
         }
     )
 });

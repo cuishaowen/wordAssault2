@@ -32,6 +32,12 @@ public class UserChapterWordWebController {
         userChapterWordService.save(userChapterWord);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "getEveryDayWord")
+    public List<EverydayMemoryWord> getEveryWord(String userId, String courseId, String date){
+        return userChapterWordService.getEveryWord(userId, courseId, date);
+    }
+
     /**
      * 已学词汇
      * @param userId

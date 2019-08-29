@@ -4,8 +4,10 @@
 package com.thinkgem.jeesite.modules.userchapterword.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.chapterexample.entity.ChapterExample;
 import com.thinkgem.jeesite.modules.chapterexample.service.ChapterExampleService;
 import com.thinkgem.jeesite.modules.chapterword.service.ChapterWordService;
@@ -95,6 +97,24 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		return wordInformations;
 	}
 
+	// 获取每日单词
+	public List<EverydayMemoryWord> getEveryWord(String userId, String courseId, String date){
+		List<EverydayMemoryWord> everydayMemoryWords = new ArrayList<EverydayMemoryWord>();
+		UserChapterWord userChapterWord = new UserChapterWord();
+		Date newDate = DateUtils.parseDate(date);
+		userChapterWord.setCourseId(courseId);
+		userChapterWord.setEngUserId(userId);
+		userChapterWord.setUpdateDate(newDate);
+		List<UserChapterWord> userChapterWords = this.findList(userChapterWord);
+		for (UserChapterWord userChapterWordInf : userChapterWords){
+			EverydayMemoryWord everydayMemoryWord = new EverydayMemoryWord();
+			Word word = wordService.get(userChapterWordInf.getWordId());
+			everydayMemoryWord.setWord(word);
+			everydayMemoryWord.setUserChapterWord(userChapterWordInf);
+			everydayMemoryWords.add(everydayMemoryWord);
+		}
+		return everydayMemoryWords;
+	}
 
     // 难记词汇 如果错误两次以上 且依然被标记被生词
 	public List<HardWord> getCourseHardWord(String userId, String courseId){
