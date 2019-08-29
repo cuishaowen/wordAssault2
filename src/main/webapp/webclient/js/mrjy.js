@@ -1,17 +1,24 @@
-/**
- * 获取生词
- */
+
 $(function() {
-    var url = getContextPath() + '/userchapterword/getCourseHard';
-    var data ={};
+    var url = getContextPath() + '/userchapterword/getEveryDayWord';
+    var data = {};
     data.courseId = GetQueryString("courseId");
     data.userId = sessionId;
+    var myDate = new Date();
+    //获取当前年
+    var year=myDate.getFullYear();
+    //获取当前月
+    var month=myDate.getMonth()+1;
+    //获取当前日
+    var day=myDate.getDate();
+
+    var date = year + '-' + month + '-' + day;
+    data.date = date;
     $.post(
         url,
         data,
         function (res) {
-            console.log('hardwords',res);
-            for (i = 0; i < res.length; i++){
+            for (i = 0; i < res.length; i++) {
                 $('tbody').append('<tr>\n' +
                     '                        <td>\n' +
                     '                            <a class="yb" href="javascript:void(0)" onclick="detail1()">\n' + res[i].word.english +
@@ -20,11 +27,9 @@ $(function() {
                     '                                </audio>\n' +
                     '                            </a>\n' +
                     '                            </td>\n' +
-                    '                        <td>'+ res[i].word.phoneticTranscription + '</td>\n' +
+                    '                        <td>' + res[i].word.phoneticTranscription + '</td>\n' +
                     '                        <td>'+res[i].word.chinese+'</td>\n' +
                     '                    </tr>')
             }
-
-        }
-    )
+        });
 });

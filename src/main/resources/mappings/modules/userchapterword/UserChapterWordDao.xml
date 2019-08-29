@@ -64,6 +64,9 @@
 			<if test="isMemo != null and isMemo != ''">
 				AND a.is_memo_ = #{isMemo}
 			</if>
+			<if test="updateDate != null and updateDate != ''">
+				AND DATE_FORMAT(a.update_date_ , '%Y-%m-%d') = DATE_FORMAT(#{updateDate}, '%Y-%m-%d')
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

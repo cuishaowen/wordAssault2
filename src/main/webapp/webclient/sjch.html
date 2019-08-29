@@ -10,7 +10,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="format-detection" content="email=no" />
     <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
-    <title>难记词汇</title>
+    <title>熟记词汇</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -31,59 +31,58 @@
     }
 </style>
 <body>
-    <div class="dc">
+<div class="dc">
         <span class="layui-breadcrumb" style="display: block;height:40px;padding-left:15px;">
-  <a style="color:#333!important;">难记词汇</a>
+  <a style="color:#333!important;">熟记词汇</a>
   <a><cite>小学英语一</cite></a>
 </span>
-        <form class="layui-form" action="" style="background-color:rgba(255,255,255,0.5);height:480px;border-radius: 5px;padding-top:20px;">
+    <form class="layui-form" action="" style="background-color:rgba(255,255,255,0.5);height:480px;border-radius: 5px;padding-top:20px;">
         <div class="layui-form-item" style="width:94%;margin:0 auto;">
 
             <div class="layui-inline">
                 <a class="sub"  onclick="bofang()" style="margin:0 auto;float:inherit;">自动跟读</a>
             </div>
             <div class="layui-inline">
-                <a class="sub"  href="javascript:void(0)" onclick="detail()" style="margin:0 auto;float:inherit;">强化生词</a>
-            </div>
-            <div class="layui-inline">
-                <a class="sub"  href="javascript:void(0)" style="margin:0 auto;float:inherit;" onclick="detail()">消灭生词</a>
-            </div>
-            <div class="layui-inline">
-                <a class="sub"  href="javascript:void(0)" style="margin:0 auto;float:inherit;">导出生词</a>
+                <a class="sub"  href="javascript:void(0)" style="margin:0 auto;float:inherit;">移除</a>
             </div>
             <div class="layui-inline" style="float:right;height:43px;line-height: 43px;">
                 <div class="layui-input-inline">
-                  2019-07-19  共学习了4个词汇
+                    2019-07-19  共学习了4个词汇
                 </div>
             </div>
         </div>
 
-            <div class="table1">
-                <table class="layui-table">
-                    <colgroup>
-                        <col width="150">
-                        <col width="150">
-                        <col width="200">
-                        <col>
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>词汇</th>
-                        <th>音标</th>
-                        <th>中文释义</th>
-                    </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div id="demo0" style="text-align: right;margin-right:3%;"></div>
-        </form>
-    </div>
+        <div class="table1">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>词汇</th>
+                    <th>音标</th>
+                    <th>中文释义</th>
+                    <!--<th>轮</th>-->
+                    <!--<th>总</th>-->
+                    <!--<th>错</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div id="demo0" style="text-align: right;margin-right:3%;"></div>
+    </form>
+</div>
 </body>
 <script src="layui/layui.js"></script>
 <script src="js/jquery-2.1.4.js"></script>
 <script src="../static/common/website.js"></script>
 <script src="./js/common.js"></script>
+<script src="js/sjch.js"></script>
 <script>
     function sp(){
         $('.dc').height($(window).height()-40);
@@ -96,7 +95,7 @@
         var d = $('.layui-form').height();
         $('.table1').height(d-148)
     }
-   sp();
+    sp();
     window.onresize = sp;
     layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer','element'], function () {
         var form = layui.form
@@ -122,14 +121,12 @@
         });
     });
 
-    function detail() {
-        var idx = layer.open({
-            title: '看词选义',
-            type: 2,
-            area: ['940px', '500px'],
-            content: 'kcxy.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-        });
-    }
+    //    $(document).on('click','.yb',function(){
+    //        var d = $(this).find('.voicebox source').attr('src');
+    //        new Audio(d).play();
+    //
+    //    })
+
     function detail1() {
         var idx = layer.open({
             title: '单词查询',
@@ -141,17 +138,15 @@
     var timeoutindex;
     var index =0;
     function bofang(){
-        timeoutindex=  setInterval('bobo()',1500);
+        timeoutindex=  setInterval('bobo()',1000);
     }
     function bobo(){
 //        $('.sub').unbind('click');
 
         $('.sub').removeAttr('onclick');
         index++;
-        var linkfy = $('.yb').eq(index - 1).parents("tr");
-        $(linkfy).css("backgroundColor", "#f2f2f2");
-        $(linkfy).siblings('tr').css("backgroundColor", "#fff");
-        var a = $('.voicebox source').eq(index - 1).attr("src");
+
+        var a = $('.voicebox source').eq(index-1).attr("src");
         var audio=new Audio(a);
         audio.play();
         console.log(index-1);
@@ -160,9 +155,9 @@
             index = 0;
             clearInterval(timeoutindex);
         }
+
+
     }
 
-
 </script>
-<script src="js/njch.js"></script>
 </html>
