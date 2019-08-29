@@ -104,16 +104,16 @@
                                     <td>前元音</td>
                                     <td><a class="a1">[iː]</a></td>
                                     <td><a class="a2">[i]</a></td>
-                                    <td><a>[e]</a></td>
-                                    <td><a>[æ]</a></td>
+                                    <td><a class="a3">[e]</a></td>
+                                    <td><a class="a4">[æ]</a></td>
                                     <td><a></a></td>
                                 </tr>
                                 <tr>
                                     <td >中元音</td>
                                     <td><a></a></td>
-                                    <td><a>[əː]</a></td>
-                                    <td><a>[ə]</a></td>
-                                    <td><a>[ʌ]</a></td>
+                                    <td><a class="b1">[əː]</a></td>
+                                    <td><a class="b2">[ə]</a></td>
+                                    <td><a class="b3">[ʌ]</a></td>
                                     <td><a></a></td>
                                 </tr>
                                 <tr>
@@ -352,11 +352,32 @@
     });
 
     $(document).on('click','.a1',function(){
-        new Audio('音频/i-sound.mp3').play();
+        // alert("ss")
+        new Audio('videos/i-sound2.mp3').play();
     });
 
     $(document).on('click','.a2',function(){
-        new Audio('音频/i-sound2.mp3').play();
+        new Audio('videos/i-sound.mp3').play();
+    });
+
+    $(document).on('click','.a3',function(){
+        new Audio('videos/e-sound.mp3').play();
+    });
+
+    $(document).on('click','.a4',function(){
+        new Audio('videos/an-sound.mp3').play();
+    });
+
+    $(document).on('click','.b1',function(){
+        new Audio('videos/er-sound.mp3').play();
+    });
+
+    $(document).on('click','.b2',function(){
+        new Audio('videos/e^-sound.mp3').play();
+    });
+
+    $(document).on('click','.b3',function(){
+        new Audio('videos/^-sound.mp3').play();
     });
 
 </script>
