@@ -220,10 +220,13 @@ function getSkilled() {
     )
 }
 
-getCourseHard();
-getKillCourseHard();
-getStrengthenMemoryWord();
-getSkilled();
-waitLearn();
-addLoop();
-completeWord();
+function loadPage() {
+    getCourseHard();
+    getKillCourseHard();
+    getStrengthenMemoryWord();
+    getSkilled();
+    waitLearn();
+    addLoop();
+    completeWord();
+}
+loadPage();

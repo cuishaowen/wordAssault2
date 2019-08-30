@@ -1,11 +1,12 @@
 // 公共变量
 u.setStorage('result','');
 var result = [];
-var userChapterWord = {};
+// 存放错题
+var errorSubjects = [];
 // 设置一个公共变量，用于遍历数组
 var pageNum = 0;
-// 请求后台数据，并将数据存储进缓存
-function chapterWord(){
+// 请求后台数据加载选择题，并将数据存储进缓存
+$(function(){
     var chapterId = GetQueryString("chapterId");
     var url = getContextPath() + '/userchapterword/getWordInformation';
     var data = {};
@@ -22,17 +23,24 @@ function chapterWord(){
             function(res) {
                 // 设置缓存
                 u.setStorage('result',res);
+                result = res;
                 console.log('result',u.getStorage('result'));
-                page(res);
+                pageOne(res);
                 // page2(res);
             }
         )
     }
-}
+});
 // 获取当前操作对象
 function getUserChapterWord(){
     var result = u.getStorage('result');
-    var wordId = result[pageNum].word.id;
+    var wordId = '';
+    // var wordId = result[pageNum].word.id;
+    if (pageNum < result.length){
+        wordId = result[pageNum].word.id;
+    }else{
+        wordId = errorSubjects[0].word.id;
+    }
     var userChapterWords = u.getStorage('userChapterWords');
     console.log('getUserChapterWordRes:',userChapterWords);
     for (i = 0; i < userChapterWords.length; i++){
@@ -43,6 +51,7 @@ function getUserChapterWord(){
 }
 // 是否生词
 function HardWord() {
+    var userChapterWord = getUserChapterWord();
     userChapterWord.studyStatus = '2';
     userChapterWord.strangeWord = 'T';
     if (userChapterWord.wrongTime == null || userChapterWord.wrongTime == undefined || userChapterWord.wrongTime == ''){
@@ -51,29 +60,25 @@ function HardWord() {
     userChapterWord.wrongTime += 1;
     return userChapterWord;
 }
-
-// 学习状态
+// 已学
 function alreadyLearn() {
     var userChapterWord = getUserChapterWord();
     userChapterWord.studyStatus = '2';
     return userChapterWord;
 }
-
-
-chapterWord();
 getUserChapterWords();
-
 // ----------------------------------------------------第一页逻辑--------------------------------------------
 /**
  * 加载第一个页面数据
  * @param res
  */
-function page(res) {
-    var result = u.getStorage('result');
-    if (result == ''){
-        result = res;
+function pageOne(res) {
+    var object = {};
+    if (pageNum < result.length){
+        object = result[pageNum];
+    }else{
+        object = res;
     }
-    var object = result[pageNum];
     console.log('object:',object);
     var english = object.word.english;
     var phoneticTranscription = object.word.phoneticTranscription;
@@ -82,10 +87,11 @@ function page(res) {
     var exampleEng = exampleArr[0];
     var exampleCh = exampleArr[1];
     var errorCh = object.errorCh;
-    errorCh.push(chinese);
+    if (pageNum < result.length){
+        errorCh.push(chinese);
+    }
     shuffle(errorCh);
     $('.da').hide();
-    userChapterWord = getUserChapterWord();
     $('#ch-right').text(chinese);
     $('#eng-word').text(english);
     $('#eng-right').text(chinese);
@@ -131,29 +137,42 @@ function nextSubject(select) {
     var right = $('#ch-right').text();
     if (select == right){
         xuanyiAnsRight();
-        $('#nextsub').on('click',function(){
-            $(this).hide();
-            alreadyLearn();
-            updateWord(userChapterWord);
-        });
+        radioDisabledTrue();
+        var userChapterWord = alreadyLearn();
+        updateWord(userChapterWord);
+        if (pageNum > result.length) {
+            errorSubjects.shift();
+            console.log('errorSubjectsRight',errorSubjects);
+        }
     }else{
-        $('#radio-1').attr('disabled',true);
-        $('#radio-2').attr('disabled',true);
-        $('#radio-3').attr('disabled',true);
-        $('#radio-4').attr('disabled',true);
         xuanyiAnsError();
-        $('#nextsub').on('click',function(){
-            $(this).hide();
-            alreadyLearn();
-            updateWord(userChapterWord);
-        });
+        radioDisabledTrue();
+        if (pageNum < result.length) {
+            errorSubjects.push(result[pageNum]);
+        }else {
+            errorSubjects.push(errorSubjects[0]);
+            errorSubjects.shift();
+            console.log('errorSubjectsError',errorSubjects);
+        }
+        var userChapterWord = HardWord();
+        updateWord(userChapterWord);
     }
 }
-/**
- * 点击进入下一题
- */
-
-
+$('#nextsub').on('click',function(){
+    pageNum++;
+    console.log('pageNum',pageNum);
+    $(this).hide();
+    radioDisabledFalse();
+    var res = result[pageNum];
+    if (pageNum < result.length) {
+        pageOne(res);
+    }else {
+        if (errorSubjects.length > 0){
+            pageOne(errorSubjects[0]);
+            console.log('errorSubjects0000:',errorSubjects[0]);
+        }
+    }
+});
 // 答对
 function xuanyiAnsRight() {
     $('.da').show();
@@ -167,6 +186,22 @@ function xuanyiAnsError(){
     $('.da span').hide();
     $('.da b').show();
     $('#nextsub').show();
+}
+
+
+// btn 设置不可点击
+function radioDisabledTrue(){
+    $('#radio-1').attr('disabled',true);
+    $('#radio-2').attr('disabled',true);
+    $('#radio-3').attr('disabled',true);
+    $('#radio-4').attr('disabled',true);
+}
+// btn 设置可以点击
+function radioDisabledFalse(){
+    $('#radio-1').attr('disabled',false);
+    $('#radio-2').attr('disabled',false);
+    $('#radio-3').attr('disabled',false);
+    $('#radio-4').attr('disabled',false);
 }
 //    ------------------------------------------------- 第二页逻辑  --------------------------------------------------
 /**
@@ -223,7 +258,7 @@ $('#aaaa').on('keypress',function(e){
             updateWord(userChapterWord);
             nextPage();
         } else {
-            pinxieAnsShow();
+            pinxieAnsError();
             $('#aaaa').attr('disabled', true);
             $('#next-page').show();
         }
@@ -259,17 +294,12 @@ function nextPage(){
     var result = u.getStorage('result');
     var res = result[pageNum];
     console.log('nextPageRes:',res);
-    page(res);
     page2(res);
-    $('#radio-1').attr('disabled',false);
-    $('#radio-2').attr('disabled',false);
-    $('#radio-3').attr('disabled',false);
-    $('#radio-4').attr('disabled',false);
     $('.da span').hide();
     $('.da b').hide();
     $('#pinxieBox').hide();
     $('#xuanyiBox').show();
-    pinxieAnsHide();
+    pinxieAnsError();
     $('#nextsub').hide();
     $('#next-page').hide();
 }
