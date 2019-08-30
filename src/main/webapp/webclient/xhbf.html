@@ -322,7 +322,6 @@
             audio.play();
             if (ii <= 0) {
                 $('.kt').attr("disabled", true);
-
             }
             getStatus();
         }
@@ -433,6 +432,7 @@
         var userChapterWords = u.getStorage('userChapterWords');
         for (i = 0; i < userChapterWords.length; i++){
             if (wordId == userChapterWords[i].wordId) {
+                console.log('userchapterword:',userChapterWords[i]);
                 return userChapterWords[i];
             }
         }

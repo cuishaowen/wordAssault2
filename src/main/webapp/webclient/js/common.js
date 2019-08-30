@@ -137,6 +137,7 @@ function updateWord(userChapterWord) {
         url,
         data,
         function (res) {
+            getUserChapterWords();
             console.log('updateUserChapterWord:','success');
         }
     )

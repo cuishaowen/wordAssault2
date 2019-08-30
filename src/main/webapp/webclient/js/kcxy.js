@@ -132,7 +132,7 @@ function nextSubject(select) {
     if (select == right){
         $('#xuanyiBox').hide();
         $('#pinxieBox').show();
-        var userChapterWord = alreadyLearn();
+        alreadyLearn();
         console.log('userChapterWord',userChapterWord);
         updateWord(userChapterWord);
     }else{
