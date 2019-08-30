@@ -115,17 +115,7 @@
                                         <th>刷题测试成绩</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>******</td>
-                                        <td> 本书已学单词：12；未学单词：12；现有生词：12；熟词：12；备忘单词：12</td>
-                                        <td>******</td>
-                                    </tr>
-                                    <tr>
-                                        <td>******</td>
-                                        <td> 本书已学单词：12；未学单词：12；现有生词：12；熟词：12；备忘单词：12</td>
-                                        <td>******</td>
-                                    </tr>
+                                    <tbody id="tbody">
                                     </tbody>
                                 </table>
                             </div>
@@ -474,5 +464,39 @@
         $(".layui-tab-title  li:nth-child(2) img").attr("src", "images/11-1.png");
         $(".layui-tab-title  li:nth-child(3) img").attr("src", "images/12.png");
     });
+</script>
+
+<script>
+
+    getCourseInfo();
+    //获取该用户课程详情
+    function getCourseInfo() {
+        var tbodyHtml="";
+        $.ajax({
+            type:'post',
+            url: getContextPath() +"/enguserOption/enguserOption/getCourseInfo",
+            cache:false,
+            async:false,
+            data:{},
+            success:function (data) {
+                if (data.code==0){
+
+                    tbodyHtml="<tr>" +
+                        "<td>******</td>" +
+                        "<td> 本书已学单词：12；未学单词：12；现有生词：12；熟词：12；备忘单词：12</td>" +
+                        "<td>******</td>" +
+                        "</tr>";
+
+                    $("#tbody").append(tbodyHtml);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error:function () {
+                alert("操作失败,请练习客服");
+            }
+        });
+    }
+
 </script>
 </html>
