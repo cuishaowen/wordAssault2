@@ -26,7 +26,7 @@ function getContextPath() {
     // var index = pathName.substr(1).indexOf("/");
     // var result = pathName.substr(0, index + 1);
     // return "http://192.168.1.24:8082/article";
-    return "http://localhost:8081/wordassault";  // 开发
+    return "http://localhost:8080/wordassault";  // 开发
     // return "http://do.anssy.com/wordassault"    // 生产
 }
 
@@ -74,13 +74,6 @@ function updateInfo(url) {
     window.location.href = url;
 }
 
-//登出系统
-function loginOut() {
-    layer.confirm("确定要退出系统吗？",function () {
-        window.sessionStorage.clear();
-        window.location.href = 'login.html';
-    });
-}
 
 //隐藏手机号中间几位
 function getHideNum(num){

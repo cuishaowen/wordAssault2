@@ -7,10 +7,10 @@ public class courseInfoEntity implements Serializable {
     private String courseName;//课程名称
     private String completeword;//已学词汇
     private String waitLearningword;//未学词汇
-    private String skilledWord;//熟记词汇
+    private String skilledWord;//熟词集
     private String strengthenMemoryWord;//备忘词汇
     private String killCourseHard;//消灭词汇
-    private String courseHardWord;//难记词汇
+    private String courseHardWord;//生词本
 
     public String getCourseName() {
         return courseName;

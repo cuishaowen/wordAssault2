@@ -11,9 +11,12 @@ function GetQueryString(name) {
 var urlId = GetQueryString("id");
 console.log(urlId);
 
-var loginName = "";
-var sessionId= "";
-var userName = "";
+var loginName = "";//登录名字
+var sessionId= "";//id
+var userName = "";//昵称
+var num = "";//编号
+var loginTimes = "";//登录次数
+var optionsId = "";//操作对象id
 $.ajax({
     "url" : getContextPath() +"/enguser/enguser/getUserSession",
     "method" : "POST",
@@ -25,12 +28,40 @@ $.ajax({
         loginName = data.loginName;
         sessionId = data.id;
         userName = data.name;
+        num = data.num;
+        loginTimes = data.loginTimes;
+        optionsId = data.optionsId;
     }
 });
 
 // 用户信息
 $('#userName').text(userName);
 $('#loginUserName').text(userName);
+$('#num').text(num);
+$('#loginTimes').text(loginTimes);
+
+
+//登出系统
+function loginOut() {
+    layer.confirm("确定要退出系统吗？",function () {
+        //先记录操作option数据，再清空缓存跳转登录页面
+        var url = getContextPath() + '/enguser/enguser/loginOut?optionsId=' + optionsId;
+        $.post(
+            url,
+            function (data) {
+                if (data.code==0){
+                    //退出成功
+                    window.sessionStorage.clear();//清空session
+                    window.location.href="Login.html";
+                }else {
+                    alert(data.msg)
+                    window.location.reload();
+                }
+            }
+        )
+
+    });
+}
 
 // 已购买课程
 function alreadyPurchase() {
@@ -69,6 +100,7 @@ var uzStorage = function () {
 };
 //定义全局变量u
 var u = {};
+
 //设置缓存
 u.setStorage = function (key, value) {
     var v = value;
@@ -83,6 +115,7 @@ u.setStorage = function (key, value) {
         ls.setItem(key, v);
     }
 };
+
 //获取缓存
 u.getStorage = function (key) {
     var ls = uzStorage();

@@ -29,7 +29,11 @@
 		<include refid="enguserOptionJoins"/>
 		WHERE a.id_ = #{id}
 	</select>
-	
+
+	<select id="getLoginTimes" resultType="Integer">
+		SELECT COUNT(1) from enguser_option a WHERE a.USER_ID_=#{id}
+	</select>
+
 	<select id="findList" resultType="EnguserOption">
 		SELECT 
 			<include refid="enguserOptionColumns"/>

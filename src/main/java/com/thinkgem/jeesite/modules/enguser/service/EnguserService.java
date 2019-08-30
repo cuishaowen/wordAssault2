@@ -130,6 +130,7 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 	// 为校长新增用户,并给每一个用户新增体验课程
 	@Transactional(readOnly = false)
 	public void insertEnguserForUser(String userId, String loginName, int insertNum){
+		//查询所有学生用户个数
 		for (int i = 0; i < insertNum; i++){
 			Enguser enguser = new Enguser();
 			String id = IdGen.uuid();
@@ -142,6 +143,14 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 			enguser.setId(id);
 			enguser.setCreateDate(new Date());
 			enguser.setUpdateDate(new Date());
+
+			Integer num=this.getEngUserCount()+1;
+			if (num==null){
+				num=100001;
+			}
+			enguser.setNum(num.toString());//产生编号
+			enguser.setMp3Type("2");//默认美式发音
+			enguser.setjPanType("1");//默认软件盘
 			enguserDao.insert(enguser);
 
 			// 新增校长用户关联表
@@ -168,6 +177,10 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 				userCourseService.save(userCourse);
 			}
 		}
+	}
+
+	private int getEngUserCount() {
+		return enguserDao.getEngUserCount();
 	}
 
 

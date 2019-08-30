@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.enguseroption.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ import com.thinkgem.jeesite.modules.enguseroption.dao.EnguserOptionDao;
 @Service
 @Transactional(readOnly = true)
 public class EnguserOptionService extends CrudService<EnguserOptionDao, EnguserOption> {
+
+	@Autowired
+	EnguserOptionDao enguserOptionDao;
 
 	public EnguserOption get(String id) {
 		return super.get(id);
@@ -43,5 +47,14 @@ public class EnguserOptionService extends CrudService<EnguserOptionDao, EnguserO
 	public void delete(EnguserOption enguserOption) {
 		super.delete(enguserOption);
 	}
-	
+
+	@Transactional(readOnly = false)
+	public EnguserOption getByUserId(String userId) {
+		return enguserOptionDao.getByUserId(userId);
+	}
+
+	@Transactional(readOnly = false)
+	public Integer getLoginTimes(String UserId) {
+		return enguserOptionDao.getLoginTimes(UserId);
+	}
 }

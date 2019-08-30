@@ -27,7 +27,7 @@
         <img class="logo" src="images/logo.png">
     </div>
     <li class="layui-nav-item "><a href="index.html">音标</a></li>
-    <li class="layui-nav-item "><a href="dcxl.html">单词训练</a></li>
+    <li class="layui-nav-item "><a href="dcxl.html">单词突击</a></li>
     <li class="layui-nav-item"><a href="llkNew.html">连连看</a></li>
     <!--<li class="layui-nav-item"><a href="dchg.html">单词回顾</a></li>-->
     <li class="layui-nav-item"><a href="chl.html">刷题测试</a></li>
@@ -36,10 +36,10 @@
     <li class="layui-nav-item tc" lay-unselect="">
         <a href="javascript:;">
             <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
-            张三</a>
+            <strong id="loginUserName">请输入名字</strong></a>
         <dl class="layui-nav-child">
             <dd><a href="jbsz.html">个人设置</a></dd>
-            <dd><a href="Login.html">退出登陆</a></dd>
+            <dd><a href="#" onclick="loginOut()">退出登陆</a></dd>
         </dl>
     </li>
 </ul>
@@ -49,11 +49,10 @@
             <div class="tx">
                 <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
                 <div class="nickname">
-                    <strong>张三</strong>同学
-                    <p>您是第<span class="red">44444</span>位学员</p>
-                    <p>欢迎您第<span class="red">44444</span>次登陆系统</p>
+                    <strong id="userName"></strong>同学
+                    <p>您是第<strong class="red" id="num"></strong>位学员</p>
+                    <p>欢迎您第<strong class="red" id="loginTimes"></strong>次登陆系统</p>
                 </div>
-
 
             </div>
 
@@ -76,46 +75,46 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">卡号</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="系统自动读取" class="layui-input">
+                            <input type="text" id="kahao" name="title" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="系统自动读取" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">姓名 <span>*</span></label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" name="title" id="loginName" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">密码 <span>*</span></label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" name="title" id="newPassword" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button type="button" class="layui-btn layui-btn-sm">修改密码</button>
+                            <button type="button" onclick="updatePassword()" class="layui-btn layui-btn-sm">修改密码</button>
                         </div>
                     </div>
 
                     <div class="layui-form-item">
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="sex" value="男" title="男" checked="">
-                            <input type="radio" name="sex" value="女" title="女">
+                            <input type="radio" name="sex" value="1" title="男" >
+                            <input type="radio" name="sex" value="2" title="女">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">软/硬键盘</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="sex1" value=" " title="软键盘" checked="">
-                            <input type="radio" name="sex1" value=" " title="硬键盘">
+                            <input type="radio" name="jpanType" value="1" title="软键盘">
+                            <input type="radio" name="jpanType" value="2" title="硬键盘">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">发音</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="sex2" value=" " title="英式发音" checked="">
-                            <input type="radio" name="sex2" value=" " title="美式发音">
+                            <input type="radio" name="mapType" value="1" title="英式发音">
+                            <input type="radio" name="mapType" value="2" title="美式发音">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -125,14 +124,13 @@
                                 <option value=""></option>
                                 <option value="0">2秒</option>
                                 <option value="1" selected="">3秒</option>
-
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">手机号码</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" id="phone" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                 </form>
@@ -160,38 +158,38 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">学校</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" id="xuexiao" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">城市</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" id="city" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">微信</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" id="weixin" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">班级</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" id="banji" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">省份</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" id="province" name="title" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                 </form>
             </div>
 
             <div class="bg5">
-                <button type="button" class="layui-btn">保存</button>
+                <button type="button" onclick="updateUserInfo()" class="layui-btn">保存</button>
             </div>
         </div>
     </div>
@@ -199,6 +197,8 @@
 </body>
 <script src="layui/layui.js"></script>
 <script src="js/jquery-2.1.4.js"></script>
+<script src="../static/common/website.js"></script>
+<script src="js/common.js"></script>
 <script>
     layui.use('element', function(){
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -230,8 +230,6 @@
 
         $('.tx2 img').attr('src',a);
     })
-
-
 </script>
 <script>
     layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
@@ -241,6 +239,91 @@
             , laydate = layui.laydate
             , laypage = layui.laypage;
     });
+
+</script>
+<script>
+    getUserInfo();
+
+    //修改个人信息
+    function updateUserInfo() {
+        var xuexiao=$('#xuexiao').val();
+        var city=$('#city').val();
+        var province=$('#province').val();
+        var weixin=$('#weixin').val();
+        var banji=$('#banji').val();
+        var phone=$('#phone').val();
+        var sex=$("input[name=sex]").val();
+        var jpanType=$("input[name=jpanType]").val();
+        var mapType=$("input[name=mapType]").val();
+        $.ajax({
+            type:'post',
+            url: getContextPath() +"/enguser/enguser/updateUserInfo",
+            cache:false,
+            async:false,
+            data:{xuexiao:xuexiao,province:province,city:city,weixin:weixin,banji:banji,phone:phone,sex:sex,jpanType:jpanType,mapType:mapType},
+            success:function (data) {
+                if (data.code==0){
+                    alert(data.msg)
+                    window.location.reload();
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error:function () {
+                alert("操作失败,请练习客服");
+            }
+        });
+    }
+
+    //修改密码
+    function updatePassword() {
+        var loginName=  $('#loginName').val();
+        var newPassword=  $('#newPassword').val();
+        if (loginName==""||newPassword==""){
+            alert("请检验登录账号和密码");
+        }else {
+            $.ajax({
+                type:'post',
+                url: getContextPath() +"/enguser/enguser/updatePassword",
+                cache:false,
+                async:false,
+                data:{loginName:loginName,newPassword:newPassword},
+                success:function (data) {
+                    if (data.code==0){
+                        alert(data.msg)
+                        window.location.href="Login.html";
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function () {
+                    alert("操作失败,请练习客服");
+                }
+            });
+        }
+    }
+
+    //获取用户的基本信息进行展示
+    function getUserInfo() {
+        $.ajax({
+            "url" : getContextPath() +"/enguser/enguser/getUserInfo",
+            "method" : "POST",
+            "cache" : false,
+            "async" : false,
+        }).success(function(data){
+            $('#kahao').val("ZHS"+data.kahao);
+            $('#xuexiao').val(data.xuexiao);
+            $('#city').val(data.city);
+            $('#province').val(data.province);
+            $('#weixin').val(data.weixin);
+            $('#banji').val(data.banji);
+            $('#phone').val(data.phone);
+            $("input[name=sex]").val([data.sex]);
+            $("input[name=jpanType]").val([data.jPanType]);
+            $("input[name=mapType]").val([data.mp3Type]);
+
+        });
+    }
 
 </script>
 </html>

@@ -116,6 +116,9 @@ public class EnguserController extends BaseController {
     @RequiresPermissions("enguser:enguser:edit")
     @RequestMapping(value = "update")
     public String update(Enguser enguser,RedirectAttributes redirectAttributes){
+		if (enguser.getSex().equals("男")){
+			enguser.setSex("1");
+		}
 	    enguserService.update(enguser);
 	    addMessage(redirectAttributes,"修改用户信息成功");
 	    return "redirect:"+Global.getAdminPath()+"/enguser/enguser/?repage";

@@ -25,7 +25,8 @@ public class EnguserOption extends DataEntity<EnguserOption> {
 	private Integer currentStudyTime;		// 本次学习时间
 	private String blankOne;		// blank_one_
 	private String blankTwo;		// blank_two_
-	
+
+
 	public EnguserOption() {
 		super();
 	}

@@ -33,8 +33,36 @@ public class Enguser extends DataEntity<Enguser> {
 	private String province;		// 省份
 	private String blankOne;		// 预留字段1
 	private String blankTwo;		// 预留字段2
+	private String num;//编号
 	private CourseIsOpen courseIsOpen;
-	
+	private String mp3Type;		// blank_two_
+
+	public String getMp3Type() {
+		return mp3Type;
+	}
+
+	public void setMp3Type(String mp3Type) {
+		this.mp3Type = mp3Type;
+	}
+
+	public String getjPanType() {
+		return jPanType;
+	}
+
+	public void setjPanType(String jPanType) {
+		this.jPanType = jPanType;
+	}
+
+	private String jPanType;		// blank_two_
+
+	public String getNum() {
+		return num;
+	}
+
+	public void setNum(String num) {
+		this.num = num;
+	}
+
 	public Enguser() {
 		super();
 	}

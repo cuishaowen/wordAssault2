@@ -27,4 +27,6 @@ public interface EnguserDao extends CrudDao<Enguser> {
     enguserEntity getEntityByUserId(@Param("id")String id);
 
     List<Map<String,String>> findCourseMapById(@Param("id")String id);
+
+    int getEngUserCount();
 }

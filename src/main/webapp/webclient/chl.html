@@ -28,7 +28,7 @@
         <img class="logo" src="images/logo.png">
     </div>
     <li class="layui-nav-item "><a href="index.html">音标</a></li>
-    <li class="layui-nav-item "><a href="dcxl.html">单词训练</a></li>
+    <li class="layui-nav-item "><a href="dcxl.html">单词突击</a></li>
     <li class="layui-nav-item"><a href="llkNew.html">连连看</a></li>
     <!--<li class="layui-nav-item "><a href="dchg.html">单词回顾</a></li>-->
     <li class="layui-nav-item layui-this"><a href="#">刷题测试</a></li>
@@ -40,7 +40,7 @@
             张三</a>
         <dl class="layui-nav-child">
             <dd><a href="jbsz.html">个人设置</a></dd>
-            <dd><a href="Login.html">退出登陆</a></dd>
+            <dd><a href="#" onclick="loginOut()" >退出登陆</a></dd>
         </dl>
     </li>
 </ul>
@@ -51,8 +51,8 @@
                 <img class="tx-img" src="images/20150607110911_kY5cP.jpeg" alt="">
                 <div class="nickname">
                     <strong id="userName"></strong>同学
-                    <p>您是第<span class="red">3</span>位学员</p>
-                    <p>欢迎您第<span class="red">12500</span>次登陆系统</p>
+                    <p>您是第<strong class="red" id="num"></strong>位学员</p>
+                    <p>欢迎您第<strong class="red" id="loginTimes"></strong>次登陆系统</p>
                 </div>
                 <div class="kc">
                     <span onclick="kczx()">

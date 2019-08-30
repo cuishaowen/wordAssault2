@@ -21,7 +21,10 @@
 		a.remarks_ AS "remarks",
 		a.del_flag_ AS "delFlag",
 		a.blank_one_ AS "blankOne",
-		a.blank_two_ AS "blankTwo"
+		a.blank_two_ AS "blankTwo",
+		a.num_ AS "num",
+		a.mp3_type AS "mp3Type",
+		a.j_pan_type AS "jPanType"
 	</sql>
 
 	<resultMap type="com.thinkgem.jeesite.modules.wx.pojo.enguserEntity" id="enguserEntity">
@@ -42,6 +45,10 @@
 		a.NUM_,
 		(select count(1) from user_course uc where uc.USER_ID_ = #{id}) as course_num
 		from enguser a WHERE a.ID_=#{id}
+	</select>
+
+	<select id="getEngUserCount" resultType="Integer">
+		SELECT MAX(a.NUM_) from enguser a
 	</select>
 
 	<select id="findCourseMapById" resultType="Map">
@@ -139,7 +146,10 @@
 			remarks_,
 			del_flag_,
 			blank_one_,
-			blank_two_
+			blank_two_,
+			num_,
+			mp3_type,
+			j_pan_type
 		) VALUES (
 			#{id},
 			#{img},
@@ -159,7 +169,10 @@
 			#{remarks},
 			#{delFlag},
 			#{blankOne},
-			#{blankTwo}
+			#{blankTwo},
+			#{num},
+			#{mp3Type},
+			#{jPanType}
 		)
 	</insert>
 	
@@ -183,7 +196,10 @@
 			remarks_ = #{remarks},
 			del_flag_ = #{delFlag},
 			blank_one_ = #{blankOne},
-			blank_two_ = #{blankTwo}
+			blank_two_ = #{blankTwo},
+			num_ = #{num},
+			mp3_type = #{mp3Type},
+			j_pan_type = #{jPanType}
 		WHERE id_ = #{id}
 	</update>
 	

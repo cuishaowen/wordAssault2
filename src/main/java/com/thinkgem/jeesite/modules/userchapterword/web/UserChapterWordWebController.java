@@ -100,7 +100,7 @@ public class UserChapterWordWebController {
     }
 
     /**
-     * 难记词汇
+     * 生词本
      * @param userId
      * @param courseId
      * @return

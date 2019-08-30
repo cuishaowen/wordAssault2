@@ -71,7 +71,7 @@
                     <span>
                         本书已学单词：${course.completeword}；
                         未学单词：${course.waitLearningword}；
-                        难记词汇：${course.courseHardWord}；
+                        生词本：${course.courseHardWord}；
                         熟词：${course.skilledWord}；
                         备忘单词：${course.strengthenMemoryWord}；
                         已消灭生词：${course.killCourseHard}
