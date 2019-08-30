@@ -25,8 +25,11 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>id_：</label>
-				<form:input path="id" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>课程名称：</label>
+				<form:select path="courseId" class="input-xlarge">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getCourse()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -44,17 +47,17 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="courseChapterWord">
+		<c:forEach items="${page.list}" var="chapterWord">
 			<tr>
-				<td rowspan="${courseChapterWord.words.size() + 1}"> ${courseChapterWord.course.name}</td>
-				<td rowspan="${courseChapterWord.words.size() + 1}">${courseChapterWord.chapter.name}</td>
-				<c:forEach items="${courseChapterWord.words}" var="word">
+				<td rowspan="${fns:getCourseChapterWord(chapterWord).words.size() + 1}"> ${fns:getCourseChapterWord(chapterWord).course.name}</td>
+				<td rowspan="${fns:getCourseChapterWord(chapterWord).words.size() + 1}">${fns:getCourseChapterWord(chapterWord).chapter.name}</td>
+				<c:forEach items="${fns:getCourseChapterWord(chapterWord).words}" var="word">
 					<tr>
 						<td>${word.english}</td>
 						<td>${word.chinese}</td>
 						<shiro:hasPermission name="chapterword:chapterWord:edit"><td>
-						<a href="${ctx}/chapterword/chapterWord/form?id=${courseChapterWord.chapterWord.id}">修改</a>
-						<a href="${ctx}/chapterword/chapterWord/updateByWordId?id=${courseChapterWord.chapterWord.id}&wordId=${word.id}" onclick="return confirmx('确认要删除该章节单词吗？', this.href)">删除</a>
+						<a href="${ctx}/chapterword/chapterWord/form?id=${chapterWord.id}">修改</a>
+						<a href="${ctx}/chapterword/chapterWord/updateByWordId?id=${chapterWord.id}&wordId=${word.id}" onclick="return confirmx('确认要删除该章节单词吗？', this.href)">删除</a>
 						</td></shiro:hasPermission>
 					</tr>
 				</c:forEach>

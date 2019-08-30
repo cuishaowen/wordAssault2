@@ -84,7 +84,7 @@ function page(res) {
     var errorCh = object.errorCh;
     errorCh.push(chinese);
     shuffle(errorCh);
-    xuanyiAnsHide();
+    $('.da').hide();
     userChapterWord = getUserChapterWord();
     $('#ch-right').text(chinese);
     $('#eng-word').text(english);

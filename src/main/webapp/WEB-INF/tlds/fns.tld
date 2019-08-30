@@ -308,6 +308,13 @@
         <function-class>com.thinkgem.jeesite.modules.word.untils.WordUtils</function-class>
         <function-signature>java.util.List getWordByChapter(java.lang.String)</function-signature>
     </function>
+
+  <!--chapterWord-->
+  <function>
+    <name>getCourseChapterWord</name>
+    <function-class>com.thinkgem.jeesite.modules.chapterword.utils.ChapterWordUtils</function-class>
+    <function-signature>com.thinkgem.jeesite.modules.chapterword.entity.CourseChapterWord getCourseChapterWordList(com.thinkgem.jeesite.modules.chapterword.entity.ChapterWord)</function-signature>
+  </function>
   
   <!-- wordExample -->
   <function>

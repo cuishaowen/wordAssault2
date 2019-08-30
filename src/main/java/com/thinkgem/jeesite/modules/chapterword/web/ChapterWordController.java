@@ -63,54 +63,12 @@ public class ChapterWordController extends BaseController {
 		return entity;
 	}
 
-	// 获取课程章节下的所有单词信息
-	@RequiresPermissions("chapterword:chapterWord:view")
-	@RequestMapping(value = "courseChapterWord")
-	public Page<CourseChapterWord> getCourseChapterWordList(List<ChapterWord> chapterWords){
-
-		Page<CourseChapterWord> courseChapterWordPage = new Page<CourseChapterWord>();
-		List<CourseChapterWord> courseChapterWords = new ArrayList<CourseChapterWord>();
-
-		// 遍历所有的章节单词表，来获取所有的课程信息 章节信息 以及 单词信息
-		for (ChapterWord chapterWord : chapterWords){
-			CourseChapterWord courseChapterWord = new CourseChapterWord();
-			courseChapterWord.setChapterWord(chapterWord);
-
-			String chapterId = chapterWord.getChapterId();
-			String wordIds = chapterWord.getWordIds();
-
-			// 查询章节信息
-			Chapter chapter = chapterService.get(chapterId);
-			courseChapterWord.setChapter(chapter);
-
-			// 查询课程信息
-			Course course = courseService.get(chapter.getParentId());
-			courseChapterWord.setCourse(course);
-
-			// 获取单词信息
-			List<Word> words = new ArrayList<Word>();
-			if (wordIds == null){
-				wordIds = "";
-			}
-			String[] arr = wordIds.split(",");
-			for (int i = 0; i < arr.length; i++){
-				Word word = wordService.get(arr[i]);
-				words.add(word);
-			}
-			courseChapterWord.setWords(words);
-			courseChapterWords.add(courseChapterWord);
-		}
-		courseChapterWordPage.setList(courseChapterWords);
-
-		return courseChapterWordPage;
-	}
 
 	@RequiresPermissions("chapterword:chapterWord:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ChapterWord chapterWord, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ChapterWord> page = chapterWordService.findPage(new Page<ChapterWord>(request, response), chapterWord);
-		Page<CourseChapterWord> courseChapterWords = getCourseChapterWordList(page.getList());
-		model.addAttribute("page", courseChapterWords);
+		model.addAttribute("page", page);
 		return "modules/chapterword/chapterWordList";
 	}
 
