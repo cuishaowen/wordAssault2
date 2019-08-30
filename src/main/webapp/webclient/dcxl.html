@@ -236,12 +236,18 @@
             , laypage = layui.laypage;
     });
     function detail(chapterId) {
-        var idx = layer.open({
+        layer.open({
             title: '看词选义',
             type: 2,
             area: ['940px', '500px'],
-            content: 'kcxy.html?chapterId='+ chapterId //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-        });
+            content: 'kcxy.html?chapterId='+ chapterId,
+            end: function () {
+                $('.beizu').load(location.href + ' .beizu');
+                $('.xl_btns').load(location.href + ' .xl_btns');
+                loadPage();
+            }
+        }
+        );
     }
 
     function detail1() {
@@ -267,10 +273,7 @@
             area: ['900px', '650px'],
             content: 'xhbf.html?chapterId='+ chapterId //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
         });
-        if ($(this).is('')){
-
-        }
-            }
+    }
     function kczx() {
         var idx = layer.open({
             title: '课程中心',
@@ -308,13 +311,6 @@
         $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
         $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9.png");
     }
-//    $(document).on('click','.dc-tab-title  li:last-child',function(){
-//        $(".dc-tab-title  li:first-child img").attr("src", "images/6-1.png");
-//        $(".dc-tab-title  li:nth-child(2) img").attr("src", "images/7-1.png");
-//        $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
-//        $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9.png");
-//    });
-
 </script>
 
 </html>
