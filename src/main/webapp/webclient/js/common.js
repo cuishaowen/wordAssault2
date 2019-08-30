@@ -40,7 +40,7 @@ function alreadyPurchase() {
         function (res) {
             var openCourses = res.openCourseList;
             for (var i = 0; i < openCourses.length; i++){
-                $('#alreadyPurchase').append('<li onclick="alreadyBuyCourses('+ openCourses[i].id +')">' + openCourses[i].name + '<i></i></li>');
+                $('#alreadyPurchase').append('<li onclick="alreadyBuyCourses(\''+ openCourses[i].id +'\')">' + openCourses[i].name + '<i></i></li>');
             }
         }
     )

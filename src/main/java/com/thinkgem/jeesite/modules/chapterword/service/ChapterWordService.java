@@ -104,6 +104,7 @@ public class ChapterWordService extends CrudService<ChapterWordDao, ChapterWord>
     }
 
     // 新增
+    @Transactional(readOnly = false)
     public void insert(ChapterWord chapterWord){
         // 生成id 信息
 	    String id = IdGen.uuid();

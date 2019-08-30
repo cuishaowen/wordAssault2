@@ -24,7 +24,7 @@ function chapterWord(){
                 u.setStorage('result',res);
                 console.log('result',u.getStorage('result'));
                 page(res);
-                page2(res);
+                // page2(res);
             }
         )
     }
@@ -130,32 +130,44 @@ $('#radio-4').on('click',function(){
 function nextSubject(select) {
     var right = $('#ch-right').text();
     if (select == right){
-        $('#xuanyiBox').hide();
-        $('#pinxieBox').show();
-        alreadyLearn();
-        console.log('userChapterWord',userChapterWord);
-        updateWord(userChapterWord);
+        xuanyiAnsRight();
+        $('#nextsub').on('click',function(){
+            $(this).hide();
+            alreadyLearn();
+            updateWord(userChapterWord);
+        });
     }else{
         $('#radio-1').attr('disabled',true);
         $('#radio-2').attr('disabled',true);
         $('#radio-3').attr('disabled',true);
         $('#radio-4').attr('disabled',true);
-        xuanyiAnsShow();
-        $('#nextsub').show();
+        xuanyiAnsError();
+        $('#nextsub').on('click',function(){
+            $(this).hide();
+            alreadyLearn();
+            updateWord(userChapterWord);
+        });
     }
 }
-
 /**
  * 点击进入下一题
  */
-$('#nextsub').on('click',function(){
-    $(this).hide();
-    $('#xuanyiBox').hide();
-    $('#pinxieBox').show();
-    pinxieAnsHide();
-    var userChapterWord = HardWord();
-    updateWord(userChapterWord);
-});
+
+
+// 答对
+function xuanyiAnsRight() {
+    $('.da').show();
+    $('.da span').show();
+    $('.da b').hide();
+    $('#nextsub').show();
+}
+// 答错
+function xuanyiAnsError(){
+    $('.da').show();
+    $('.da span').hide();
+    $('.da b').show();
+    $('#nextsub').show();
+}
 //    ------------------------------------------------- 第二页逻辑  --------------------------------------------------
 /**
  * 加载第二个页面数据
@@ -225,29 +237,19 @@ $('#next-page').on('click',function () {
     nextPage();
 });
 
-// 显示答案
-function pinxieAnsShow(){
+// 答对
+function pinxieAnsRight(){
     $('.pingxie_da').show();
     $('.pingxie_da span').show();
     $('.pingxie_da b').show();
 }
-function xuanyiAnsShow() {
-    $('.da').show();
-    $('.da span').show();
-    $('.da b').show();
-}
-
-// 隐藏答案
-function pinxieAnsHide(){
+// 答错
+function pinxieAnsError(){
     $('.pingxie_da span').hide();
     $('.pingxie_da b').hide();
     $('.pingxie_da').hide();
 }
-function xuanyiAnsHide(){
-    $('.da').hide();
-    $('.da span').hide();
-    $('.da b').hide();
-}
+
 
 /**
  * 点击进入下一页
