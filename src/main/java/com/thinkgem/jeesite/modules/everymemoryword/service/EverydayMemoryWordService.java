@@ -115,7 +115,7 @@ public class EverydayMemoryWordService extends CrudService<EverydayMemoryWordDao
 			int totalTime = 0;
 			List<EnguserOption> enguserOptions = enguserOptionService.findList(e);
 			for (EnguserOption enguserOption : enguserOptions){
-				totalTime += enguserOption.getCurrentStudyTime();
+				totalTime += Integer.parseInt(enguserOption.getCurrentStudyTime());
 			}
 			sevenDaysWord.setTotalTime(totalTime);
 			sevenDaysWords.add(sevenDaysWord);

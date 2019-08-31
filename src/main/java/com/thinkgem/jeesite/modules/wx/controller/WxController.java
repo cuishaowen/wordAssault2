@@ -3,6 +3,7 @@ package com.thinkgem.jeesite.modules.wx.controller;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
 import com.thinkgem.jeesite.modules.enguser.service.EnguserService;
+import com.thinkgem.jeesite.modules.enguseroption.service.EnguserOptionService;
 import com.thinkgem.jeesite.modules.sys.utils.MD5Util;
 import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
 import com.thinkgem.jeesite.modules.word.pojo.CompletionWord;
@@ -30,6 +31,9 @@ public class WxController extends AppController {
 
     @Autowired
     UserChapterWordService userChapterWordService;
+
+    @Autowired
+    private EnguserOptionService enguserOptionService;
 
     /**
      * 跳转到微信登录页面
@@ -85,14 +89,66 @@ public class WxController extends AppController {
                 enguserEntity.setCourseInfoEntityList(courseInfoEntities);
 
             }
-
             mv.addObject("enguserEntity",enguserEntity);
+            mv.addObject("id",id);
 
         }catch (Exception e){
             e.printStackTrace();
             mv=new ModelAndView("wx/login");
         }
         return mv;
+    }
+
+    /**
+     * 查询学习时间
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getLastWeekStudyTime/{id}",method =RequestMethod.GET)
+    public Map<String,Object> getLastWeekStudyTime(@PathVariable String id){
+        Map<String,Object> resultMap=new HashMap<String, Object>();
+        try {
+
+            //查询出了除了此次之外的，7天之类的学习时间
+            List<Map<String,String>> enguserOptionList=enguserOptionService.findLastWeekOption(id);
+
+            if (enguserOptionList.size()!=0&&enguserOptionList!=null){
+                //数据不为空，则进行数据归纳
+                //定义两个数组，学习时间数组和学习天数数组
+                Map<String,String> TimeMap=new HashMap<String, String>();
+                for (Map<String,String> map:enguserOptionList
+                        ) {
+                    String loginTime=map.get("loginTime");
+                    if (TimeMap.containsKey(loginTime)){
+                        //包含这个日期key，时间叠加
+                        String TimeHas=TimeMap.get(loginTime);//获取已存储的学习时间
+                        String TimeNew=map.get("studyTime");//获取此日期的新学习时间
+                        Integer timeCount=Integer.parseInt(TimeHas)+Integer.parseInt(TimeNew);
+                        TimeMap.put(loginTime,timeCount.toString());//修改时间
+                    }else {
+                        //不包含此日期key,新纪录
+                        TimeMap.put(loginTime,map.get("studyTime"));//存储新日期和对应学习时间
+                    }
+                }
+
+                //根据TimeMap中的数据，分给两个数组，传递前台
+                Object[] loginTimeArr=TimeMap.keySet().toArray();
+                Integer[] studyTimeArr=new Integer[loginTimeArr.length];
+                for (int i=0;i<loginTimeArr.length;i++) {
+                    studyTimeArr[i]=Integer.parseInt(TimeMap.get(loginTimeArr[i]));
+                }
+                resultMap.put("studyTimeArr",studyTimeArr);
+                resultMap.put("loginTimeArr",loginTimeArr);
+            }
+
+            resultMap.put("code",0);//操作失败
+            resultMap.put("msg","学习时间获取成功");
+            return resultMap;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultMap.put("code",1);//操作失败
+            resultMap.put("msg","操作失败");
+            return resultMap;
+        }
     }
 
     /**

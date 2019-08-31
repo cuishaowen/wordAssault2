@@ -4,6 +4,7 @@
 package com.thinkgem.jeesite.modules.enguseroption.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,4 +58,8 @@ public class EnguserOptionService extends CrudService<EnguserOptionDao, EnguserO
 	public Integer getLoginTimes(String UserId) {
 		return enguserOptionDao.getLoginTimes(UserId);
 	}
+
+    public List<Map<String,String>> findLastWeekOption(String userId) {
+		return enguserOptionDao.findLastWeekOption(userId);
+    }
 }

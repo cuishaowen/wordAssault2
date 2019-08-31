@@ -96,7 +96,7 @@ public class EnguserWebController {
            long nm = 1000 * 60;
             Long min=diff %nd %nh /nm;
             //相差的分钟
-           enguserOption.setCurrentStudyTime(min.intValue());
+           enguserOption.setCurrentStudyTime(min.toString());
            enguserOptionService.save(enguserOption);//更新数据
            resultMap.put("code",0);//操作失败
            resultMap.put("msg","退出成功");
@@ -218,6 +218,11 @@ public class EnguserWebController {
             entity.setSchool(xuexiao);
             enguserService.update(entity);
         }
+
+        //更新httpSession里面的软键盘和发音类型
+        httpSession.setAttribute("Mp2Type",entity.getMp3Type());//发音模式
+        httpSession.setAttribute("JpanType",entity.getjPanType());//键盘模式
+
         resultMap.put("code",0);//操作成功
         resultMap.put("msg","操作成功");
         return resultMap;

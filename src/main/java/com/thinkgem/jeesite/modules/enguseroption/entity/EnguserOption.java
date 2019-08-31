@@ -22,7 +22,7 @@ public class EnguserOption extends DataEntity<EnguserOption> {
 	private Date loginOutTime;		// 登出时间
 	private Date currentTime;		// 当前时间
 	private String autoLoginOut;		// T 是 F 不是
-	private Integer currentStudyTime;		// 本次学习时间
+	private String currentStudyTime;		// 本次学习时间
 	private String blankOne;		// blank_one_
 	private String blankTwo;		// blank_two_
 
@@ -80,11 +80,11 @@ public class EnguserOption extends DataEntity<EnguserOption> {
 		this.autoLoginOut = autoLoginOut;
 	}
 
-	public Integer getCurrentStudyTime() {
+	public String getCurrentStudyTime() {
 		return currentStudyTime;
 	}
 
-	public void setCurrentStudyTime(Integer currentStudyTime) {
+	public void setCurrentStudyTime(String currentStudyTime) {
 		this.currentStudyTime = currentStudyTime;
 	}
 	

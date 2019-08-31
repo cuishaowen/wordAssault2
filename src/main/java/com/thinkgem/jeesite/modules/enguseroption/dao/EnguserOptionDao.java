@@ -8,6 +8,9 @@ import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.enguseroption.entity.EnguserOption;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * enguseroptionDAO接口
  * @author cuisw
@@ -19,4 +22,6 @@ public interface EnguserOptionDao extends CrudDao<EnguserOption> {
     EnguserOption getByUserId(@Param("userId")String userId);
 
     Integer getLoginTimes(@Param("id")String id);
+
+    List<Map<String,String>> findLastWeekOption(@Param("userId")String userId);
 }
