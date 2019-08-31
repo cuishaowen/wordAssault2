@@ -77,6 +77,11 @@ public class UserChapterService extends CrudService<UserChapterDao, UserChapter>
 		return chapterInformations;
 	}
 
+	@Transactional(readOnly = false)
+	public void updateStatus(String chapterId, String userId, String studyStatus, String isOpen){
+		userChapterDao.updateStatus(chapterId,userId,studyStatus,isOpen);
+	}
+
 
 //		// 获取所有用户章节信息
 //		UserChapter userChapter = new UserChapter();

@@ -48,7 +48,7 @@
 	</select>
 
 	<select id="getEngUserCount" resultType="Integer">
-		SELECT MAX(a.NUM_) from enguser a
+		SELECT count(*) from enguser a
 	</select>
 
 	<select id="findCourseMapById" resultType="Map">

@@ -35,9 +35,10 @@ $(function(){
 function getUserChapterWord(){
     var result = u.getStorage('result');
     var wordId = '';
+    var i = pageNum -1 ;
     // var wordId = result[pageNum].word.id;
-    if (pageNum < result.length){
-        wordId = result[pageNum].word.id;
+    if (i < result.length){
+        wordId = result[i].word.id;
     }else{
         wordId = errorSubjects[0].word.id;
     }
@@ -134,6 +135,8 @@ $('#radio-4').on('click',function(){
  * 选择错误 则将所有选项disabled
  */
 function nextSubject(select) {
+    pageNum++;
+    console.log('pageNum',pageNum);
     var right = $('#ch-right').text();
     if (select == right){
         xuanyiAnsRight();
@@ -147,20 +150,20 @@ function nextSubject(select) {
     }else{
         xuanyiAnsError();
         radioDisabledTrue();
+        var userChapterWord = HardWord();
+        updateWord(userChapterWord);
         if (pageNum < result.length) {
             errorSubjects.push(result[pageNum]);
+            console.log('errorSubjectsError',errorSubjects);
         }else {
             errorSubjects.push(errorSubjects[0]);
             errorSubjects.shift();
             console.log('errorSubjectsError',errorSubjects);
         }
-        var userChapterWord = HardWord();
-        updateWord(userChapterWord);
+
     }
 }
 $('#nextsub').on('click',function(){
-    pageNum++;
-    console.log('pageNum',pageNum);
     $(this).hide();
     radioDisabledFalse();
     var res = result[pageNum];
@@ -170,7 +173,17 @@ $('#nextsub').on('click',function(){
         if (errorSubjects.length > 0){
             pageOne(errorSubjects[0]);
             console.log('errorSubjects0000:',errorSubjects[0]);
+        }else{
+            console.log('没有错误的选择题了');
+            // 开始第二页数据
+            pageNum = 0;
+            $('#xuanyiBox').hide();
+            $('#pinxieBox').show();
+            $('.pingxie_da').hide();
+
+            page2(result[pageNum]);
         }
+
     }
 });
 // 答对
@@ -209,11 +222,13 @@ function radioDisabledFalse(){
  */
 function page2(res) {
     index = 0;
-    var result = u.getStorage('result');
-    if (result == '') {
-        result = res;
+    word = "";
+    var object = {};
+    if (pageNum < result.length){
+        object = result[pageNum];
+    }else{
+        object = res;
     }
-    var object = result[pageNum];
     var english = object.word.english;
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
@@ -221,26 +236,51 @@ function page2(res) {
     var exampleEng = exampleArr[0];
     var exampleCh = exampleArr[1];
     var errorCh = object.errorCh;
-    errorCh.push(chinese);
+    if (pageNum < result.length){
+        errorCh.push(chinese);
+    }
     shuffle(errorCh);
-
     $('#ch-word').text(chinese);
     $('#eng-right').text(english);
-    var arr = [];
-    $('#aaaa').attr('disabled',false);
-
-    for (var i = 0; i < english.length; i++) {
-        arr.push(english.charAt(i))
-    }
-    arr.join(',');
-    shuffle(arr);
-    console.log(arr);
     $('#aaaa').val('');
-    $('#a-word').html('');
-    $('#a-word-click').html('');
-    for (var j = 0; j < arr.length; j++) {
-        $('#a-word').append('<li class="lfi1">' + arr[j] + '</li>\n');
-        $('#a-word-click').append('<li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
+    if (jPanType == '1'){
+        var arr = [];
+        for (var i = 0; i < english.length; i++) {
+            arr.push(english.charAt(i))
+        }
+        $('#a-word').html('');
+        $('#aa-word').html('');
+        $('#a-word-click').html('');
+        for (var j = 0; j < arr.length; j++) {
+            var abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','x','y','z','w','v','u'];
+            abc.splice($.inArray(arr[j],abc),1);
+            var flag = randNum();
+            shuffle(abc);
+            if (flag == 'T'){
+                $('#a-word').append('<li class="lfi1">' + arr[j] + '</li>\n');
+                $('#aa-word').append('<li class="lfi1">' + abc[j] + '</li>\n');
+            }else{
+                $('#a-word').append('<li class="lfi1">' + abc[j] + '</li>\n');
+                $('#aa-word').append('<li class="lfi1">' + arr[j] + '</li>\n');
+            }
+
+            $('#a-word-click').append('<li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
+        }
+        $('.lfi').hide();
+        $('.lfii').show();
+        $('.lfiii').show();
+    }else{
+        $('.lfi').show();
+        $('.lfii').hide();
+        $('.lfiii').hide();
+    }
+}
+function randNum(){
+    var a = Math.floor((Math.random()*10)+1);
+    if(a%2 == 0){
+        return 'T';
+    }else{
+        return 'F';
     }
 }
 
@@ -249,57 +289,93 @@ function page2(res) {
  */
 $('#aaaa').on('keypress',function(e){
     if(e.keyCode==13){
+        pageNum++;
+        console.log('pageNum',pageNum);
         e.preventDefault();
         var a = $('#aaaa').val();
         var b = $('.pingxie_da span i').text();
         var c = $('.lfiii .layui-input-block ul li').text();
         if (a == b || c == b) {
+            pinxieAnsRight();
             var userChapterWord = alreadyLearn();
             updateWord(userChapterWord);
-            nextPage();
+            if (pageNum > result.length) {
+                errorSubjects.shift();
+                console.log('errorSubjectsRight',errorSubjects);
+            }
         } else {
             pinxieAnsError();
-            $('#aaaa').attr('disabled', true);
-            $('#next-page').show();
+            var userChapterWord = HardWord();
+            updateWord(userChapterWord);
+            if (pageNum < result.length) {
+                errorSubjects.push(result[pageNum]);
+            }else {
+                errorSubjects.push(errorSubjects[0]);
+                errorSubjects.shift();
+                console.log('errorSubjectsError',errorSubjects);
+            }
         }
     }
 });
 
 // 点击进入下一特
 $('#next-page').on('click',function () {
-    HardWord();
-    updateWord(userChapterWord);
-    nextPage();
-});
+    $('.pingxie_da').hide();
+    $(this).hide();
+    $('#aaaa').attr('disabled',false);
 
+    var res = result[pageNum];
+    if (pageNum < result.length) {
+        page2(res);
+    }else {
+        if (errorSubjects.length > 0) {
+            page2(errorSubjects[0]);
+            console.log('errorSubjects0000:', errorSubjects[0]);
+        } else {
+            console.log('没有错误的选择题了');
+            alert('恭喜你闯关成功！');
+            var userChapterWords = u.getStorage('userChapterWords');
+            var userChapters = u.getStorage('userChapters');
+            var chapterId = userChapterWords[0].chapterId;
+            var courseId = userChapterWords[0].courseId;
+            var userChapter = {};
+            var  userChapterNext = {};
+            var j  = 0;
+            for (i = 0; i < userChapters.length; i++){
+                j = i + 1;
+                if (j <= userChapters.length) {
+                    if (chapterId == userChapters[i].userChapter.chapterId){
+                        userChapter = userChapters[i].userChapter;
+                        userChapterNext = userChapters[j].userChapter;
+                        break;
+                    }
+                }
+            }
+            if (userChapter.studyStatus != '3'){
+                var studyStatus = '3';
+                updateStatus(chapterId,studyStatus); // 修改此章节完成
+                console.log('userChapterNext', userChapterNext);
+                updateStatus(userChapterNext.chapterId, '1'); // 开通下一章节
+                $('.xl_btns').load(location.href + ' .xl_btns');
+                addLoop();
+            }
+        }
+    }
+});
 // 答对
 function pinxieAnsRight(){
     $('.pingxie_da').show();
     $('.pingxie_da span').show();
-    $('.pingxie_da b').show();
+    $('.pingxie_da b').hide();
+    $('#next-page').show();
+    $('#aaaa').attr('disabled',true);
 }
 // 答错
 function pinxieAnsError(){
     $('.pingxie_da span').hide();
-    $('.pingxie_da b').hide();
-    $('.pingxie_da').hide();
+    $('.pingxie_da b').show();
+    $('.pingxie_da').show();
+    $('#next-page').show();
+    $('#aaaa').attr('disabled',true);
 }
 
-
-/**
- * 点击进入下一页
- */
-function nextPage(){
-    pageNum++;
-    var result = u.getStorage('result');
-    var res = result[pageNum];
-    console.log('nextPageRes:',res);
-    page2(res);
-    $('.da span').hide();
-    $('.da b').hide();
-    $('#pinxieBox').hide();
-    $('#xuanyiBox').show();
-    pinxieAnsError();
-    $('#nextsub').hide();
-    $('#next-page').hide();
-}

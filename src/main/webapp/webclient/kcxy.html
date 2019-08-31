@@ -72,24 +72,28 @@
         <div class="xt-content">
             <div class="xt1">
                 <form id="pinxie-form" class="layui-form layui-form-pane" action="">
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <input type="radio" name="sex" value="1" title="硬键盘" checked="">
-                            <input type="radio" name="sex" value="2" title="软键盘">
-                        </div>
-                    </div>
+<!--                    <div class="layui-form-item">-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input type="radio" name="sex" value="1" title="硬键盘" checked="">-->
+<!--                            <input type="radio" name="sex" value="2" title="软键盘">-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="layui-form-item lfi">
                         <div class="layui-input-block">
                             <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
                         </div>
                     </div>
-                    <div class="layui-form-item lfii">
+                    <div id="a-word-form" class="layui-form-item lfii">
                         <div class="layui-input-block">
                             <ul id="a-word" class="ul"></ul>
                         </div>
                     </div>
-
-                    <div class="layui-form-item lfiii">
+                    <div id="aa-word-form" class="layui-form-item lfii">
+                        <div class="layui-input-block">
+                            <ul id="aa-word" class="ul"></ul>
+                        </div>
+                    </div>
+                    <div id="a-word-click-form" class="layui-form-item lfiii">
                         <div class="layui-input-block" style="font-size: 18px;color:#1d8183;line-height: 38px;font-weight: 600;text-align: center;">
                             <ul  id="a-word-click" style="text-align: center;"></ul>
                         </div>
@@ -127,43 +131,43 @@
         var form = layui.form
             ,$= layui.$;
 
-        form.on('radio', function(data){
-            var a = $(this).parent('.layui-input-block').find('.layui-unselect div');
-            var b = $('#ch-right').text();
-            $('.sub').on('click',function(){
-                console.log(data.elem); //得到radio原始DOM对象
-                console.log(data.value); //被点击的radio的value值
-                console.log('atext:',a);
-                if(a.text() != b){
-                    $('.da b').show();
-                    $('.da span').hide();
-                }else  {  //答案正确
-                    $('.da span').show();
-                    $('.da b').hide();
+        // form.on('radio', function(data){
+        //     var a = $(this).parent('.layui-input-block').find('.layui-unselect div');
+        //     var b = $('#ch-right').text();
+        //     $('.sub').on('click',function(){
+        //         console.log(data.elem); //得到radio原始DOM对象
+        //         console.log(data.value); //被点击的radio的value值
+        //         console.log('atext:',a);
+                // if(a.text() != b){
+                //     $('.da b').show();
+                //     $('.da span').hide();
+                // }else  {  //答案正确
+                //     $('.da span').show();
+                //     $('.da b').hide();
+                //
+                //     $(".pinxie").show();
+                //     $(".xuanyi").hide();
+                // }
 
-                    $(".pinxie").show();
-                    $(".xuanyi").hide();
-                }
-
-            });
-            if(data.value ==1){
-                $('.lfi').show();
-                $('.lfii').hide();
-                $('.lfiii').hide();
-            };
-            if(data.value ==2){
-                $('.lfi').hide();
-                $('.lfii').show();
-                $('.lfiii').show();
-            };
-        });
     });
-
-    $('.pingxie_da span').hide();
-    $('.pingxie_da b').hide();
-    $('.lfii').hide();
-    $('.lfiii').hide();
-    $('.pinxie_yb').hide();
+            // if(data.value ==1){
+            //     $('.lfi').show();
+            //     $('.lfii').hide();
+            //     $('.lfiii').hide();
+            // };
+            // if(data.value ==2){
+            //     $('.lfi').hide();
+            //     $('.lfii').show();
+            //     $('.lfiii').show();
+            // };
+    //     });
+    // });
+    //
+    // $('.pingxie_da span').hide();
+    // $('.pingxie_da b').hide();
+    // $('.lfii').hide();
+    // $('.lfiii').hide();
+    // $('.pinxie_yb').hide();
     $(document).on('click','.pinxie .word',function(){
         if($('.pinxie_yb').is(':hidden')){
             $('.pinxie_yb').show();
@@ -187,15 +191,27 @@
         console.log('word:  ',word);
         index++;
         if (index >= engRight.length) {
+            pageNum++;
+            console.log('pageNum',pageNum);
             if (word == engRight) {
-                $('.pingxie_da span').show();
-                    nextPage();
+                pinxieAnsRight();
+                var userChapterWord = alreadyLearn();
+                updateWord(userChapterWord);
+                if (pageNum > result.length) {
+                    errorSubjects.shift();
+                    console.log('errorSubjectsRight',errorSubjects);
+                }
             }else{
-                $('.pingxie_da').show();
-                $('.pingxie_da span').show();
-                $('.pingxie_da b').show();
-                $('#next-page').show();
-                $('.lfi1').attr('disabled',true);
+                pinxieAnsError();
+                var userChapterWord = HardWord();
+                updateWord(userChapterWord);
+                if (pageNum < result.length) {
+                    errorSubjects.push(result[pageNum]);
+                }else {
+                    errorSubjects.push(errorSubjects[0]);
+                    errorSubjects.shift();
+                    console.log('errorSubjectsError',errorSubjects);
+                }
             }
         }
 

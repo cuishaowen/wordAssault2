@@ -1,24 +1,24 @@
 //nav slideDown
-jQuery("#nav").slide({
-    type:"menu",// 效果类型，针对菜单/导航而引入的参数（默认slide）
-    titCell:".nLi", //鼠标触发对象
-    targetCell:".sub", //titCell里面包含的要显示/消失的对象
-    effect:"slideDown", //targetCell下拉效果
-    delayTime:300 , //效果时间
-    triggerTime:0, //鼠标延迟触发时间（默认150）
-    returnDefault:true //鼠标移走后返回默认状态，例如默认频道是“预告片”，鼠标移走后会返回“预告片”（默认false）
-});
+// jQuery("#nav").slide({
+//     type:"menu",// 效果类型，针对菜单/导航而引入的参数（默认slide）
+//     titCell:".nLi", //鼠标触发对象
+//     targetCell:".sub", //titCell里面包含的要显示/消失的对象
+//     effect:"slideDown", //targetCell下拉效果
+//     delayTime:300 , //效果时间
+//     triggerTime:0, //鼠标延迟触发时间（默认150）
+//     returnDefault:true //鼠标移走后返回默认状态，例如默认频道是“预告片”，鼠标移走后会返回“预告片”（默认false）
+// });
 
 //用户相关下拉菜单
-jQuery(".corner>ul").slide({
-    type: "menu",// 效果类型，针对菜单/导航而引入的参数（默认slide）
-    titCell: ".nLi", //鼠标触发对象
-    targetCell: ".user_handle", //titCell里面包含的要显示/消失的对象
-    effect: "slideDown", //targetCell下拉效果
-    delayTime: 300, //效果时间
-    triggerTime: 0, //鼠标延迟触发时间（默认150）
-    returnDefault: true //鼠标移走后返回默认状态，例如默认频道是“预告片”，鼠标移走后会返回“预告片”（默认false）
-});
+// jQuery(".corner>ul").slide({
+//     type: "menu",// 效果类型，针对菜单/导航而引入的参数（默认slide）
+//     titCell: ".nLi", //鼠标触发对象
+//     targetCell: ".user_handle", //titCell里面包含的要显示/消失的对象
+//     effect: "slideDown", //targetCell下拉效果
+//     delayTime: 300, //效果时间
+//     triggerTime: 0, //鼠标延迟触发时间（默认150）
+//     returnDefault: true //鼠标移走后返回默认状态，例如默认频道是“预告片”，鼠标移走后会返回“预告片”（默认false）
+// });
 
 //获取项目根路径
 function getContextPath() {
@@ -26,8 +26,9 @@ function getContextPath() {
     // var index = pathName.substr(1).indexOf("/");
     // var result = pathName.substr(0, index + 1);
     // return "http://192.168.1.24:8082/article";
-    return "http://localhost:8080/wordassault";  // 开发
-    // return "http://do.anssy.com/wordassault"    // 生产
+    // return "http://localhost:8080/wordassault";  // YangZ开发
+    return "http://localhost:8081/wordassault";  // cuisw开发
+    // return "http://do.anssy.com/wordassault"  // 生产
 }
 
 //获取路径中的参数

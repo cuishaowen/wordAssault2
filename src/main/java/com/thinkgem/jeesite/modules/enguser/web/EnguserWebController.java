@@ -122,6 +122,8 @@ public class EnguserWebController {
             jsonObject.put("loginTimes",httpSession.getAttribute("loginTimes"));//登录次数
             jsonObject.put("num",httpSession.getAttribute("num"));//编号
             jsonObject.put("optionsId",httpSession.getAttribute("optionsId"));//操作记录id
+            jsonObject.put("Mp2Type",httpSession.getAttribute("Mp2Type")); // 发音设置
+            jsonObject.put("JpanType",httpSession.getAttribute("JpanType")); // 键盘设置
         }
         return jsonObject.toString();
     }

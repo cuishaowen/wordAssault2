@@ -145,8 +145,8 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 			enguser.setUpdateDate(new Date());
 
 			Integer num=this.getEngUserCount()+1;
-			if (num==null){
-				num=100001;
+			if (num == 0){
+				num = 100001;
 			}
 			enguser.setNum(num.toString());//产生编号
 			enguser.setMp3Type("2");//默认美式发音

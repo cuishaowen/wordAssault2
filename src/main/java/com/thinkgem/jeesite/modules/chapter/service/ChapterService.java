@@ -47,4 +47,16 @@ public class ChapterService extends CrudService<ChapterDao, Chapter> {
 		super.delete(chapter);
 	}
 
+	public Chapter getNextChapter(String courseId,String chapterId){
+		// 通过章节id 找到当前章节
+		Chapter chapter = this.get(chapterId);
+		Chapter chapterNext = new Chapter();
+		chapterNext.setSort(chapter.getSort() + 5);
+		chapterNext.setParentId(courseId);
+		List<Chapter> chapters = this.findList(chapterNext);
+		if (chapters == null || chapters.size() < 1){
+			return null;
+		}
+		return chapters.get(0);
+	}
 }

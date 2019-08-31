@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="">
@@ -60,7 +60,6 @@
                         <i>课程中心</i>
                     </span>
                 </div>
-
             </div>
 
             <div class="gm">
@@ -68,11 +67,7 @@
                     <div class="title">已经购买课程 <i></i></div>
                 </div>
                 <div class="gm-kc">
-                    <ul>
-                        <li>小学体验课程<i></i></li>
-                        <li>初中体验课程<i></i></li>
-                        <li>高中体验课程<i></i></li>
-                    </ul>
+                    <ul id="alreadyPurchase"></ul>
                 </div>
             </div>
         </div>
@@ -85,13 +80,8 @@
                    <div class="layui-form-item">
                        <label class="layui-form-label">分册选择</label>
                        <div class="layui-input-block">
-                           <select name="interest" lay-filter="aihao">
+                           <select id="coursesOpen" name="one" lay-filter="open">
                                <option value=""></option>
-                               <option value="0" selected="">初中体验课</option>
-                               <option value="1" >2</option>
-                               <option value="2">3</option>
-                               <option value="3">4</option>
-                               <option value="4">5</option>
                            </select>
                        </div>
                    </div>
@@ -99,30 +89,26 @@
                    <div class="layui-form-item">
                        <label class="layui-form-label">单元</label>
                        <div class="layui-input-block">
-                           <select name="interest" lay-filter="aihao">
-                               <option value=""></option>
+                           <select id="chapter" name="two" lay-filter="unit">
+                               <option value="0"></option>
                                <option value="0" selected="">全本</option>
-                               <option value="1" >unit1</option>
-                               <option value="2">unit2</option>
-                               <option value="3">unit3</option>
-                               <option value="4">unit4</option>
                            </select>
                        </div>
                    </div>
 
                    <div class="layui-form-item" style="height:60px;">
-                       <label class="layui-form-label" style="height:60px;">测试类型（多选）</label>
+                       <label class="layui-form-label" style="height:60px;">测试类型</label>
                        <div class="layui-input-block">
-                           <button type="button" class=" btn12 btn11-active">英译汉</button>
+                           <button id="yingyihan" type="button" class=" btn12 btn11-active" value="1" >英译汉</button>
                            <!--<button type="button" class=" btn12">汉译英</button>-->
-                           <button type="button" class=" btn12">听写</button>
+                           <button id="tingxie" type="button" class=" btn12" value="2">听写</button>
                        </div>
                    </div>
 
                    <div class="layui-form-item" style="height:60px;">
 
-                       <div class="layui-input-block" >
-                           <a href="cs.html" style="margin-left:212px;"  class="layui-btn layui-btn-lg faguanbtn">开始测试</a>
+                       <div class="layui-input-block">
+                           <a style="margin-left:212px;"  class="layui-btn layui-btn-lg faguanbtn" lay-submit lay-filter="*">开始测试</a>
                        </div>
                    </div>
                </form>
@@ -170,6 +156,61 @@
             , laydate = layui.laydate
             , laypage = layui.laypage;
     });
+
+    layui.use(['form','jquery'],function () {
+        var form = layui.form;
+        coursesOpen();
+        form.render('select');
+        form.on('select(open)',function (data) {
+            var url = getContextPath() + '/chapter/getList';
+            var dataPost = {};
+            dataPost.courseId = data.value;
+            $.post(
+                url,
+                dataPost,
+                function(res) {
+                    for (i = 0; i < res.length; i++){
+                        $('#chapter').append(
+                            '<option value="'+ res[i].id +'">' + res[i].name + '</option>'
+                        )
+                    }
+                    form.render('select');
+                }
+            )
+        });
+        form.on('submit(*)',function (data) {
+            console.log(data.field);
+            var courseId = data.field.one;
+            var chapterId = data.field.two;
+            // 获取章节下面的所有单词信息 以及用户的操作信息
+            var btnVal = $('.btn11-active').val();
+            if (courseId == null || courseId == ''){
+                if (chapterId == null || chapterId == 0){
+                    return false;
+                } else{
+                    window.open('cs.html?chapterId=' + chapterId + '&val=' + btnVal);
+                }
+            }else{
+                if (chapterId == null || chapterId == 0){
+                    window.open('cs.html?courseId=' + courseId +'&val=' + btnVal);
+                    // return getContextPath() + '/webclient/cs.html?courseId=' + courseId +'&val=' + btnVal;
+                } else{
+                    window.open('cs.html?chapterId=' + chapterId + '&val=' + btnVal);
+                }
+            }
+        })
+    });
+
+
+    function coursesOpen() {
+        var coursesOpen = u.getStorage('openCourses');
+        for (i = 0; i < coursesOpen.length; i++) {
+            $('#coursesOpen').append(
+                '<option value="'+ coursesOpen[i].id+ '">' + coursesOpen[i].name + '</option>'
+            );
+        }
+    }
+
     function detail() {
         var idx = layer.open({
             title: '每日学习 <span style="float:right;display: block;width:auto;height:43px;line-height: 43px;">2019年7月15日</span>',
@@ -186,14 +227,6 @@
             content: 'kczx.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
         });
     }
-    //    function detail1() {
-    //        var idx = layer.open({
-    //            title: '熟词集',
-    //            type: 2,
-    //            area: ['900px', '650px'],
-    //            content: 'jyhg.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-    //        });
-    //    }
 
     $('.btn11').on('click',function(){
         $(this).addClass('btn11-active').siblings().removeClass('btn11-active')
@@ -206,7 +239,6 @@
         }else{
             $(this).addClass('btn11-active')
         }
-    })
-
+    });
 </script>
 </html>

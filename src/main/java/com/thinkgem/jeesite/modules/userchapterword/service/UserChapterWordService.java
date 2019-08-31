@@ -6,7 +6,6 @@ package com.thinkgem.jeesite.modules.userchapterword.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.chapterexample.entity.ChapterExample;
@@ -98,7 +97,36 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		return wordInformations;
 	}
 
-	// 获取每日学习单词数量
+	// 根据章节获取所有章节单词信息  单词例句
+	public List<WordInformation> getCourseWordInformation(String courseId){
+		List<WordInformation> wordInformations = new ArrayList<WordInformation>();
+
+		// 获取章节下所有的例子信息
+		ChapterExample chapterExample = new ChapterExample();
+		chapterExample.setCourseId(courseId);
+		List<ChapterExample> chapterExamples = chapterExampleService.findList(chapterExample);
+
+		// 获取章节相关的例子信息
+		for (ChapterExample chapterExampleInf : chapterExamples){
+			WordInformation wordInformation = new WordInformation();
+			List<String> errorCh = new ArrayList<String>();
+			WordExample wordExample = wordExampleService.get(chapterExampleInf.getWordExampleId());
+			Word word = wordService.get(wordExample.getWordId());
+			List<Word> errorWords = wordService.selectRandWordWithoutThis(wordExample.getWordId());
+			for (Word wordError : errorWords){
+				errorCh.add(wordError.getChinese());
+			}
+
+			wordInformation.setErrorCh(errorCh);				// 错误单词释义
+			wordInformation.setWord(word); 						// 单词信息
+			wordInformation.setWordExample(wordExample); 		// 单词对应的例句信息
+			wordInformation.setChapterExample(chapterExample);  // 例句和单词对应的课程和章节id
+			wordInformations.add(wordInformation);
+		}
+		return wordInformations;
+	}
+
+	// 获取每日单词
 	public List<EverydayMemoryWord> getEveryWord(String userId, String courseId, String date){
 		List<EverydayMemoryWord> everydayMemoryWords = new ArrayList<EverydayMemoryWord>();
 		UserChapterWord userChapterWord = new UserChapterWord();
@@ -253,9 +281,5 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		userChapterWord.setCourseId(courseId);
 		userChapterWord.setEngUserId(userId);
 		return this.findList(userChapterWord);
-	}
-
-	public List<Map<String,String>> findWeekStudyWords(String userId) {
-		return userChapterWordDao.findWeekStudyWords(userId);
 	}
 }

@@ -243,8 +243,21 @@
             content: 'kcxy.html?chapterId='+ chapterId,
             end: function () {
                 $('.beizu').load(location.href + ' .beizu');
-                $('.xl_btns').load(location.href + ' .xl_btns');
+                // $('.xl_btns').load(location.href + ' .xl_btns');
                 loadPage();
+                var userchapters = u.getStorage('userChapters');
+                var userchapter = {};
+                for (i = 0; i < userchapters.length; i++){
+                    if (chapterId == userchapters[i].userChapter.chapterId){
+                        userchapter = userchapters[i].userChapter;
+                    }
+                }
+                if (userchapter.studyStatus == 1){
+                    updateStatus(userchapter.chapterId,'2');
+                    $('.xl_btns').load(location.href + ' .xl_btns');
+                    addLoop();
+                }
+                // addLoop();
             }
         }
         );

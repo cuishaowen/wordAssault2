@@ -17,4 +17,9 @@ import org.apache.ibatis.annotations.Param;
 public interface UserChapterDao extends CrudDao<UserChapter> {
 
     public UserChapter getByChapterIdAndUserId(@Param("chapterId")String chapterId,@Param("userId")String userId);
+
+    public void updateStatus(
+            @Param("chapterId")String chapterId,@Param("userId")String userId,
+            @Param("studyStatus")String studyStatus,@Param("isOpen")String isOpen
+    );
 }

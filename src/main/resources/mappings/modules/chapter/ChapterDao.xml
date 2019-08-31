@@ -47,6 +47,9 @@
 			<if test="parentId != null and parentId != ''">
 				AND a.parent_id_ = #{parentId}
 			</if>
+			<if test="sort != null and sort != ''">
+				and a.sort_ = #{sort}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

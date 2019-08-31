@@ -1,36 +1,36 @@
 -- ----------------------------
--- Table structure for enguser
+-- Table structure for `enguser`
 -- ----------------------------
 DROP TABLE IF EXISTS `enguser`;
-create table enguser
-(
-    ID_ varchar(64) not null comment '编号',
-    IMG_ varchar(255) null comment '头像',
-    NAME_ varchar(20) null comment '姓名',
-    SEX_ char(1) null comment  '性别',
-    AGE_ int null comment '年龄',
-    TEL_ varchar(20) null comment '手机号码',
-    WE_CHAT_ varchar(20) null comment '微信号',
-    LOGIN_NAME_ varchar(50) null comment '登录名',
-    PASSWORD_ varchar(50) null comment '密码',
-    SCHOOL_ varchar(20) null comment '学校',
-    CLASS_R varchar(20) null comment '班级',
-    CITY_ varchar(20) null comment '城市',
-    PROVINCE varchar(20) null comment '省份',
-    CREATE_DATE_ datetime null comment '创建时间',
-    UPDATE_DATE_ datetime null comment '修改时间',
-    REMARKS_ varchar(255) null comment '备注',
-    DEL_FLAG_ char(1) null comment '删除标识 1 正常 2 删除',
-    LOGIN_TIME_  int               null comment '登录次数',
-    NUM_         int default 12530 null comment '编号',
-    BLANK_ONE_ text null comment '预留字段1',
-    BLANK_TWO_ text null comment '预留字段2',
-    constraint enguser_pk
-        primary key (ID_)
-)
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+CREATE TABLE `enguser` (
+   `ID_` varchar(64) NOT NULL COMMENT '编号',
+   `IMG_` varchar(255) DEFAULT NULL COMMENT '头像',
+   `NAME_` varchar(20) DEFAULT NULL COMMENT '姓名',
+   `SEX_` char(1) DEFAULT NULL COMMENT '性别',
+   `AGE_` int(11) DEFAULT NULL COMMENT '年龄',
+   `TEL_` varchar(20) DEFAULT NULL COMMENT '手机号码',
+   `WE_CHAT_` varchar(20) DEFAULT NULL COMMENT '微信号',
+   `LOGIN_NAME_` varchar(50) DEFAULT NULL COMMENT '登录名',
+   `PASSWORD_` varchar(50) DEFAULT NULL COMMENT '密码',
+   `SCHOOL_` varchar(20) DEFAULT NULL COMMENT '学校',
+   `CLASS_R` varchar(20) DEFAULT NULL COMMENT '班级',
+   `CITY_` varchar(20) DEFAULT NULL COMMENT '城市',
+   `PROVINCE` varchar(20) DEFAULT NULL COMMENT '省份',
+   `CREATE_DATE_` datetime DEFAULT NULL COMMENT '创建时间',
+   `UPDATE_DATE_` datetime DEFAULT NULL COMMENT '修改时间',
+   `REMARKS_` varchar(255) DEFAULT NULL COMMENT '备注',
+   `DEL_FLAG_` char(1) DEFAULT NULL COMMENT '删除标识 1 正常 2 删除',
+   `BLANK_ONE_` text COMMENT '预留字段1',
+   `BLANK_TWO_` text COMMENT '预留字段2',
+   `LOGIN_TIME_` int(11) DEFAULT NULL COMMENT '登录次数',
+   `NUM_` int(11) DEFAULT '12530' COMMENT '编号',
+   `MP3_TYPE` char(1) DEFAULT NULL COMMENT '''(1英式发音，2美式发音)''',
+   `J_PAN_TYPE` char(1) DEFAULT NULL COMMENT '(1软键盘，2硬键盘)',
+   PRIMARY KEY (`ID_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+
 -- ----------------------------
---  Records of  enguser
+-- Records of enguser
 -- ----------------------------
 
 -- ----------------------------

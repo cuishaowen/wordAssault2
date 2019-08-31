@@ -122,6 +122,17 @@ public class UserChapterWordWebController {
         return userChapterWordService.getWordInformation(chapterId);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "getCourseWordInformation")
+    public List<WordInformation> getCourseWordInformation(String courseId){
+        return userChapterWordService.getCourseWordInformation(courseId);
+    }
+
+
+
+
+
+
     /**
      * 获取章节下的所有的单词信息和例句
      * @param chapterId

@@ -126,5 +126,24 @@
 		DELETE FROM user_chapter
 		WHERE id_ = #{id}
 	</update>
+
+	<update id="updateStatus">
+		update user_chapter
+		set
+		<if test="studyStatus != null and studyStatus != ''">
+			study_status_ = #{studyStatus},
+		</if>
+		<if test="isOpen != null and isOpen != '' ">
+			is_open_ = #{isOpen}
+		</if>
+		<where>
+			<if test="userId != null and userId != ''">
+				and user_id_ = #{userId}
+			</if>
+			<if test="chapterId != null and chapterId != ''">
+				and chapter_id_ = #{chapterId}
+			</if>
+		</where>
+	</update>
 	
 </mapper>
