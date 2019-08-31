@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.userchapterword.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.chapterexample.entity.ChapterExample;
@@ -97,6 +98,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		return wordInformations;
 	}
 
+	// 获取每日学习单词数量
 	// 根据章节获取所有章节单词信息  单词例句
 	public List<WordInformation> getCourseWordInformation(String courseId){
 		List<WordInformation> wordInformations = new ArrayList<WordInformation>();
@@ -281,5 +283,9 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		userChapterWord.setCourseId(courseId);
 		userChapterWord.setEngUserId(userId);
 		return this.findList(userChapterWord);
+	}
+
+	public List<Map<String,String>> findWeekStudyWords(String userId) {
+		return userChapterWordDao.findWeekStudyWords(userId);
 	}
 }
