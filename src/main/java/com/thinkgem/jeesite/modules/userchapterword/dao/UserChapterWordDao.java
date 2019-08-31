@@ -7,6 +7,9 @@ import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * userchapterwordDAO接口
  * @author cuisw
@@ -14,5 +17,6 @@ import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
  */
 @MyBatisDao
 public interface UserChapterWordDao extends CrudDao<UserChapterWord> {
-	
+
+    List<Map<String,String>> findWeekStudyWords(String userId);
 }

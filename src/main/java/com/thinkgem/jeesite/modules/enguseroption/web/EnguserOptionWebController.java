@@ -27,6 +27,42 @@ public class EnguserOptionWebController {
     @Autowired
     UserChapterWordService userChapterWordService;
 
+    @ResponseBody
+    @RequestMapping(value = "/getLastWeekStudyWords",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public Map<String,Object> getLastWeekStudyWords(HttpSession httpSession){
+        Map<String,Object> resultMap=new HashMap<String, Object>();
+        try {
+            //根据用户id查询出所有的课程，声明日期，循环查询每日学习单词数量
+            String userId=httpSession.getAttribute("id").toString();//获取到用户的id
+            //通过用户id查询user_chapter_word的更新时间，确认学习单词数量
+            List<Map<String,String>> weekStudyWordsList=userChapterWordService.findWeekStudyWords(userId);
+
+            if (weekStudyWordsList!=null&&weekStudyWordsList.size()!=0){
+                Map<String,String> wordsMap=new HashMap<String, String>();
+                for (Map<String,String> map:weekStudyWordsList){
+                    String wordTime=map.get("updateTime");//学习的时间
+                    Object countNum = map.get("countNum");
+                    wordsMap.put(wordTime,countNum.toString());//把所有的map中的数据放到一个map里面
+                }
+                Object[] updateTime=wordsMap.keySet().toArray();//把日期值转换成数组
+                Integer[] wordsCount=new Integer[updateTime.length];
+                for (int i=0;i<updateTime.length;i++){
+                    wordsCount[i]=Integer.parseInt(wordsMap.get(updateTime[i]));
+                }
+                resultMap.put("updateTimes",updateTime);
+                resultMap.put("wordsCount",wordsCount);
+            }
+
+            resultMap.put("code",0);//成功
+            resultMap.put("msg","操作成功");
+            return resultMap;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultMap.put("code",1);//操作失败
+            resultMap.put("msg","操作失败");
+            return resultMap;
+        }
+    }
 
     @ResponseBody
     @RequestMapping(value = "/getLastWeekStudyTime",method =RequestMethod.POST,produces = "application/json;charset=UTF-8")

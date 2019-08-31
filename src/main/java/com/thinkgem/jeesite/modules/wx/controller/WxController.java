@@ -100,6 +100,46 @@ public class WxController extends AppController {
     }
 
     /**
+     * 查询近一周学习单词数量
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getLastWeekStudyWords/{id}",method = RequestMethod.GET)
+    public Map<String,Object> getLastWeekStudyWords(@PathVariable String id){
+        Map<String,Object> resultMap=new HashMap<String, Object>();
+        try {
+
+            //通过用户id查询user_chapter_word的更新时间，确认学习单词数量
+            List<Map<String,String>> weekStudyWordsList=userChapterWordService.findWeekStudyWords(id);
+
+            if (weekStudyWordsList!=null&&weekStudyWordsList.size()!=0){
+                Map<String,String> wordsMap=new HashMap<String, String>();
+                for (Map<String,String> map:weekStudyWordsList){
+                    String wordTime=map.get("updateTime");//学习的时间
+                    Object countNum = map.get("countNum");
+                    wordsMap.put(wordTime,countNum.toString());//把所有的map中的数据放到一个map里面
+                }
+                Object[] updateTime=wordsMap.keySet().toArray();//把日期值转换成数组
+                Integer[] wordsCount=new Integer[updateTime.length];
+                for (int i=0;i<updateTime.length;i++){
+                    wordsCount[i]=Integer.parseInt(wordsMap.get(updateTime[i]));
+                }
+                resultMap.put("updateTimes",updateTime);
+                resultMap.put("wordsCount",wordsCount);
+            }
+
+            resultMap.put("code",0);//操作失败
+            resultMap.put("msg","学习时间获取成功");
+            return resultMap;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultMap.put("code",1);//操作失败
+            resultMap.put("msg","操作失败");
+            return resultMap;
+        }
+
+        }
+
+    /**
      * 查询学习时间
      */
     @ResponseBody

@@ -103,113 +103,133 @@
 <script>
     $(function () {
         getStudyTime();
+        getLastWeekStudyWords();
     })
 </script>
 <script type="text/javascript">
-    var dom = document.getElementById("container");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    app.title = '柱状图分数划分';
-    var namedate = ['2019-08-21', '2019-07-22', '2019-07-23', '2019-07-24', '2019-07-25', '2019-07-26', '2019-07-27'];
-    var numdate = [83, 20, 30, 40, 50, 60, 100];
-    var colorlist = [];
-    numdate.forEach(element => {
-        if (element < 60) {
-        colorlist.push(["#fc7095", "#fa8466"])
-    } else if (element >= 60 && element < 90) {
-        colorlist.push(["#386ffd", "#74b3ff"])
-    } else {
-        colorlist.push(["#1aa8ce", "#49d3c6"])
-    }
-    });
-    option = {
+    function getLastWeekStudyWords() {
+        $.ajax({
+            type:'get',
+            url: "${pageContext.request.contextPath}/wx/Common/getLastWeekStudyWords/${id}",
+            cache:false,
+            async:false,
+            data:{},
+            success:function (data) {
+                if (data.code==0){
+                    var dom = document.getElementById("container");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+                    option = null;
+                    app.title = '柱状图分数划分';
+                    var namedate = data.updateTimes;
+                    var numdate =data.wordsCount;
+                    var colorlist = [];
+                    numdate.forEach(element => {
+                        if (element < 60) {
+                        colorlist.push(["#fc7095", "#fa8466"])
+                    } else if (element >= 60 && element < 90) {
+                        colorlist.push(["#386ffd", "#74b3ff"])
+                    } else {
+                        colorlist.push(["#1aa8ce", "#49d3c6"])
+                    }
+                });
+                    option = {
 
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: [
-            {
-                type: 'category',
-                data: namedate,
-                axisTick: {
-                    alignWithLabel: true
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: "#4dd1c4",
-                        width: 1
-                    }
-                },
-                axisLabel: {
-                    show: true,
-                    textStyle: {
-                        color: '#999'
-                    }
-                }
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value} 个',
-                    show: true,
-                    textStyle: {
-                        color: '#999'
-                    }
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: "#4dd1c4",
-                        width: 1
-                    }
-                },
-                splitLine: {
-                    show: true,
-                    lineStyle: {
-                        type: 'dashed',
-                        color: '#ddd'
-                    }
-                }
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: namedate,
+                                axisTick: {
+                                    alignWithLabel: true
+                                },
+                                axisLine: {
+                                    lineStyle: {
+                                        color: "#4dd1c4",
+                                        width: 1
+                                    }
+                                },
+                                axisLabel: {
+                                    show: true,
+                                    textStyle: {
+                                        color: '#999'
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                axisLabel: {
+                                    formatter: '{value} 个',
+                                    show: true,
+                                    textStyle: {
+                                        color: '#999'
+                                    }
+                                },
+                                axisLine: {
+                                    lineStyle: {
+                                        color: "#4dd1c4",
+                                        width: 1
+                                    }
+                                },
+                                splitLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        type: 'dashed',
+                                        color: '#ddd'
+                                    }
+                                }
 
-            }
-        ],
-        series: [
-            {
-                name: '学习数量（个）',
-                type: 'bar',
-                barWidth: '60%',
-                data: numdate,
-                itemStyle: {
-                    normal: {
-                        color: function (params) {
-                            var colorList = colorlist
-                            var index = params.dataIndex;
-                            return new echarts.graphic.LinearGradient(0, 0, 0, 1,
-                                [
-                                    { offset: 1, color: colorList[index][0] },
-                                    { offset: 0, color: colorList[index][1] }
-                                ]);
-                        }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '学习数量（个）',
+                                type: 'bar',
+                                barWidth: '60%',
+                                data: numdate,
+                                itemStyle: {
+                                    normal: {
+                                        color: function (params) {
+                                            var colorList = colorlist
+                                            var index = params.dataIndex;
+                                            return new echarts.graphic.LinearGradient(0, 0, 0, 1,
+                                                [
+                                                    { offset: 1, color: colorList[index][0] },
+                                                    { offset: 0, color: colorList[index][1] }
+                                                ]);
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    ;
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
                     }
+                } else {
+                    alert(data.msg)
                 }
+            },
+            error:function () {
+                alert("时间获取失败");
             }
-        ]
-    };
-    ;
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
+        });
     }
+
 </script>
 <script type="text/javascript">
     function getStudyTime() {

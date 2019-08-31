@@ -24,7 +24,17 @@
 	<sql id="userChapterWordJoins">
 		LEFT JOIN enguser u2 ON u2.id_ = a.user_id_
 	</sql>
-    
+
+	<select id="findWeekStudyWords" resultType="Map">
+		SELECT COUNT(a.WORD_ID_) AS countNum,DATE_FORMAT(a.UPDATE_DATE_,'%Y-%m-%d') as updateTime FROM user_chapter_word a
+		WHERE
+		a.STUDY_STATUS_='2'
+		AND
+		a.USER_ID_=#{userId}
+		AND
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= a.UPDATE_DATE_ GROUP BY updateTime
+	</select>
+
 	<select id="get" resultType="UserChapterWord">
 		SELECT 
 			<include refid="userChapterWordColumns"/>
