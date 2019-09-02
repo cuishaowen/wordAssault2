@@ -26,4 +26,10 @@ public class UserCourseWebController {
         return userCourseService.getUserOpenCoursesAndNot(enguserId);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "updateScore")
+    public void updateScoreByIds(String score, String userId, String  courseId){
+        userCourseService.updateScore(score, userId, courseId);
+    }
+
 }

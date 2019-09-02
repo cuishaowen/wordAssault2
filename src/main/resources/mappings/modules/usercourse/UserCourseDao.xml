@@ -132,5 +132,10 @@
 		DELETE FROM user_course
 		WHERE id_ = #{id}
 	</update>
-	
+
+	<update id="updateScore">
+		UPDATE user_course SET
+			score = #{score}
+		where user_id_ = #{userId} and course_id_ = #{courseId}
+	</update>
 </mapper>

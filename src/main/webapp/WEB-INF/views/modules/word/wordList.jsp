@@ -91,7 +91,7 @@
 					</audio>
 				</td>
 
-				<td>
+				<td style="width: 100px">
 					<img src="${word.img}" style="width:100px;height:75px" alt="">
 				</td>
 				<td>

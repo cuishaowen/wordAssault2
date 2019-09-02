@@ -23,29 +23,43 @@
     .layui-form-pane .layui-input-block{margin-left: 30px; color: #fff;}
     #aaaa{border: 1px solid #169dbe; border-radius: 5px; background-color: #141e4a; color: #fff;}
     .btn3{background-color: #00f6ff; height: 40px; line-height: 40px; color: #0f8e93;}
+    .tm1 {
+        margin-top: 30px;
+    }
+    .ck {
+        margin-top: 20px;
+    }
+    .zzl {
+        height: 500px;
+    }
+    .tm {
+        margin-bottom: 100px
+    }
 </style>
 <body>
 <div class="zz">
-    <div class="zz1">
+    <div class="zz1" style="height: 500px;display: block">
         <div class="zz-title">
             <img class="cha1" src="images/cha1.png" alt="">
         </div>
         <div class="zz-img">
             <img src="images/cha.png" alt="">
         </div>
-        <div class="fs">
-            <span>不及格！</span><i>0分</i>
+        <div id="failure" class="fs" style="display: none">
+            <span class="no">失败！</span><i><span class="cur-score"></span>分</i>
+        </div>
+        <div id="success" class="fs">
+            <span class="yes">成功！</span><i><span class="cur-score"></span>分</i>
         </div>
         <div class="tm">
             <div class="tm1">
                  <span style="width: 100%; line-height: 2px;">
-                上次测试成绩 90分
+                上次测试成绩 <span id="pre-score"></span>分
                  </span>
             </div>
             <div class="tm1">
-                <span>题目：   100</span><i>答对：   0</i>
+                <span id="subject-num">题目：   </span><i id="right-num">答对：  </i>
             </div>
-
         </div>
         <div class="ck">
             <div class="ck1">
@@ -63,7 +77,7 @@
     </fieldset>
     <div class="btn2" style="margin-top:20px;">
         <div class="btn21" style="text-align: center;">
-            <button class="btn3" type="button">交卷</button>
+            <button id="submit-paper" class="btn3" type="button">交卷</button>
         </div>
     </div>
 </div>
@@ -98,19 +112,10 @@
     });
 
     $('.zz').hide();
-    $('.btn3').on('click',function(){
-        $('.zz').fadeIn(300);
-    });
-    $('.cha1').on('click',function(){
-        $('.zz').fadeOut(300);
-    });
 
     $('.layui-btn-danger').on('click',function(){
         $('.zz').fadeOut(300);
     });
-    $('.lb').on('click',function(){
-        window.location.href='ct.html'
-    })
     $('.wordvoice').on('click',function(){
         $(this).find('audio')[0].play();
     });

@@ -3,10 +3,10 @@ var uzStorage = function () {
     var ls = window.localStorage;
     return ls;
 };
-//定义全局变量u
+// 定义全局变量u
 var u = {};
 
-//设置缓存
+// 设置缓存
 u.setStorage = function (key, value) {
     var v = value;
     if (typeof v == 'object') {
@@ -21,7 +21,7 @@ u.setStorage = function (key, value) {
     }
 };
 
-//获取缓存
+// 获取缓存
 u.getStorage = function (key) {
     var ls = uzStorage();
     if (ls) {
@@ -299,7 +299,16 @@ function addLoop() {
                     console.log('id:' ,'#xl'+k );
                     console.log(i);
                 }
-
+            }
+            if ($('#xl' + k + ' a').length == 1){
+                $('#xl' + k).append(
+                    '<c class="last-append" href="javascript:void (0);">\n' +
+                    '</c>\n');
+            }
+            if ($('#xxl' + k + ' a').length == 1){
+                $('#xxl' + k).append(
+                    '<c class="last-append" href="javascript:void (0);">\n' +
+                    '</c>\n');
             }
 
         }

@@ -21,4 +21,5 @@ public interface UserChapterWordDao extends CrudDao<UserChapterWord> {
 
     List<Map<String,String>> findWeekStudyWords(String userId);
     String getCourseScoreByIds(@Param("userId")String userId,@Param("courseId") String courseId);
+
 }

@@ -16,5 +16,5 @@ import org.apache.ibatis.annotations.Param;
 @MyBatisDao
 public interface UserCourseDao extends CrudDao<UserCourse> {
 
-
+    public void updateScore(@Param("score")String score, @Param("userId")String userId,@Param("courseId") String courseId);
 }

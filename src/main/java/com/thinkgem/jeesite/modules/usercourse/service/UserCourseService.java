@@ -51,6 +51,8 @@ public class UserCourseService extends CrudService<UserCourseDao, UserCourse> {
 	private WordService wordService;
     @Autowired
 	private UserChapterWordService userChapterWordService;
+    @Autowired
+	private UserCourseDao userCourseDao;
 
 	public UserCourse get(String id) {
 		return super.get(id);
@@ -176,6 +178,11 @@ public class UserCourseService extends CrudService<UserCourseDao, UserCourse> {
 			}
 		}
 
+	}
+
+	@Transactional(readOnly = false)
+	public void updateScore(String score, String userId, String courseId) {
+		userCourseDao.updateScore(score, userId, courseId);
 	}
 
 }

@@ -275,8 +275,6 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 //        return list;
 //    }
 
-
-
 	// 通过courseId 获取userChapterWord表数据
 	public List<UserChapterWord> getUserChapterWordList(String userId, String courseId){
 		UserChapterWord userChapterWord = new UserChapterWord();
@@ -292,4 +290,5 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 	public String getCourseScoreByIds(String userId, String courseId) {
 		return userChapterWordDao.getCourseScoreByIds(userId,courseId);
 	}
+
 }

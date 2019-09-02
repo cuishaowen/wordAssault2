@@ -82,6 +82,11 @@ function pageOne(res) {
     }
     console.log('object:',object);
     var english = object.word.english;
+    var engVoice = object.word.engVoice;
+    var ameVoice = object.word.ameVoice;
+    var voice = ameVoice ? ameVoice : engVoice;
+    var audio=new Audio(voice);
+    audio.play();
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
     var exampleArr = object.wordExample.example.split("$$$");
@@ -97,6 +102,7 @@ function pageOne(res) {
     $('#eng-word').text(english);
     $('#eng-right').text(chinese);
     $('#ch-word').text(chinese);
+    $('#fayin audio source').attr('src',voice);
     $('#radio-1').val(errorCh[0]);
     $('#radio-1').text('A. '+ errorCh[0]);
     $('#radio-2').val(errorCh[1]);
@@ -105,6 +111,7 @@ function pageOne(res) {
     $('#radio-3').text('C. '+ errorCh[2]);
     $('#radio-4').val(errorCh[3]);
     $('#radio-4').text('D. '+ errorCh[3]);
+
 }
 
 // 获取当前点击按钮的值
@@ -160,7 +167,6 @@ function nextSubject(select) {
             errorSubjects.shift();
             console.log('errorSubjectsError',errorSubjects);
         }
-
     }
 }
 $('#nextsub').on('click',function(){
@@ -230,6 +236,11 @@ function page2(res) {
         object = res;
     }
     var english = object.word.english;
+    var ameVoice = object.word.ameVoice;
+    var engVoice = object.word.engVoice;
+    var voice = ameVoice ? ameVoice : engVoice;
+    var audio=new Audio(voice);
+    audio.play();
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
     var exampleArr = object.wordExample.example.split("$$$");
@@ -242,6 +253,7 @@ function page2(res) {
     shuffle(errorCh);
     $('#ch-word').text(chinese);
     $('#eng-right').text(english);
+    $('#fayin2 audio source').attr('src',voice);
     $('#aaaa').val('');
     if (jPanType == '1'){
         var arr = [];
@@ -378,4 +390,22 @@ function pinxieAnsError(){
     $('#next-page').show();
     $('#aaaa').attr('disabled',true);
 }
+
+//发音图标
+$('#fayin').on('click',function () {
+    var f = $('#fayin audio source').attr('src');
+    var audio=new Audio(f);
+    audio.play();
+});
+$('#fayin2').on('click',function () {
+    var f = $('#fayin2 audio source').attr('src');
+    var audio=new Audio(f);
+    audio.play();
+});
+//发音图标
+$('#fayin').on('click',function () {
+    var f = $('.wordvoice audio source').attr('src');
+    var audio=new Audio(f);
+    audio.play();
+});
 

@@ -49,8 +49,7 @@ VALUES ('140', '被动语态', '被动语态', 'subject_type', '试卷类别', 4
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
 VALUES ('141', '疑问句', '疑问句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 
--- 为用户表增加登录次数字段
-alter table enguser add loginTime int null comment '登录次数';
+
 
 
 

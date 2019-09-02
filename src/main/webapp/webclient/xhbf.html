@@ -55,11 +55,13 @@
                             <div id="wordId-right" style="display: none;"></div>
                             <div class="fayin"></div>
                             <div class="yb"></div>
+                            <div style="display: inline-block">
                             <a href="javascript:void(0)" class="wordvoice" id="fayin">
                                 <audio class="voicebox" controls="" autoplay="" preload="auto" style="display: none;">
                                     <source src="">
                                 </audio>
                             </a>
+                            </div>
                         </div>
                         <div class="form_kg">
                             <form class="layui-form" action="">
@@ -130,7 +132,9 @@
             var c = $(el).index();
             var d = $(el).find('audio source').attr('src');
             var wordId = $(el).find('.wordId-left').text();
+            var img = $(el).find('.dc_img').attr('src');
 
+            $('.dc_img img').attr('src',img);
             $('#wordId-right').text(wordId);
             $('.fayin').text(a);
             $('.yb').text(yb);
@@ -183,16 +187,20 @@
     //自动播放
     function bofang(){
         timeoutindex=  setInterval('bobo()',1500);
+
     }
     function bobo(){
         if(!play)
         {
-            next();
-            if(bfindex>=$('.dc-left ul li').length){
-                $('.play').attr("onclick",'bofang()');
-                index = 0;
-                clearInterval(timeoutindex);
+            console.log($('.dc-left ul li').length);
+            if((bfindex+2)>=$('.dc-left ul li').length){
+                play = !play;
+                $('.play').text("自动播放");
+                // $('.play').attr("onclick",'bofang()');
+                bfindex = 0;
+                // clearInterval(timeoutindex);
             }
+            next();
         }
         else {clearInterval(timeoutindex);}
 
@@ -223,7 +231,9 @@
         var c = $(this).index();
         var d = $(this).find('audio source').attr('src');
         var wordId = $(this).find('.wordId-left').text();
+        var img = $(this).find('.dc_img').attr('src');
 
+        $('.dc_img img').attr('src',img);
         $('#wordId-right').text(wordId);
         $('.fayin').text(a);
         $('.yb').text(yb);
@@ -269,7 +279,9 @@
             var f = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis2').text();
             var d = $('.dc-left ul li').eq(ii).find('audio source').attr('src');
             var wordId = $('.dc-left ul li').eq(ii).find('.wordId-left').text();
+            var img = $('.dc-left ul li').eq(ii).find('.dc_img').attr('src');
 
+            $('.dc_img img').attr('src',img);
             $('#wordId-right').text(wordId);
             $('.btns audio ').attr('src',d);
             $('.wordvoice audio source').attr('src',d);
@@ -286,8 +298,10 @@
             if(ii>=i-1){
 
                 $('.kj').attr("disabled",true);
+
             }
             bfindex=ii;
+
         }
         getStatus();
     }
@@ -299,7 +313,7 @@
             ii--;
 
             $('.dc-left ul li').eq(ii).addClass('li-active');
-            $('.dc-left ul li').eq(ii).siblings().removeClass('li-active')
+            $('.dc-left ul li').eq(ii).siblings().removeClass('li-active');
             var a = $('.dc-left ul li').eq(ii).find('i').text();
             var yb = $('.dc-left ul li').eq(ii).find('.yinbiao_dis').text();
             var b = $('.dc-left ul li').eq(ii).find('span').text();
@@ -307,7 +321,9 @@
             var f = $('.dc-left ul li').eq(ii).find('.lj_dis').find('.lj_dis2').text();
             var d = $('.dc-left ul li').eq(ii).find('audio source').attr('src');
             var wordId = $('.dc-left ul li').eq(ii).find('.wordId-left').text();
+            var img = $('.dc-left ul li').eq(ii).find('.dc_img').attr('src');
 
+            $('.dc_img img').attr('src',img);
             $('#wordId-right').text(wordId);
             $('.btns audio ').attr('src',d);
             $('.wordvoice audio source').attr('src',d);
@@ -376,10 +392,6 @@
             data,
             function(res){
                 u.setStorage('result',res);
-                var myDate = new Date;
-                var year = myDate.getFullYear(); //获取当前年
-                var mon = myDate.getMonth() + 1; //获取当前月
-                var DateStr = year+ '/' + mon +'/';
                 for (var i = 0; i < res.length; i++ ){
                     var  wordId = res[i].word.id;
                     var english = res[i].word.english;
@@ -388,6 +400,11 @@
                     var exampleArr = res[i].wordExample.example.split("$$$");
                     var exampleEng = exampleArr[0];
                     var exampleCh  = exampleArr[1];
+                    var img = res[i].word.img;
+                    var engVoice = res[i].word.engVoice;
+                    var ameVoice = res[i].word.ameVoice;
+                    var voice = ameVoice ? ameVoice : engVoice ;
+                    console.log('voice:',voice);
                     if (i == 0){
                         $('#chapterWord').append('<li class="li-active">\n' +
                             '<div class="wordId-left" style="display: none;">' + wordId + '</div>' +
@@ -398,8 +415,9 @@
                             '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
                             '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
                             '</div>\n' +
+                            '<img class="dc_img" src="'+ img +'" style="display: none">\n' +
                             '<audio controls preload="auto" style="display: none;">\n' +
-                            // '<source src="/wordassault/userfiles/engVoice/"' + DateStr + english + '".mp3" type="audio/mpeg">\n' +
+                            '<source src="'+ voice +'" type="audio/mpeg">\n' +
                             '您的浏览器不支持 audio 元素。\n' +
                             '</audio>\n' +
                             '</li>')
@@ -413,8 +431,9 @@
                             '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
                             '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
                             '</div>\n' +
+                            '<img class="dc_img" src="'+ img +'" style="display: none;">\n' +
                             '<audio controls preload="auto" style="display: none;">\n' +
-                            // '<source src="/wordassault/userfiles/engVoice/"' + DateStr + english + '".mp3" type="audio/mpeg">\n' +
+                            '<source src="'+ voice +'" type="audio/mpeg">\n' +
                             '您的浏览器不支持 audio 元素。\n' +
                             '</audio>\n' +
                             '</li>')

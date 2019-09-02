@@ -128,11 +128,6 @@ public class UserChapterWordWebController {
         return userChapterWordService.getCourseWordInformation(courseId);
     }
 
-
-
-
-
-
     /**
      * 获取章节下的所有的单词信息和例句
      * @param chapterId
@@ -151,5 +146,13 @@ public class UserChapterWordWebController {
         wordInformationPage.setList(wordInformations);
         return wordInformationPage;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "getCourseScoreByIds")
+    public String getCourseScoreByIds(String userId, String  courseId){
+        return userChapterWordService.getCourseScoreByIds(userId, courseId);
+    }
+
+
 
 }

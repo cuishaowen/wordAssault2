@@ -62,24 +62,23 @@ create table everyday_memory_word
 -- ----------------------------
 -- Table structure for enguser_option
 -- ----------------------------
-create table enguser_option
-(
-    ID_                 varchar(64)  not null comment '用户操作表id'
-        primary key,
-    USER_ID_            varchar(64)  null comment '用户id',
-    LOGIN_IN_TIME_      datetime     null comment '登入时间',
-    LOGIN_OUT_TIME_     datetime     null comment '登出时间',
-    CURRENT_TIME_       date         null comment '当前时间',
-    AUTO_LOGIN_OUT_     char         null comment 'T 是 F 不是',
-    CURRENT_STUDY_TIME_ int(5)       null comment '本次学习时间',
-    CREATE_DATE_        datetime     null comment '创建时间',
-    UPDATE_DATE_        datetime     null comment '修改时间',
-    REMARKS_            varchar(255) null comment '备注',
-    DEL_FLAG_           char         null comment '删除标识 1 正常 2 删除',
-    BLANK_ONE_          text         null,
-    BLANK_TWO_          text         null
-)
-    comment '用户操作表';
+DROP TABLE IF EXISTS `enguser_option`;
+CREATE TABLE `enguser_option` (
+      `ID_` varchar(64) NOT NULL COMMENT '用户操作表id',
+      `USER_ID_` varchar(64) DEFAULT NULL COMMENT '用户id',
+      `LOGIN_IN_TIME_` datetime DEFAULT NULL COMMENT '登入时间',
+      `LOGIN_OUT_TIME_` datetime DEFAULT NULL COMMENT '登出时间',
+      `CURRENT_TIME_` date DEFAULT NULL COMMENT '当前时间',
+      `AUTO_LOGIN_OUT_` char(1) DEFAULT NULL COMMENT 'T 是 F 不是',
+      `CURRENT_STUDY_TIME_` varchar(5) DEFAULT NULL COMMENT '本次学习时间',
+      `CREATE_DATE_` datetime DEFAULT NULL COMMENT '创建时间',
+      `UPDATE_DATE_` datetime DEFAULT NULL COMMENT '修改时间',
+      `REMARKS_` varchar(255) DEFAULT NULL COMMENT '备注',
+      `DEL_FLAG_` char(1) DEFAULT NULL COMMENT '删除标识 1 正常 2 删除',
+      `BLANK_ONE_` text,
+      `BLANK_TWO_` text,
+      PRIMARY KEY (`ID_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户操作表';
 -- ----------------------------
 --  Records of  enguser_option
 -- ----------------------------
@@ -164,9 +163,9 @@ create table word
     ID_ varchar(64) not null,
     ENGLISH_ varchar(255) null comment '英语单词',
     PHONETIC_TRANSCRIPTION_ varchar(255) null comment '音标',
-    ENG_VOICE_ varchar(64) null comment '英式语音',
-    AME_VOICE_ varchar(64) null comment '美式语音',
-    IMG_ varchar(64) null comment '图片',
+    ENG_VOICE_ varchar(255) null comment '英式语音',
+    AME_VOICE_ varchar(255) null comment '美式语音',
+    IMG_ varchar(255) null comment '图片',
     CHINESE_ varchar(255) null comment '中文释义',
     CREATE_DATE_ datetime null comment '创建时间',
     CREATE_BY_ varchar(64) null comment '创建人',
@@ -274,6 +273,7 @@ create table user_course
     END_DATE_ datetime null comment '结束时间',
     REMARKS_ varchar(255) null comment '备注',
     DEL_FLAG_ char(1) null comment '删除标识 1 正常 2 删除',
+    SCORE varchar(64) null  comment '分数',
     BLANK_ONE_ text null,
     BLANK_TWO_ text null,
     constraint user_course_pk
