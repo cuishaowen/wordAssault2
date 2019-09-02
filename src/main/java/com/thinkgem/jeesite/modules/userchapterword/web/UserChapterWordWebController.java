@@ -128,31 +128,29 @@ public class UserChapterWordWebController {
         return userChapterWordService.getCourseWordInformation(courseId);
     }
 
-    /**
-     * 获取章节下的所有的单词信息和例句
-     * @param chapterId
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "getWordInformationPage")
-    public Page<WordInformation> getWordInformationPage(String chapterId,Integer pageNum){
-        List<WordInformation> wordInformations =  userChapterWordService.getWordInformation(chapterId);
-        Page<WordInformation> wordInformationPage = new Page<WordInformation>();
-        WordInformation wordInformation = new WordInformation();
-        wordInformation.setPage(wordInformationPage);
-        wordInformationPage.setCount(wordInformations.size());
-        wordInformationPage.setPageSize(1);
-        wordInformationPage.setPageNo(pageNum);
-        wordInformationPage.setList(wordInformations);
-        return wordInformationPage;
-    }
+//    /**
+//     * 获取章节下的所有的单词信息和例句
+//     * @param chapterId
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping(value = "getWordInformationPage")
+//    public Page<WordInformation> getWordInformationPage(String chapterId,Integer pageNum){
+//        List<WordInformation> wordInformations =  userChapterWordService.getWordInformation(chapterId);
+//        Page<WordInformation> wordInformationPage = new Page<WordInformation>();
+//        WordInformation wordInformation = new WordInformation();
+//        wordInformation.setPage(wordInformationPage);
+//        wordInformationPage.setCount(wordInformations.size());
+//        wordInformationPage.setPageSize(1);
+//        wordInformationPage.setPageNo(pageNum);
+//        wordInformationPage.setList(wordInformations);
+//        return wordInformationPage;
+//    }
 
     @ResponseBody
     @RequestMapping(value = "getCourseScoreByIds")
     public String getCourseScoreByIds(String userId, String  courseId){
         return userChapterWordService.getCourseScoreByIds(userId, courseId);
     }
-
-
 
 }
