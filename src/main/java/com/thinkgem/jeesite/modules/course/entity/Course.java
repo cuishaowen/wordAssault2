@@ -58,8 +58,7 @@ public class Course extends DataEntity<Course> {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
-	
-	@Length(min=0, max=2, message="课程状态长度必须介于 0 和 2 之间")
+
 	public String getStatus() {
 		return status;
 	}

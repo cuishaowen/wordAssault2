@@ -18,13 +18,14 @@ import java.util.List;
 public class Chapter extends DataEntity<Chapter> {
 	
 	private static final long serialVersionUID = 1L;
-	private String parentId;		// 父级id (课程id)
+	private String parentId;	// 父级id (课程id)
 	private String sort;		// 排序
 	private String name;		// 章节名称
 	private String detail;		// 简述
 	private String status;		// 章节状态
-	private String blankOne;		// blank_one_
-	private String blankTwo;		// blank_two_
+	private String blankOne;	// blank_one_
+	private String blankTwo;	// blank_two_
+	private String num;			//新增个数
 	
 	public Chapter() {
 		super();
@@ -93,5 +94,12 @@ public class Chapter extends DataEntity<Chapter> {
 	public void setBlankTwo(String blankTwo) {
 		this.blankTwo = blankTwo;
 	}
-	
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
 }

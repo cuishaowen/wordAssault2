@@ -397,7 +397,12 @@
                     var english = res[i].word.english;
                     var phoneticTranscription = res[i].word.phoneticTranscription;
                     var chinese = res[i].word.chinese;
-                    var exampleArr = res[i].wordExample.example.split("$$$");
+                    var exampleArr = '';
+                    if (res[i].wordExample != null){
+                        exampleArr = res[i].wordExample.example.split("$$$");
+                    }else{
+                        exampleArr = '***$$$***';
+                    }
                     var exampleEng = exampleArr[0];
                     var exampleCh  = exampleArr[1];
                     var img = res[i].word.img;

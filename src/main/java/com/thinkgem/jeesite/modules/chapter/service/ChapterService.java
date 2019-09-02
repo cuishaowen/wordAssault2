@@ -25,6 +25,8 @@ import com.thinkgem.jeesite.modules.chapter.dao.ChapterDao;
 @Transactional(readOnly = true)
 public class ChapterService extends CrudService<ChapterDao, Chapter> {
 
+	@Autowired
+	private ChapterDao chapterDao;
 	public Chapter get(String id) {
 		return super.get(id);
 	}
@@ -47,6 +49,7 @@ public class ChapterService extends CrudService<ChapterDao, Chapter> {
 		super.delete(chapter);
 	}
 
+
 	public Chapter getNextChapter(String courseId,String chapterId){
 		// 通过章节id 找到当前章节
 		Chapter chapter = this.get(chapterId);
@@ -59,4 +62,25 @@ public class ChapterService extends CrudService<ChapterDao, Chapter> {
 		}
 		return chapters.get(0);
 	}
+
+//	// todo  没有写完
+//	public Chapter getLastestChapter(String courseId){
+//		Chapter chapter = new Chapter();
+//		chapter.setParentId(courseId);
+//		// todo
+//	}
+//
+//	public Chapter saveMore(Chapter chapter){
+//
+//		// 查询该课程下的总章节个数
+//		Integer count = chapterDao.selectCount(chapter.getParentId());
+//		List<Chapter>
+//		// 查入
+//		Integer num = Integer.parseInt(chapter.getNum());
+//		for (int i = 1 ; i <= num; i++){
+//
+//		}
+//	}
+
+
 }

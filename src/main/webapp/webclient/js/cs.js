@@ -299,7 +299,12 @@ function addContentOne(num,error){
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
     console.log('chinese',chinese);
-    var exampleArr = object.wordExample.example.split("$$$");
+    var exampleArr = '';
+    if (object.wordExample != null){
+        exampleArr = object.wordExample.example.split("$$$");
+    }else{
+        exampleArr = '***$$$***';
+    }
     var exampleEng = exampleArr[0];
     var exampleCh = exampleArr[1];
     var errorCh = object.errorCh;
@@ -356,7 +361,12 @@ function addContentTwo(num,error) {
     var voice = ameVoice ? ameVoice : engVoice;
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
-    var exampleArr = object.wordExample.example.split("$$$");
+    var exampleArr = '';
+    if (object.wordExample != null){
+        exampleArr = object.wordExample.example.split("$$$");
+    }else{
+        exampleArr = '***$$$***';
+    }
     var exampleEng = exampleArr[0];
     var exampleCh = exampleArr[1];
     var errorCh = object.errorCh;

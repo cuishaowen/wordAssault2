@@ -69,6 +69,14 @@ public class ChapterController extends BaseController {
 	}
 
 	@RequiresPermissions("chapter:chapter:edit")
+	@RequestMapping(value = "saveMore")
+	public String saveMore(Chapter chapter, Model model,RedirectAttributes redirectAttributes) {
+//		chapterService.saveMore(chapter);
+		redirectAttributes.addAttribute("新增章节成功");
+		return "modules/chapter/chapterList";
+	}
+
+	@RequiresPermissions("chapter:chapter:edit")
 	@RequestMapping(value = "save")
 	public String save(Chapter chapter, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, chapter)){

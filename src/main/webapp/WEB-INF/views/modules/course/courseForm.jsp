@@ -27,8 +27,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/course/course/">保存成功列表</a></li>
-		<li class="active"><a href="${ctx}/course/course/form?id=${course.id}">保存成功<shiro:hasPermission name="course:course:edit">${not empty course.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="course:course:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/course/course/">课程列表</a></li>
+		<li class="active"><a href="${ctx}/course/course/form?id=${course.id}">课程添加<shiro:hasPermission name="course:course:edit">${not empty course.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="course:course:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="course" action="${ctx}/course/course/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

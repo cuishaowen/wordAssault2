@@ -30,7 +30,7 @@
 		<li><a href="${ctx}/chapter/chapter/">章节列表</a></li>
 		<li class="active"><a href="${ctx}/chapter/chapter/form?id=${chapter.id}">章节<shiro:hasPermission name="chapter:chapter:edit">${not empty chapter.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="chapter:chapter:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="chapter" action="${ctx}/chapter/chapter/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="chapter" action="${ctx}/chapter/chapter/saveMore" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
@@ -43,30 +43,21 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">最新章节：</label>
+			<div class="controls">
+<%--				<form:label path="${fns:}" htmlEscape="false" maxlength="20" class="input-xlarge " placeholder="请输入章节名称, 例如: unit lesson "/>--%>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">章节名称：</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="name" htmlEscape="false" maxlength="20" class="input-xlarge " placeholder="请输入章节名称, 例如: unit lesson "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">简述：</label>
+			<label class="control-label">新增个数：</label>
 			<div class="controls">
-				<form:input path="detail" htmlEscape="false" maxlength="50" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">章节状态：</label>
-			<div class="controls">
-				<form:select path="status" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('chapter_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">备注：</label>
-			<div class="controls">
-				<form:input path="remarks" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="num" htmlEscape="false" maxlength="20" class="input-xlarge" placeholder="请输入需要新增的章节个数"/>
 			</div>
 		</div>
 		<div class="form-actions">
