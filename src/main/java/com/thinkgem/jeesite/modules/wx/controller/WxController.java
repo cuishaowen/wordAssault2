@@ -81,6 +81,7 @@ public class WxController extends AppController {
                         courseInfoEntity.setStrengthenMemoryWord(userChapterWordService.getStrengthenMemoryWord(id,courseId).size()+"");//备忘词汇
                         courseInfoEntity.setKillCourseHard(userChapterWordService.getKillCourseHardWord(id,courseId).size()+"");//消灭词汇
                         courseInfoEntity.setCourseHardWord(userChapterWordService.getCourseHardWord(id,courseId).size()+"");//难记词汇
+                        courseInfoEntity.setCourseScore(userChapterWordService.getCourseScoreByIds(id,courseId));//测试分数
                         courseInfoEntities.add(courseInfoEntity);
                     }
                 }

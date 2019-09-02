@@ -28,6 +28,15 @@ public class UserCourse extends DataEntity<UserCourse> {
 	private Date endDate;		// 结束时间
 	private String blankOne;		// blank_one_
 	private String blankTwo;		// blank_two_
+	private String score;		// 刷题测试分数
+
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
+	}
 
 	private CourseIsOpen courseIsOpen;  // 开通课程和未开通课程
 

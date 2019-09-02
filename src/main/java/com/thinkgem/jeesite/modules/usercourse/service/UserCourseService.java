@@ -177,4 +177,5 @@ public class UserCourseService extends CrudService<UserCourseDao, UserCourse> {
 		}
 
 	}
+
 }

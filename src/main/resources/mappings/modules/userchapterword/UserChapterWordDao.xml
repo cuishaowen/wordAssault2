@@ -35,6 +35,10 @@
 		DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= a.UPDATE_DATE_ GROUP BY updateTime
 	</select>
 
+	<select id="getCourseScoreByIds" resultType="String">
+		SELECT a.SCORE from user_course a WHERE a.USER_ID_=#{userId} AND a.COURSE_ID_=#{courseId}
+	</select>
+
 	<select id="get" resultType="UserChapterWord">
 		SELECT 
 			<include refid="userChapterWordColumns"/>

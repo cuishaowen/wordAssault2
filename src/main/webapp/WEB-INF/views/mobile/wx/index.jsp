@@ -69,19 +69,18 @@
         <div class="bg_item">
             <div class="list">
                 <span>课本名称</span>
-                <span>测试名称</span>
+                <%--<span>测试名称</span>--%>
                 <span>分数</span>
             </div>
-            <div class="list">
-                <span>初中体验课</span>
-                <span>单元测试</span>
-                <span>0/90</span>
-            </div>
-            <div class="list">
-                <span>初中体验课</span>
-                <span>听写练习</span>
-                <span>0/60</span>
-            </div>
+            <c:forEach var="course" items="${enguserEntity.courseInfoEntityList}">
+                <div class="list">
+                    <span>${course.courseName}</span>
+                    <%--<span>单元测试</span>--%>
+                    <span>${course.courseScore}</span>
+                </div>
+            </c:forEach>
+
+
         </div>
     </div>
 

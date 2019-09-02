@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.usercourse.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * usercourseDAO接口
@@ -14,5 +15,6 @@ import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
  */
 @MyBatisDao
 public interface UserCourseDao extends CrudDao<UserCourse> {
-	
+
+
 }

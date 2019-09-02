@@ -305,6 +305,7 @@ function addLoop() {
         }
     )
 }
+
 alreadyPurchase();
 
 

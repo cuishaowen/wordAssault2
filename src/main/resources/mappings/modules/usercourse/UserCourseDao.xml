@@ -14,7 +14,8 @@
 		a.remarks_ AS "remarks",
 		a.del_flag_ AS "delFlag",
 		a.blank_one_ AS "blankOne",
-		a.blank_two_ AS "blankTwo"
+		a.blank_two_ AS "blankTwo",
+		a.score AS "score"
 	</sql>
 	
 	<sql id="userCourseJoins">
@@ -28,6 +29,8 @@
 		<include refid="userCourseJoins"/>
 		WHERE a.id_ = #{id}
 	</select>
+
+
 	
 	<select id="findList" resultType="UserCourse">
 		SELECT 
@@ -88,7 +91,8 @@
 			remarks_,
 			del_flag_,
 			blank_one_,
-			blank_two_
+			blank_two_,
+			score
 		) VALUES (
 			#{id},
 			#{engUserId},
@@ -101,7 +105,8 @@
 			#{remarks},
 			#{delFlag},
 			#{blankOne},
-			#{blankTwo}
+			#{blankTwo},
+			#{score}
 		)
 	</insert>
 	
@@ -118,7 +123,8 @@
 			remarks_ = #{remarks},
 			del_flag_ = #{delFlag},
 			blank_one_ = #{blankOne},
-			blank_two_ = #{blankTwo}
+			blank_two_ = #{blankTwo},
+			score = #{score}
 		WHERE id_ = #{id}
 	</update>
 	

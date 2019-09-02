@@ -288,4 +288,8 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 	public List<Map<String,String>> findWeekStudyWords(String userId) {
 		return userChapterWordDao.findWeekStudyWords(userId);
 	}
+
+	public String getCourseScoreByIds(String userId, String courseId) {
+		return userChapterWordDao.getCourseScoreByIds(userId,courseId);
+	}
 }

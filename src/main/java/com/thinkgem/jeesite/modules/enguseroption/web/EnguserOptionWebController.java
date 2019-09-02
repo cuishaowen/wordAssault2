@@ -147,6 +147,7 @@ public class EnguserOptionWebController {
                         courseInfoEntity.setStrengthenMemoryWord(userChapterWordService.getStrengthenMemoryWord(userId,courseId).size()+"");//备忘词汇
                         courseInfoEntity.setKillCourseHard(userChapterWordService.getKillCourseHardWord(userId,courseId).size()+"");//消灭词汇
                         courseInfoEntity.setCourseHardWord(userChapterWordService.getCourseHardWord(userId,courseId).size()+"");//难记词汇
+                        courseInfoEntity.setCourseScore(userChapterWordService.getCourseScoreByIds(userId,courseId));//测试分数
                         courseInfoEntities.add(courseInfoEntity);
                     }
                 }
