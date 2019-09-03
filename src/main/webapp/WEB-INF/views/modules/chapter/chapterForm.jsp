@@ -45,6 +45,7 @@
 		<div class="control-group">
 			<label class="control-label">最新章节：</label>
 			<div class="controls">
+				<label id="latestChapter"></label>
 <%--				<form:label path="${fns:}" htmlEscape="false" maxlength="20" class="input-xlarge " placeholder="请输入章节名称, 例如: unit lesson "/>--%>
 			</div>
 		</div>
@@ -65,6 +66,18 @@
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
+	<script>
+
+		console.log('testStart');
+
+		$('#parentId').bind('change',function () {
+			console.log($('.select2-chosen').text());
+			var courseId = $(this).val();
+			var url = '${ctx}/chapter/chapter/getLastestChapter?courseId=' + courseId;
+			$.get(url,function (res) {
+				$('#latestChapter').text(res);
+			});
+		});
+	</script>
 </body>
-<
 </html>

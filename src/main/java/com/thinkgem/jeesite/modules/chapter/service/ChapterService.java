@@ -63,24 +63,36 @@ public class ChapterService extends CrudService<ChapterDao, Chapter> {
 		return chapters.get(0);
 	}
 
-//	// todo  没有写完
-//	public Chapter getLastestChapter(String courseId){
-//		Chapter chapter = new Chapter();
-//		chapter.setParentId(courseId);
-//		// todo
-//	}
-//
-//	public Chapter saveMore(Chapter chapter){
-//
-//		// 查询该课程下的总章节个数
-//		Integer count = chapterDao.selectCount(chapter.getParentId());
-//		List<Chapter>
-//		// 查入
-//		Integer num = Integer.parseInt(chapter.getNum());
-//		for (int i = 1 ; i <= num; i++){
-//
-//		}
-//	}
+	// 获取最新章节
+	public String getLastestChapter(String courseId){
+		Chapter chapter = new Chapter();
+		chapter.setParentId(courseId);
+		if (courseId == null || courseId.equals("")){
+			return null;
+		}
+		List<Chapter> chapterList = this.findList(chapter);
+		if (chapterList == null || chapterList.size() < 1){
+			return null;
+		}
+		return chapterList.get(chapterList.size()-1).getName();
+	}
+
+	// 批量新增章节
+	@Transactional(readOnly = false)
+	public void saveMore(Chapter chapter){
+		// 查询该课程下的总章节个数
+		Integer count = chapterDao.selectCount(chapter.getParentId());
+		Integer num = Integer.parseInt(chapter.getNum());
+
+		for (int i = 1 ; i <= num; i++){
+			int countI = count + i;
+			Chapter chapterInf = new Chapter();
+			chapterInf.setParentId(chapter.getParentId());
+			chapterInf.setName(chapter.getName() + countI);
+			chapterInf.setSort(String.valueOf(countI*5));
+			this.save(chapterInf);
+		}
+	}
 
 
 }

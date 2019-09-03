@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
@@ -61,6 +62,8 @@ public class ChapterController extends BaseController {
 		return "modules/chapter/chapterList";
 	}
 
+
+
 	@RequiresPermissions("chapter:chapter:view")
 	@RequestMapping(value = "form")
 	public String form(Chapter chapter, Model model) {
@@ -68,12 +71,28 @@ public class ChapterController extends BaseController {
 		return "modules/chapter/chapterForm";
 	}
 
+	@ResponseBody
+	@RequiresPermissions("chapter:chapter:view")
+	@RequestMapping(value = "getLastestChapter")
+	public String getLastestChapter(String courseId) {
+		return chapterService.getLastestChapter(courseId);
+	}
+
+	@ResponseBody
+	@RequiresPermissions("chapter:chapter:view")
+	@RequestMapping(value = "getChapterByCourseId")
+	public List<Chapter> getChapterByCourseId(String courseId) {
+		Chapter chapter = new Chapter();
+		chapter.setParentId(courseId);
+		return chapterService.findList(chapter);
+	}
+
 	@RequiresPermissions("chapter:chapter:edit")
 	@RequestMapping(value = "saveMore")
 	public String saveMore(Chapter chapter, Model model,RedirectAttributes redirectAttributes) {
-//		chapterService.saveMore(chapter);
 		redirectAttributes.addAttribute("新增章节成功");
-		return "modules/chapter/chapterList";
+		chapterService.saveMore(chapter);
+		return "redirect:"+Global.getAdminPath()+"/chapter/chapter/?repage";
 	}
 
 	@RequiresPermissions("chapter:chapter:edit")

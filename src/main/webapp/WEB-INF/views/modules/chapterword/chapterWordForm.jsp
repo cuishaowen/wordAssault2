@@ -90,7 +90,6 @@
 				<div class="controls">
 					<form:select path="chapterId" class="input-xlarge ">
 						<form:option value="" label=""/>
-						<form:options items="${fns:getChapter()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 					</form:select>
 				</div>
 			</div>
@@ -114,5 +113,18 @@
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
+<script>
+	$('#courseId').bind('change',function () {
+		var courseId = $(this).val();
+		var url = '${ctx}/chapter/chapter/getChapterByCourseId?courseId='+ courseId;
+		$('#chapterId').html('');
+		$.get(url,function (res) {
+			console.log('res',res);
+			for (i = 0; i < res.length; i++){
+				$('#chapterId').append('<option value="' + res[i].id + '">' + res[i].name + '</option>')
+			}
+		});
+	})
+</script>
 </body>
 </html>
