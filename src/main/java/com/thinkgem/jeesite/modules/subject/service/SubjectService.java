@@ -5,6 +5,9 @@ package com.thinkgem.jeesite.modules.subject.service;
 
 import java.util.List;
 
+import com.thinkgem.jeesite.modules.sys.entity.Dict;
+import com.thinkgem.jeesite.modules.sys.service.DictService;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,8 @@ public class SubjectService extends CrudService<SubjectDao, Subject> {
 
 	@Autowired
 	private SubjectDao subjectDao;
+	@Autowired
+	private DictService dictService;
 
 	public Subject get(String id) {
 		return super.get(id);
@@ -32,6 +37,10 @@ public class SubjectService extends CrudService<SubjectDao, Subject> {
 	
 	public List<Subject> findList(Subject subject) {
 		return super.findList(subject);
+	}
+
+	public List<String> getSubjectVersion(){
+		return subjectDao.getSubjectVersion();
 	}
 	
 	public Page<Subject> findPage(Page<Subject> page, Subject subject) {
@@ -52,4 +61,14 @@ public class SubjectService extends CrudService<SubjectDao, Subject> {
 	public void insert(Subject subject){
 		subjectDao.insert(subject);
 	}
+
+	public List<Dict> getDictList(String type){
+		Dict dict = new Dict();
+		dict.setType(type);
+		return dictService.findList(dict);
+	}
+
+
+
+
 }

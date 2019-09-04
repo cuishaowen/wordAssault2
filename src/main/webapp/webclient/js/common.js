@@ -219,8 +219,6 @@ function updateStatus(chapterId,studyStatus) {
     );
 }
 
-
-
 /**
  * 获取课程下的所有章节
  */

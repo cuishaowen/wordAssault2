@@ -16,38 +16,37 @@ VALUES ('125', '0', '下架', 'chapter_status', '章节状态', 10, '0', '1', no
 
 -- 试卷类别
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('126', '名词', '名词', 'subject_type', '试卷类别', 10, '0', '1', now() , '1', now(), null, '0');
+VALUES ('126', '1', '名词', 'subject_type', '试卷类别', 10, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('127', '代词', '代词', 'subject_type', '试卷类别', 20, '0', '1', now() , '1', now(), null, '0');
+VALUES ('127', '2', '代词', 'subject_type', '试卷类别', 20, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('128', '形容词', '形容词', 'subject_type', '试卷类别', 30, '0', '1', now() , '1', now(), null, '0');
+VALUES ('128', '3', '形容词', 'subject_type', '试卷类别', 30, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('129', '动词', '动词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('129', '4', '动词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('130', '冠词', '冠词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('130', '5', '冠词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('131', '副词', '副词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('131', '6', '副词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('132', '连词', '连词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('132', '7', '连词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('133', '介词', '介词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('133', '8', '介词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('134', '系助情态动词', '系助情态动词', 'subjec
-t_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('134', '9', '系助情态动词', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('135', '从句', '从句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('135', '10', '从句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('136', '主谓一致', '主谓一致', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('136', '11', '主谓一致', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('137', '疑问句', '疑问句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('137', '12', '疑问句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('138', '感叹句', '感叹句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('138', '13', '感叹句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('139', '动词时态', '动词时态', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('139', '14', '动词时态', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('140', '被动语态', '被动语态', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('140', '15', '被动语态', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 INSERT INTO engweb.sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date, remarks, del_flag)
-VALUES ('141', '疑问句', '疑问句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
+VALUES ('141', '16', '疑问句', 'subject_type', '试卷类别', 40, '0', '1', now() , '1', now(), null, '0');
 
 
 

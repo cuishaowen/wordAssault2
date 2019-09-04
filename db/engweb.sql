@@ -348,8 +348,8 @@ create table subject
 (
     ID_          varchar(64)  not null comment '练习题id'
         primary key,
-    SORT_        varchar(100) null comment '题目分类',
-    VERSION_     varchar(100) null comment '版本信息',
+    SORT_        varchar(10) null comment '题目分类',
+    VERSION_     varchar(64) null comment '版本信息',
     NUMBER_      varchar(25)  null comment '编号',
     QUESTION_    varchar(255) null comment '问题',
     SELECT_A_    varchar(255) null comment '选择a',
@@ -371,37 +371,32 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='题目表';
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for chapter_subject
+--  Records of  subject
 -- ----------------------------
-DROP TABLE IF EXISTS `chapter_subject`;
-create table chapter_subject
+CREATE TABLE subject_version
 (
-    ID_ varchar(64) not null comment '章节练习题id',
-    CHAPTER_ID_ varchar(64) null comment '章节id',
-    SUBJECT_ID_ varchar(64) null comment '题目id',
-    CREATE_DATE_ datetime null comment '创建时间',
-    UPDATE_DATE_ datetime null comment '修改时间',
-    REMARKS_ varchar(255) null comment '备注',
-    DEL_FLAG_ char(1) null comment '删除标识 1 正常 2 删除',
-    BLANK_ONE_ text null,
-    BLANK_TWO_ text null,
-    constraint chapter_subject_pk
-        primary key (ID_)
-)
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='章节练习题关联表';
+    id_ varchar(64) PRIMARY KEY NOT NULL,
+    name_ varchar(64) COMMENT '语法题名称',
+    type_ varchar(10) COMMENT '类型',
+    create_date_ date COMMENT '语法题个数',
+    update_date_ date,
+    blank_one_ varchar(255),
+    blank_two_ varchar(255)
+);
+ALTER TABLE subject_version COMMENT = '语法题版本';
 -- ----------------------------
---  Records of  chapter_subject
+--  Records of  subject
 -- ----------------------------
-
-
 -- ----------------------------
--- Table structure for user_chapter_subject
+-- Table structure for user_subject
 -- ----------------------------
 DROP TABLE IF EXISTS `user_chapter_subject`;
-create table user_chapter_subject
+DROP TABLE IF EXISTS `user_subject`;
+create table user_subject
 (
     ID_ varchar(64) not null comment '用户练习题id',
     USER_ID_ varchar(64) null comment '用户id',
+    SUBJECT_VERSION_ID_ VARCHAR(64) NULL COMMENT '题目版本id',
     SUBJECT_ID_ varchar(64) null comment '练习题id',
     STUDY_STATUS_ varchar(2) null comment '用户章节题目的学习状态 1.待学习 2.待复习 3.已完成',
     IS_MEMO_ boolean null comment '是否备忘 true 是 false 不是',
@@ -413,12 +408,12 @@ create table user_chapter_subject
     DEL_FLAG_ char(1) null comment '删除标识 1 正常 2 删除',
     BLANK_ONE_ text null,
     BLANK_TWO_ text null,
-    constraint user_chapter_subject_pk
+    constraint user_subject_pk
         primary key (ID_)
 )
     ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户题目关联表';
 -- ----------------------------
---  Records of  user_chapter_subject
+--  Records of  user_subject
 -- ----------------------------
 
 -- ----------------------------
@@ -442,3 +437,24 @@ create table user_enguser
     ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='校长用户关联表';
 --  Records of  user_chapter_subject
 -- ----------------------------
+
+-- ----------------------------
+--  Records of  user_subject_version
+-- ----------------------------
+CREATE TABLE user_subject_version
+(
+    id_ varchar(64) PRIMARY KEY NOT NULL,
+    user_id_ varchar(64) COMMENT '用户id',
+    subject_version_id_ varchar(100) COMMENT '题目版本名称',
+    subject_type_ varchar(20) COMMENT '题目类型',
+    score_ varchar(20) COMMENT '得分',
+    create_date_ date,
+    update_date_ date,
+    blank_one_ varchar(255),
+    blank_two_ varchar(255)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户题目版本';
+-- ----------------------------
+--  Records of  user_subject_version
+-- ----------------------------
+

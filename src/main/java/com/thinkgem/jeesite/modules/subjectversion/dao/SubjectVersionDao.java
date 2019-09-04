@@ -1,21 +1,19 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.subject.dao;
+package com.thinkgem.jeesite.modules.subjectversion.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.subject.entity.Subject;
-
-import java.util.List;
+import com.thinkgem.jeesite.modules.subjectversion.entity.SubjectVersion;
 
 /**
- * subjectDAO接口
+ * 语法题版本DAO接口
  * @author cuisw
- * @version 2019-08-06
+ * @version 2019-09-04
  */
 @MyBatisDao
-public interface SubjectDao extends CrudDao<Subject> {
+public interface SubjectVersionDao extends CrudDao<SubjectVersion> {
 
-    public List<String> getSubjectVersion();
+
 }

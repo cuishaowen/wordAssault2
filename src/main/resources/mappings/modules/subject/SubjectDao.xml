@@ -73,6 +73,12 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="getSubjectVersion" resultType="java.lang.String">
+		select
+		distinct version_
+		from subject
+	</select>
 	
 	<insert id="insert">
 		INSERT INTO subject(

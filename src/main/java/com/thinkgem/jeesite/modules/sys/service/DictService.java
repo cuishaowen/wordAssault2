@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.sys.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +23,19 @@ import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 @Service
 @Transactional(readOnly = true)
 public class DictService extends CrudService<DictDao, Dict> {
-	
+
+	@Autowired
+	private DictDao dictDao;
 	/**
 	 * 查询字段类型列表
 	 * @return
 	 */
 	public List<String> findTypeList(){
 		return dao.findTypeList(new Dict());
+	}
+
+	public Dict selectByLabelAndType(String label, String type){
+		return dictDao.selectByLabelAndType(label, type);
 	}
 
 	@Transactional(readOnly = false)
@@ -42,5 +49,6 @@ public class DictService extends CrudService<DictDao, Dict> {
 		super.delete(dict);
 		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
+
 
 }

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.usersubjectversion.dao.UserSubjectVersionDao">
+    
+	<sql id="userSubjectVersionColumns">
+		a.id_ AS "id",
+		a.user_id_ AS "userId",
+		a.subject_version_name_ AS "subjectVersionName",
+		a.subject_type_ AS "subjectType",
+		a.score_ AS "score",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="userSubjectVersionJoins">
+	</sql>
+    
+	<select id="get" resultType="UserSubjectVersion">
+		SELECT 
+			<include refid="userSubjectVersionColumns"/>
+		FROM user_subject_version a
+		<include refid="userSubjectVersionJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserSubjectVersion">
+		SELECT 
+			<include refid="userSubjectVersionColumns"/>
+		FROM user_subject_version a
+		<include refid="userSubjectVersionJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id_ = #{id}
+			</if>
+			<if test="userId != null and userId != ''">
+				AND a.user_id_ = #{userId}
+			</if>
+			<if test="subjectVersionName != null and subjectVersionName != ''">
+				AND a.subject_version_name_ = #{subjectVersionName}
+			</if>
+			<if test="subjectType != null and subjectType != ''">
+				AND a.subject_type_ = #{subjectType}
+			</if>
+			<if test="score != null and score != ''">
+				AND a.score_ &gt;= #{score}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserSubjectVersion">
+		SELECT 
+			<include refid="userSubjectVersionColumns"/>
+		FROM user_subject_version a
+		<include refid="userSubjectVersionJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO user_subject_version(
+			id_,
+			user_id_,
+			subject_version_name_,
+			subject_type_,
+			score_,
+			create_date_,
+			update_date_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{userId},
+			#{subjectVersionName},
+			#{subjectType},
+			#{score},
+			#{createDate},
+			#{updateDate},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE user_subject_version SET 	
+			id_ = #{id},
+			user_id_ = #{userId},
+			subject_version_name_ = #{subjectVersionName},
+			subject_type_ = #{subjectType},
+			score_ = #{score},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM user_subject_version
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

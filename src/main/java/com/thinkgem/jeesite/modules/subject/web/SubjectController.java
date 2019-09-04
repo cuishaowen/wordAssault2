@@ -9,8 +9,13 @@ import javax.validation.ConstraintViolationException;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.beanvalidator.BeanValidators;
+import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
+import com.thinkgem.jeesite.modules.subjectversion.entity.SubjectVersion;
+import com.thinkgem.jeesite.modules.subjectversion.service.SubjectVersionService;
+import com.thinkgem.jeesite.modules.sys.entity.Dict;
+import com.thinkgem.jeesite.modules.sys.service.DictService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +35,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.subject.entity.Subject;
 import com.thinkgem.jeesite.modules.subject.service.SubjectService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +49,10 @@ public class SubjectController extends BaseController {
 
 	@Autowired
 	private SubjectService subjectService;
+	@Autowired
+    private SubjectVersionService subjectVersionService;
+	@Autowired
+    private DictService dictService;
 	
 	@ModelAttribute
 	public Subject get(@RequestParam(required=false) String id) {
@@ -97,16 +107,26 @@ public class SubjectController extends BaseController {
         try {
             int successNum=0;
             int failureNum=0;
-            int i = 1;
             StringBuilder failureMsg=new StringBuilder();
             ImportExcel ei=new ImportExcel(file, 1, 0);
             List<Subject> list=ei.getDataList(Subject.class);
+
+            SubjectVersion subjectVersion = new SubjectVersion();
+            Row row = ei.getRow(0);
+            String versionName = ei.getCellValue(row,0).toString();
+            String versionId = IdGen.uuid();
+            subjectVersion.setId(versionId);
+            subjectVersion.setName(versionName);
+            subjectVersion.setCreateDate(new Date());
+            subjectVersionService.insert(subjectVersion);
+
             for(Subject subject:list){
                 try {
-                    Row row = ei.getRow(0);
-                    subject.setVersion(ei.getCellValue(row,0).toString());
+                    String sort = subject.getSort();
+                    Dict dict = dictService.selectByLabelAndType(sort, "subject_type");
+                    subject.setSort(dict.getValue());
+                    subject.setVersion(versionId);
                     subjectService.save(subject);
-                    i++;
                     successNum++;
                     addMessage(redirectAttributes, "已成功导入 "+successNum+" 个语法题"+failureMsg);
                 } catch (ConstraintViolationException ex) {

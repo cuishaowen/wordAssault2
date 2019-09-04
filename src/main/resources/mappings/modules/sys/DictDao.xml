@@ -42,6 +42,13 @@
 		GROUP BY type
 		ORDER BY type
 	</select>
+
+	<select id="selectByLabelAndType" resultType="Dict">
+		SELECT
+			*
+		FROM sys_dict a
+		where a.label = #{label} and a.type  = #{type}
+	</select>
 	
 	<insert id="insert">
 		INSERT INTO sys_dict(
