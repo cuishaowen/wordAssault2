@@ -49,6 +49,13 @@
 		FROM sys_dict a
 		where a.label = #{label} and a.type  = #{type}
 	</select>
+
+	<select id="selectByValueAndType" resultType="Dict">
+		SELECT
+			*
+		FROM sys_dict a
+		where a.value = #{value} and a.type  = #{type}
+	</select>
 	
 	<insert id="insert">
 		INSERT INTO sys_dict(

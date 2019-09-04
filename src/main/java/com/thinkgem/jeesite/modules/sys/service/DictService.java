@@ -38,6 +38,10 @@ public class DictService extends CrudService<DictDao, Dict> {
 		return dictDao.selectByLabelAndType(label, type);
 	}
 
+	public Dict selectByValueAndType(String value, String type){
+		return dictDao.selectByValueAndType(value, type);
+	}
+
 	@Transactional(readOnly = false)
 	public void save(Dict dict) {
 		super.save(dict);

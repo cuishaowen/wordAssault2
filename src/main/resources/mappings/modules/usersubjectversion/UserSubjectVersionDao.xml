@@ -22,7 +22,7 @@
 			<include refid="userSubjectVersionColumns"/>
 		FROM user_subject_version a
 		<include refid="userSubjectVersionJoins"/>
-		WHERE a.id = #{id}
+		WHERE a.id_ = #{id}
 	</select>
 	
 	<select id="findList" resultType="UserSubjectVersion">
@@ -109,12 +109,12 @@
 			update_date_ = #{updateDate},
 			blank_one_ = #{blankOne},
 			blank_two_ = #{blankTwo}
-		WHERE id = #{id}
+		WHERE id_ = #{id}
 	</update>
 	
 	<update id="delete">
 		DELETE FROM user_subject_version
-		WHERE id = #{id}
+		WHERE id_ = #{id}
 	</update>
 	
 </mapper>

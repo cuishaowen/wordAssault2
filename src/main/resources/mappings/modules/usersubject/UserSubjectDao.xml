@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.usersubject.dao.UserSubjectDao">
+    
+	<sql id="userSubjectColumns">
+		a.id_ AS "id",
+		a.user_id_ AS "userId",
+		a.subject_version_id_ AS "subjectVersionId",
+		a.subject_id_ AS "subjectId",
+		a.study_status_ AS "studyStatus",
+		a.is_memo_ AS "isMemo",
+		a.is_wrong_ AS "isWrong",
+		a.wrong_time_ AS "wrongTime",
+		a.create_date_ AS "createDate",
+		a.update_date_ AS "updateDate",
+		a.remarks_ AS "remarks",
+		a.del_flag_ AS "delFlag",
+		a.blank_one_ AS "blankOne",
+		a.blank_two_ AS "blankTwo"
+	</sql>
+	
+	<sql id="userSubjectJoins">
+	</sql>
+    
+	<select id="get" resultType="UserSubject">
+		SELECT 
+			<include refid="userSubjectColumns"/>
+		FROM user_subject a
+		<include refid="userSubjectJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserSubject">
+		SELECT 
+			<include refid="userSubjectColumns"/>
+		FROM user_subject a
+		<include refid="userSubjectJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id_ = #{id}
+			</if>
+			<if test="userId != null and userId != ''">
+				AND a.user_id_ = #{userId}
+			</if>
+			<if test="subjectVersionId != null and subjectVersionId != ''">
+				AND a.subject_version_id_ = #{subjectVersionId}
+			</if>
+			<if test="subjectId != null and subjectId != ''">
+				AND a.subject_id_ = #{subjectId}
+			</if>
+			<if test="studyStatus != null and studyStatus != ''">
+				AND a.study_status_ = #{studyStatus}
+			</if>
+			<if test="isWrong != null and isWrong != ''">
+				AND a.is_wrong_ = #{isWrong}
+			</if>
+			<if test="wrongTime != null and wrongTime != ''">
+				AND a.wrong_time_ = #{wrongTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserSubject">
+		SELECT 
+			<include refid="userSubjectColumns"/>
+		FROM user_subject a
+		<include refid="userSubjectJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO user_subject(
+			id_,
+			user_id_,
+			subject_version_id_,
+			subject_id_,
+			study_status_,
+			is_memo_,
+			is_wrong_,
+			wrong_time_,
+			create_date_,
+			update_date_,
+			remarks_,
+			del_flag_,
+			blank_one_,
+			blank_two_
+		) VALUES (
+			#{id},
+			#{userId},
+			#{subjectVersionId},
+			#{subjectId},
+			#{studyStatus},
+			#{isMemo},
+			#{isWrong},
+			#{wrongTime},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{blankOne},
+			#{blankTwo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE user_subject SET 	
+			id_ = #{id},
+			user_id_ = #{userId},
+			subject_version_id_ = #{subjectVersionId},
+			subject_id_ = #{subjectId},
+			study_status_ = #{studyStatus},
+			is_memo_ = #{isMemo},
+			is_wrong_ = #{isWrong},
+			wrong_time_ = #{wrongTime},
+			create_date_ = #{createDate},
+			update_date_ = #{updateDate},
+			remarks_ = #{remarks},
+			del_flag_ = #{delFlag},
+			blank_one_ = #{blankOne},
+			blank_two_ = #{blankTwo}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM user_subject
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

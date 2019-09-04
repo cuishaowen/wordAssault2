@@ -27,7 +27,16 @@ public class Subject extends DataEntity<Subject> {
 	private String analysis;	// 答案解析
 	private String blankOne;	// blank_one_
 	private String blankTwo;	// blank_two_
-	
+	private String subjectTypeLabel;
+
+	public String getSubjectTypeLabel() {
+		return subjectTypeLabel;
+	}
+
+	public void setSubjectTypeLabel(String subjectTypeLabel) {
+		this.subjectTypeLabel = subjectTypeLabel;
+	}
+
 	public Subject() {
 		super();
 	}

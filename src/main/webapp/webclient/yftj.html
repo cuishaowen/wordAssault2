@@ -36,10 +36,13 @@
     .dc-tab-title .dc_active .img2{background: url("images/yftj_select2.png") no-repeat center; background-size: 100% 100%;}
     .hasbuy{border:1px solid #22A9FB; color:#22A9FB;}
     .btn11-active{background-color: #22A9FB; color: #fff;}
-    .xt-content{text-align: center; padding: 10px 0; margin-bottom: 20px;}
+    .xt-content{text-align: center; padding: 10px 0; margin-bottom: 20px;height: 100px}
     .xt-content .layui-input-block{display: inline-block; margin-left: 50px;}
     .tab_img{width:120px;height:116px}
     .bg1{padding: 0;}
+    .yufa {
+        line-height: 20px;
+    }
 </style>
 <body class="bgbody">
 <ul class="layui-nav layui-bg-blue">
@@ -113,7 +116,7 @@
                                <p>语法突击</p>
                            </li>
                            <li>
-                               <div class="tab_img img2"></div>
+                               <div id="errorSubject" class="tab_img img2"></div>
                                <p>错题本</p>
                            </li>
                        </ul>
@@ -133,9 +136,11 @@
                                </div>
                            </div>
                            <div class="dc_tab_item" style="height: 316px;">
+                               <div class="timu" style="margin: 0 auto;height: 30px">
+                                   <span class="beizhu timu" style="width: 80px;display: inline-block;float: left;font-size: 20px"> 【名词】</span>
+                               </div>
                               <div class="timu">
-                                  <p class="yufa">1) An  old <span></span> wants  to  see  you</p>
-                                  <span class="beizhu"> 【名词】</span>
+                                  <p class="yufa" style="line-height: 30px">1) An  old <span></span> wants  to  see  you</p>
                               </div>
                                <div class="xt-content">
                                    <form class="layui-form layui-form-pane" action="">
@@ -156,16 +161,17 @@
                                    </form>
                                </div>
                                <div class="tj_da">
-                                   <p>答案正确</p>
-                                   <p>【解析】解析内容解析内容解析内容</p>
+                                   <p class="error">答案错误</p>
+                                   <p class="right">答案正确</p>
+                                   <p class="analysis">【解析】解析内容解析内容解析内容</p>
                                </div>
                                <div class="newbtns">
-                                   <a class="faguanbtn">移出错题本</a>
+                                   <a id="removeErrSubject" class="faguanbtn">移出错题本</a>
                                    <a class="faguanbtn">下一题</a>
                                </div>
                                <div class="jdt">
                                <div class="zj">
-                                   <span>第2题 共计：10题</span>
+                                   <span>第<i id="indexS">1</i>题 共计：<i id="totalS">10</i>题</span>
                                </div>
                                <div class="layui-progress">
                                    <div class="layui-progress-bar layui-bg-blue" lay-percent="50%" style="background-color:#22A9FB !important; "></div>
@@ -250,8 +256,8 @@
         var f = $(this).find('audio source').attr('src');
         var audio=new Audio(f);
         audio.play();
-    })
-
+    });
+    alreadyPurchase();
 </script>
 <script src="js/yftj.js"></script>
 </html>

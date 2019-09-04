@@ -1,4 +1,3 @@
-
 var curWwwPath=window.document.location.href;
 var pathName=window.document.location.pathname;
 var pos=curWwwPath.indexOf(pathName);
@@ -24,9 +23,6 @@ var outtime = 120;
 var usedtime = 0;
 var bodypage = null;
 var music = true;
-
-
-
 function lianliankan(data1, data2, t,tit_title) {
 
     array_e = data1;
@@ -111,7 +107,6 @@ function lianliankan(data1, data2, t,tit_title) {
 function two_char(n) {
     return n >= 10 ? n : "0" + n;
 }
-
 function getMin(){
     m = Math.floor(outtime / 60);
     if (m < 10) {
@@ -143,37 +138,32 @@ function time_fun() {
         outtime = outtime - 1;
         if (outtime <= 0)
         {
-
             gameover();
-            clearInterval(timeInter111);
             return;
         }
         $("#m").text(getMin());
         $("#s").text(getSec());
     }, 1000);
 }
-
 function out(){
     clearInterval(timeInter111);
     $("#llk").remove();
 }
 function gameover() {
     $("#mytime").text('');
-    clearInterval(timeInter111);
-
     var html = ' <div class="over_1">游戏结束</div>';
     html+=' <div class="over_split"></div>';
     html+='<div class="over_c">';
     html += '    <div class="over_img"></div>';
     html += '    <div class="over_3">共用时<span>' + usedtime + '</span>秒</div>';
     html+='    <div class="over_4">总点击次数<span>'+(rightcount+errorcount)+'</span>,点对<span>'+rightcount+'</span>次,点错<span>'+errorcount+'</span>次</div>';
-    html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);">继续游戏</a> </div>';
+    html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);" onclick="getWords()">继续游戏</a> </div>';
     html+=' </div>';
 
     $('.container').html(html);
+    clearInterval(timeInter111);
 
 }
-
 function init() {
     array_e_temp = [];
     array_c_temp = [];
@@ -218,7 +208,6 @@ function init() {
         array_c_temp[i][0] = temp;
     }
 }
-
 var compare = function (x, y) {//比较函数
     if (x < y) {
         return -1;
@@ -228,30 +217,20 @@ var compare = function (x, y) {//比较函数
         return 0;
     }
 }
-
 function bao() {
     init();
     container = "";
     container1 = "";
     for (var i = 0; i < list2.length; i++) {
         temp_l = array_c_temp[list2[i]][0].split('.');
-
-
         if(temp_l.length==1)
         {
             temp_l.push(temp_l[0]);
             temp_l[0]="";
         }
-
-
-
         var cls = "";
-
-
-        if (array_c[list2[i]][0].length > 10)
-        {
+        if (array_c[list2[i]][0].length > 10) {
             cls = "long";
-
         }
         // console.log(temp_l[1].length);
         if (temp_l[1].length >= 8) {
@@ -269,8 +248,6 @@ function bao() {
     }
     $('.container').html(container + container1);
 }
-
-
 function box(obj) {
     if (obj.children('span').hasClass('active')) {
         obj.children('span').removeClass('active');
@@ -279,7 +256,7 @@ function box(obj) {
     obj.children('span').addClass('active').addClass('pim-monkey');
     setTimeout(function () {
         $('.box').children('span').removeClass('pim-monkey');
-    }, 500)
+    }, 500);
     if ($('.active').length == 2) {
         var2 = obj.children('span').attr('data-src');
         w2T = obj.offset().top;
@@ -323,12 +300,13 @@ function box(obj) {
                         gameover();
                     }
                 }
-            }, 500)
+            }, 500);
             setTimeout(function () {
                 $('.sha').css({ 'left': wcL, 'top': wcT, 'display': 'none' }).removeClass('zoomIn');
-            }, 500)
-
-
+            }, 500);
+            if (rightcount == 10){
+                gameover();
+            }
         } else {
             errorcount++;
             if (music) {
@@ -343,15 +321,81 @@ function box(obj) {
             w2L = '';
             $('.box').children('span').removeClass('active');
         }
-
     } else {
         var1 = obj.children('span').attr('data-src');
         w1T = obj.offset().top + 44;
         w1L = obj.offset().left + 60;
         w1T = 0;
         w1L = 0;
-
     }
-
-
 }
+
+var courseId = GetQueryString("courseId");
+layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'jquery'],function () {
+    var subjectType = '';
+    var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate
+        , laypage = layui.laypage;
+    function openllkan() {
+        if (courseId == null || courseId == '') {
+            layer.open({
+                title: '提示'
+                , content: '请选择课程'
+            });
+        } else {
+            getWords();
+        }
+    }
+    alreadyBuy();
+    openllkan();
+});
+
+function getWords() {
+    var url = getContextPath() + '/word/selectTenRandWord';
+    $('.container').html('');
+    var data = {};
+    data.courseId = courseId;
+    $.post(url, data, function (res) {
+        u.setStorage('llkWord', res);
+        for (i = 0; i < res.length; i++) {
+            $('.container').append(
+                '<div class="box color1" onclick="box($(this))"><span data-src="' + res[i].id + '">' + res[i].english + '</span></div>'
+            )
+        }
+        shuffle(res);
+        for (j = 0; j < res.length; j++) {
+            var chinese = res[j].chinese;
+            if (chinese.length > 12){
+                var arr_ch = chinese.split("；");
+                chinese = arr_ch[0];
+            }
+            $('.container').append(
+                '<div class="box color1" onclick="box($(this))"><span data-src="' + res[j].id + '">' + chinese + '</span></div>'
+            )
+        }
+    });
+}
+
+// 已购买课程
+function alreadyBuy() {
+    var url = getContextPath() + '/usercourse/usercourse/getCourseOpenOrClose?enguserId=' + sessionId;
+    $.post(
+        url,
+        function (res) {
+            var openCourses = res.openCourseList;
+            u.setStorage('openCourses',openCourses);
+            for (var i = 0; i < openCourses.length; i++){
+                $('#alreadyPurchase').append('<li onclick="openlianliankan(\''+ openCourses[i].id +'\')">' + openCourses[i].name + '<i></i></li>');
+            }
+        }
+    )
+}
+function openlianliankan(courseId){
+    window.location.href = getContextPath() + '/webclient/llkNew.html?courseId=' + courseId;
+    getWords();
+}
+$('.faguanbtn').on('click',function () {
+    getWords();
+});

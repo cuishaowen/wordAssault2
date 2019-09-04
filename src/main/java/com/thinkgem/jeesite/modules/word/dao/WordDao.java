@@ -19,6 +19,6 @@ import java.util.List;
 public interface WordDao extends CrudDao<Word> {
 
 
-    public List<Word> selectRandWordWithoutThis(@Param("id") String id);
+    List<Word> selectRandWordWithoutThis(@Param("id") String id);
 
 }

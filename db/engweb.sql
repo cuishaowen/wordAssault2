@@ -373,6 +373,7 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='题目表';
 -- ----------------------------
 --  Records of  subject
 -- ----------------------------
+DROP TABLE IF EXISTS `subject_version`;
 CREATE TABLE subject_version
 (
     id_ varchar(64) PRIMARY KEY NOT NULL,

@@ -22,4 +22,6 @@ public interface DictDao extends CrudDao<Dict> {
 
 	public Dict selectByLabelAndType(@Param("label") String label, @Param("type") String type);
 
+	public Dict selectByValueAndType(@Param("value")String value, @Param("type") String type);
+
 }

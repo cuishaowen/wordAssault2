@@ -6,6 +6,9 @@ var uzStorage = function () {
 // 定义全局变量u
 var u = {};
 
+// 定义课程全局变量
+var staticCourseId = '';
+
 // 设置缓存
 u.setStorage = function (key, value) {
     var v = value;
@@ -122,7 +125,7 @@ function alreadyPurchase() {
             }
         }
     )
-};
+}
 
 function alreadyBuyCourses(courseId){
     window.location.href = getContextPath() + '/webclient/dcxl.html?courseId=' + courseId;
@@ -313,6 +316,6 @@ function addLoop() {
     )
 }
 
-alreadyPurchase();
+
 
 

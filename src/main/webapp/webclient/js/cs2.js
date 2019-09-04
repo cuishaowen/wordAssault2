@@ -139,11 +139,10 @@ layui.use(['layer','form','jquery'],function () {
                 $('#failure').show();
             }
             $('.cur-score').text(curScore);
+            ErrorSubject();
+            saveErrorSubject();
             $('.zz').fadeIn(300);
         }
-
-
-
         function saveScore(score) {
             var url = getContextPath() + '/userSubjectVersion/save';
             var data = {};
@@ -162,8 +161,8 @@ layui.use(['layer','form','jquery'],function () {
         $('.zz').fadeOut(300);
     });
 
-    // 获取错题
-    function getErrorSubject() {
+    // 获取错题信息
+    function ErrorSubject() {
         for (i = 0; i < testSubject.length; i++) {
             var object = testSubject[i];
             var id = object.id;
@@ -173,6 +172,9 @@ layui.use(['layer','form','jquery'],function () {
                 }
             }
         }
+    }
+    // 获取错题
+    function getErrorSubject() {
         console.log('errorSubject',errorSubject);
         $('#container').html('');
         for (n = 0; n < errorSubject.length; n++) {
@@ -186,6 +188,21 @@ layui.use(['layer','form','jquery'],function () {
         getErrorSubject();
         form.render();
     });
+
+    // 将错题持久化
+    function saveErrorSubject(){
+        for (i = 0; i < errorSubject.length; i++){
+            var data = {};
+            data.userId = sessionId;
+            data.subjectVersionId = version;
+            data.subjectId = errorSubject[i].id;
+            data.isWrong = 'T';
+            var url = getContextPath() + '/userSubject/save';
+            $.post(url,data,function (res) {
+                layer.msg('错题保存成功');
+            })
+        }
+    }
 });
 
 function addContent(num,error){
@@ -266,6 +283,9 @@ function addContent(num,error){
         )
     }
 }
+
+
+
 
 
 
