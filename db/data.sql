@@ -101,8 +101,8 @@ CREATE TABLE subject_version
     update_date_ date,
     blank_one_ varchar(255),
     blank_two_ varchar(255)
-);
-ALTER TABLE subject_version COMMENT = '语法题版本';
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='语法题版本';
 
 
 

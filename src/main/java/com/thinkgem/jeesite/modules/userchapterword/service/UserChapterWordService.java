@@ -128,7 +128,13 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 
 				List<String> threeOtherWordChinese = this.getThreeOtherWords(wordId);
 				Word word = wordService.get(wordId);
+				WordExample wordExample = new WordExample();
+				wordExample.setWordId(wordId);
+				List<WordExample> wordExamples = wordExampleService.findList(wordExample);
 
+				if (wordExamples != null && wordExamples.size() > 0){
+					wordInformation.setWordExample(wordExamples.get(0));
+				}
 				wordInformation.setWord(word);
 				wordInformation.setErrorCh(threeOtherWordChinese);
 

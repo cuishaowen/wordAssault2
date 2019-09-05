@@ -155,6 +155,7 @@
                             <span>已消灭生词: </span><strong id="killHardWord"></strong>
                             <p><span>点击</span><a href="javascript:void(0)" onclick="linkdchg();">单词回顾</a><span>了解学习详情</span></p>
                         </div>
+                        <div class="container"></div>
                         <div class="state">
                             <div>
                                 <div class="ico ico1"></div>
@@ -305,7 +306,6 @@
         $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
         $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9-1.png");
     });
-
     $(document).on('click','.dc-tab-title  li:nth-child(3)',function(){
         $(".dc-tab-title  li:first-child img").attr("src", "images/6-1.png");
         $(".dc-tab-title  li:nth-child(2) img").attr("src", "images/7-1.png");
@@ -322,6 +322,17 @@
         $(".dc-tab-title  li:nth-child(3) img").attr("src", "images/8-1.png");
         $(".dc-tab-title  li:nth-child(4) img").attr("src", "images/9.png");
     }
+
     alreadyPurchase();
+    function alreadyBuyCourses(courseId){
+        // window.location.href = getContextPath() + '/webclient/dcxl.html?courseId=' + courseId;
+
+        var currenturl = window.location.href;
+        console.log(currenturl);
+        var newUrl = (currenturl.split("?"))[0];
+        history.pushState('','',newUrl+'?courseId=' + courseId);//前两个参数可省略
+        addLoop();
+        getWordPage();
+    }
 </script>
 </html>

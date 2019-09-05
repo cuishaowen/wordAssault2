@@ -126,11 +126,6 @@ function alreadyPurchase() {
         }
     )
 }
-
-function alreadyBuyCourses(courseId){
-    window.location.href = getContextPath() + '/webclient/dcxl.html?courseId=' + courseId;
-}
-
 function shuffle(a) {
     var len = a.length;
     for(var i=0;i<len;i++){
@@ -226,15 +221,15 @@ function updateStatus(chapterId,studyStatus) {
  * 获取课程下的所有章节
  */
 function addLoop() {
+    $('#Loop').html('');
+    // $('#shaoguan').load(location.href + ' #shaoguan');
+    $('.container').html('');
     var courseId = GetQueryString('courseId');
     var url =  getContextPath() + '/userChapter/userChapter/getUserChapterList';
     var data = {};
     data.courseId = courseId;
     data.userId = sessionId;
-    $.post(
-        url,
-        data,
-        function(res){
+    $.post(url, data, function(res){
             var j = 1;
             var k = 0;
             u.setStorage('userChapters',res);
@@ -242,7 +237,7 @@ function addLoop() {
             for (var m = 0; m < res.length; m++){
                 if ( m % 2 != 1){ // 如果 i 是偶数  i = 0 i = 2
                     $('#Loop').append('<div id="xl'+ j +'" class="xl_btns"></div>');
-                    $('#shaoguan').append('<div id="xxl'+ j +'" class="xl_btns"></div>');
+                    $('.container').append('<div id="xxl'+ j +'" class="xl_btns"></div>');
                     j++;
                 }
             }

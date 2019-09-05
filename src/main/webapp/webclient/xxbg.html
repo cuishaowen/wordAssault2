@@ -544,5 +544,12 @@
         });
     }
     alreadyPurchase();
+    function alreadyBuyCourses(courseId) {
+        // window.location.href = getContextPath() + '/webclient/dcxl.html?courseId=' + courseId;
+        var currenturl = window.location.href;
+        console.log(currenturl);
+        var newUrl = (currenturl.split("?"))[0];
+        history.pushState('', '', newUrl + '?courseId=' + courseId);//前两个参数可省略
+    }
 </script>
 </html>

@@ -1,14 +1,4 @@
-$(function () {
-    console.log('加载数据。。。。');
-    var url = getContextPath() + '/subjectVersion/list';
-    $.get(url,function (res) {
-        console.log('res',res);
-        for (i=0; i < res.length; i++){
-            $('#version').append(
-                '<option value="' + res[i].id+ '">' + res[i].name+ '</option>'
-            )
-        }
-    });
+function getButton(){
     var url1 = getContextPath() + '/subject/getSubjectType';
     var data = {};
     data.type = 'subject_type';
@@ -19,10 +9,10 @@ $(function () {
             )
         }
     })
-});
+}
+getButton();
 
 layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
-    var subjectType = '';
     var form = layui.form
         , layer = layui.layer
         , layedit = layui.layedit
@@ -30,17 +20,30 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
         , laypage = layui.laypage;
 
     var version = '';
-    $('.btn11').on('click',function () {
-       subjectType = $(this).val();
-    });
+    var subjectType = '';
+    function getSelect(){
+        var url = getContextPath() + '/subjectVersion/list';
+        $.get(url,function (res) {
+            for (i=0; i < res.length; i++){
+                $('#version').append(
+                    '<option value="' + res[i].id+ '">' + res[i].name+ '</option>'
+                )
+            }
+            form.render('select');
+        });
+    }
+    getSelect();
 
     form.on('select',function (data) {
         version = data.elem.value;
-        console.log(version);
+        
+    });
+
+    $('.btn11').on('click',function () {
+        subjectType = $(this).val();
     });
 
     form.on('submit(*)',function (data) {
-        var version = data.field.version;
         if (subjectType == '' || version == ''){
             layer.open({
                 title: '提示'
@@ -88,7 +91,6 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
     });
 
     function getErrorList(subjectVersionId) {
-        console.log("加载错题");
         var url = getContextPath() + '/userSubject/errorList?subjectVersionId=' + subjectVersionId;
         $.get(url,function (res) {
             u.setStorage('errorSubject',res);
@@ -147,18 +149,17 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
             layer.msg('错题移除成功');
             NextErrorList(index);
             if (index == (errorSubject.length-1)){
-                console.log("加载错题");
                 var url = getContextPath() + '/userSubject/errorList?subjectVersionId=' + subjectVersionId;
                 $.get(url,function (res) {
                     u.setStorage('errorSubject', res);
                 })
             }
         });
-
-
     });
     form.render();
 });
+
+
 
 
 

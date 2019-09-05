@@ -644,7 +644,7 @@
         var i= $('.jj_active').index();
         i++;
         $('.jjjc ul li').eq(i).addClass('jj_active');
-        $('.jjjc ul li').eq(i).siblings().removeClass('jj_active')
+        $('.jjjc ul li').eq(i).siblings().removeClass('jj_active');
         var src= $('.jjjc ul li').eq(i).find('img').attr('src');
         $('.img-box').find('img').attr('src',src);
         var ado = $('.jjjc ul li').eq(i).find('.audio11 source').attr('src');
@@ -654,5 +654,8 @@
         Audio.play();
     });
     alreadyPurchase();
+    function alreadyBuyCourses(courseId) {
+        window.location.href = getContextPath() + '/webclient/dcxl.html?courseId=' + courseId;
+    }
 </script>
 </html>
