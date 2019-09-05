@@ -214,7 +214,6 @@
         $('.gm').height($('.bg-left').height() - 300);
         $('.gm-kc').height($('.gm').height() - 71);
         $('.layui-tab-content').height($('.bg-right').height() - 132)
-
         $('.bg3,.bg4').height($('.bg-right').height()-117)
     };
     sp();
@@ -252,9 +251,9 @@
         var weixin=$('#weixin').val();
         var banji=$('#banji').val();
         var phone=$('#phone').val();
-        var sex=$("input[name=sex]").val();
-        var jpanType=$("input[name=jpanType]").val();
-        var mapType=$("input[name=mapType]").val();
+        var sex=$("input[name='sex']:checked").val();
+        var jpanType=$("input[name='jpanType']:checked").val();
+        var mapType=$("input[name='mapType']:checked").val();
         $.ajax({
             type:'post',
             url: getContextPath() +"/enguser/enguser/updateUserInfo",
@@ -318,10 +317,9 @@
             $('#weixin').val(data.weixin);
             $('#banji').val(data.banji);
             $('#phone').val(data.phone);
-            $("input[name=sex]").val([data.sex]);
-            $("input[name=jpanType]").val([data.jPanType]);
-            $("input[name=mapType]").val([data.mp3Type]);
-
+            $("input[name='sex']").val([data.sex]);
+            $("input[name='jpanType']").val([data.jPanType]);
+            $("input[name='mapType']").val([data.mp3Type]);
         });
     }
 
