@@ -137,7 +137,7 @@
                            </div>
                            <div class="dc_tab_item" style="height: 316px;">
                                <div class="timu" style="margin: 0 auto;height: 30px">
-                                   <span class="beizhu timu" style="width: 80px;display: inline-block;float: left;font-size: 20px"> 【名词】</span>
+                                   <span class="beizhu timu" style="display: inline-block;float: left;font-size: 20px"> 【名词】</span>
                                </div>
                               <div class="timu">
                                   <p class="yufa" style="line-height: 30px">1) An  old <span></span> wants  to  see  you</p>
@@ -167,20 +167,19 @@
                                </div>
                                <div class="newbtns">
                                    <a id="removeErrSubject" class="faguanbtn">移出错题本</a>
-                                   <a class="faguanbtn">下一题</a>
+                                   <a id="nextSubject" class="faguanbtn">下一题</a>
                                </div>
                                <div class="jdt">
                                <div class="zj">
                                    <span>第<i id="indexS">1</i>题 共计：<i id="totalS">10</i>题</span>
                                </div>
                                <div class="layui-progress">
-                                   <div class="layui-progress-bar layui-bg-blue" lay-percent="50%" style="background-color:#22A9FB !important; "></div>
+                                   <div class="layui-progress-bar layui-bg-blue" lay-filter="demo" lay-percent="0%" style="background-color:#22A9FB !important; "></div>
                                </div>
                                </div>
                            </div>
                        </div>
                    </div>
-
                </form>
            </div>
         </div>
@@ -232,26 +231,33 @@
     }
 </script>
 <script>
-    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+    var subjectType = '';
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer','element'], function () {
         var form = layui.form
             , layer = layui.layer
             , layedit = layui.layedit
             , laydate = layui.laydate
-            , laypage = layui.laypage;
+            , laypage = layui.laypage
+            , element = layui.element;
+
+        var url1 = getContextPath() + '/subject/getSubjectType';
+        var data = {};
+        data.type = 'subject_type';
+        $.post(url1,data,function (res) {
+            for (i=0; i < res.length; i++){
+                $('#subjectType').append(
+                    '<button type="button" class="btn11 hasbuy float-shadow" style="margin-bottom: 20px;" onclick="getBtnValue(' + res[i].value + ')" value="' + res[i].value + '">'+ res[i].label +'</button>'
+                )
+            }
+        });
     });
 
-    $('.btn11').on('click',function(){
-        $(this).addClass('btn11-active').siblings().removeClass('btn11-active')
+    function getBtnValue(value){
+        subjectType = value;
+        var btn = $('button[value=' + value + ']');
+        btn.addClass('btn11-active').siblings().removeClass('btn11-active');
+    }
 
-    });
-    $('.btn12').on('click',function(){
-
-        if($(this).hasClass('btn11-active')){
-            $(this).removeClass('btn11-active')
-        }else{
-            $(this).addClass('btn11-active')
-        }
-    })
     $('#fayin2').on('click',function(){
         var f = $(this).find('audio source').attr('src');
         var audio=new Audio(f);
@@ -259,7 +265,6 @@
     });
     alreadyPurchase();
     function alreadyBuyCourses(courseId) {
-
     }
 </script>
 <script src="js/yftj.js"></script>

@@ -1,6 +1,5 @@
 package com.thinkgem.jeesite.modules.userchapterword.web;
 
-import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
 import com.thinkgem.jeesite.modules.word.pojo.*;
@@ -107,7 +106,7 @@ public class UserChapterWordWebController {
      */
     @ResponseBody
     @RequestMapping(value = "getCourseHard")
-    public List<HardWord> getCourseHardWord(String userId, String courseId){
+    public List<WordInformation> getCourseHardWord(String userId, String courseId){
         return userChapterWordService.getCourseHardWord(userId, courseId);
     }
 

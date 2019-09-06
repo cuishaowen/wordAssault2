@@ -165,10 +165,8 @@
             var url = getContextPath() + '/chapter/getList';
             var dataPost = {};
             dataPost.courseId = data.value;
-            $.post(
-                url,
-                dataPost,
-                function(res) {
+            $('#chapter').html('');
+            $.post(url, dataPost, function(res) {
                     for (i = 0; i < res.length; i++){
                         $('#chapter').append(
                             '<option value="'+ res[i].id +'">' + res[i].name + '</option>'

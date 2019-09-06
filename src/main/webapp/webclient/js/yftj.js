@@ -1,26 +1,14 @@
-function getButton(){
-    var url1 = getContextPath() + '/subject/getSubjectType';
-    var data = {};
-    data.type = 'subject_type';
-    $.post(url1,data,function (res) {
-        for (i=0; i < res.length; i++){
-            $('#subjectType').append(
-                '<button type="button" class="btn11 hasbuy float-shadow" style="margin-bottom: 20px;" value="' + res[i].value + '">'+ res[i].label +'</button>'
-            )
-        }
-    })
-}
-getButton();
+var version = '';
 
-layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
+
+layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'element'],function () {
     var form = layui.form
         , layer = layui.layer
         , layedit = layui.layedit
         , laydate = layui.laydate
-        , laypage = layui.laypage;
+        , laypage = layui.laypage
+        , element = layui.element;
 
-    var version = '';
-    var subjectType = '';
     function getSelect(){
         var url = getContextPath() + '/subjectVersion/list';
         $.get(url,function (res) {
@@ -36,11 +24,7 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
 
     form.on('select',function (data) {
         version = data.elem.value;
-        
-    });
-
-    $('.btn11').on('click',function () {
-        subjectType = $(this).val();
+        console.log('version',version);
     });
 
     form.on('submit(*)',function (data) {
@@ -80,7 +64,8 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
         getErrorList(version);
     });
 
-    $('.faguanbtn').on('click',function () {
+    // 下一题
+    $('#nextSubject').on('click',function () {
         var errorSubject = u.getStorage('errorSubject');
         index++;
         if (index >= (errorSubject.length)){
@@ -89,6 +74,7 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
         NextErrorList(index);
         form.render();
     });
+
 
     function getErrorList(subjectVersionId) {
         var url = getContextPath() + '/userSubject/errorList?subjectVersionId=' + subjectVersionId;
@@ -158,6 +144,7 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'],function () {
     });
     form.render();
 });
+
 
 
 

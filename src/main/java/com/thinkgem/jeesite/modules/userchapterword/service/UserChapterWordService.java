@@ -101,6 +101,39 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		return this.getWordInformation(courseId);
 	}
 
+    // 难记词汇 如果错误两次以上 且依然被标记被生词
+    public List<WordInformation> getCourseHardWord(String userId, String courseId){
+        List<WordInformation> wordInformations = new ArrayList<WordInformation>();
+        List<UserChapterWord> userChapterWords = this.getUserChapterWordList(userId, courseId);
+        for (UserChapterWord userChapterWordInf: userChapterWords){
+            HardWord hardWord = new HardWord();
+
+            // 如果错误次数大于两次，且记忆状态为生词
+            if (userChapterWordInf.getWrongTime() != null && userChapterWordInf.getStrangeWord() != null) {
+                if (userChapterWordInf.getWrongTime() >= 2 && userChapterWordInf.getStrangeWord().equals("T")) {
+                    Word word = wordService.get(userChapterWordInf.getWordId());
+                    hardWord.setWord(word);
+                    hardWord.setUserChapterWord(userChapterWordInf);
+                    WordInformation wordInformation = new WordInformation();
+
+                    List<String> threeOtherWordChinese = this.getThreeOtherWords(userChapterWordInf.getWordId());
+                    WordExample wordExample = new WordExample();
+                    wordExample.setWordId(userChapterWordInf.getWordId());
+                    List<WordExample> wordExamples = wordExampleService.findList(wordExample);
+
+                    if (wordExamples != null && wordExamples.size() > 0){
+                        wordInformation.setWordExample(wordExamples.get(0));
+                    }
+                    wordInformation.setWord(word);
+                    wordInformation.setErrorCh(threeOtherWordChinese);
+                    wordInformations.add(wordInformation);
+                }
+            }
+        }
+        return wordInformations;
+    }
+
+
 	// 获取章节单词信息
 	public List<WordInformation> getChapterWordList(String chapterId, String courseId){
 		ChapterWord chapterWord = new ChapterWord();
@@ -154,7 +187,6 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		if (courseId != null){
 			chapterExample.setCourseId(courseId);
 		}
-		chapterExample.setChapterId(chapterId);
 		return chapterExampleService.findList(chapterExample);
 	}
 
@@ -207,26 +239,6 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 			everydayMemoryWords.add(everydayMemoryWord);
 		}
 		return everydayMemoryWords;
-	}
-
-    // 难记词汇 如果错误两次以上 且依然被标记被生词
-	public List<HardWord> getCourseHardWord(String userId, String courseId){
-		List<HardWord> hardWordList = new ArrayList<HardWord>();
-		List<UserChapterWord> userChapterWords = this.getUserChapterWordList(userId, courseId);
-		for (UserChapterWord userChapterWordInf: userChapterWords){
-			HardWord hardWord = new HardWord();
-
-			// 如果错误次数大于两次，且记忆状态为生词
-			if (userChapterWordInf.getWrongTime() != null && userChapterWordInf.getStrangeWord() != null) {
-				if (userChapterWordInf.getWrongTime() >= 2 && userChapterWordInf.getStrangeWord().equals("T")) {
-					Word word = wordService.get(userChapterWordInf.getWordId());
-					hardWord.setWord(word);
-					hardWord.setUserChapterWord(userChapterWordInf);
-					hardWordList.add(hardWord);
-				}
-			}
-		}
-		return hardWordList;
 	}
 
 	// 消灭难记词汇  如果错误次数超过两次 且不是生词

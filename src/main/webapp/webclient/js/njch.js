@@ -6,25 +6,24 @@ $(function() {
     var data ={};
     data.courseId = GetQueryString("courseId");
     data.userId = sessionId;
-    $.post(
-        url,
-        data,
-        function (res) {
-            console.log('hardwords',res);
-            for (i = 0; i < res.length; i++){
-                $('tbody').append('<tr>\n' +
-                    '                        <td>\n' +
-                    '                            <a class="yb" href="javascript:void(0)" onclick="detail1()">\n' + res[i].word.english +
-                    '                                <audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
-                    '                                    <source src="音频/anyone.mp3">\n' +
-                    '                                </audio>\n' +
-                    '                            </a>\n' +
-                    '                            </td>\n' +
-                    '                        <td>'+ res[i].word.phoneticTranscription + '</td>\n' +
-                    '                        <td>'+res[i].word.chinese+'</td>\n' +
-                    '                    </tr>')
+    $.post(url, data, function (res) {
+        for (i = 0; i < res.length; i++){
+            var engVoice = res[i].word.engVoice;
+            var ameVoice = res[i].word.ameVoice;
+            var voice = ameVoice ? ameVoice : engVoice;
+            $('tbody').append(
+                '<tr>\n' +
+                '<td>\n' +
+                '<a class="yb" href="javascript:void(0)" onclick="detail1()">\n' + res[i].word.english +
+                '<audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
+                '<source src="'+ voice +'">\n' +
+                '</audio>\n' +
+                '</a>\n' +
+                '</td>\n' +
+                '<td>'+ res[i].word.phoneticTranscription + '</td>\n' +
+                '<td>'+res[i].word.chinese+'</td>\n' +
+                '</tr>')
             }
-
         }
     )
 });

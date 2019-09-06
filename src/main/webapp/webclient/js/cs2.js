@@ -1,8 +1,10 @@
 var testSubject = [];
 var errorSubject = [];
+var result = [];
 var highestScore = 0;
 var subjectType = GetQueryString('subjectType');
 var version = GetQueryString('version');
+
 
 // 最高得分
 function getHighestScore(){
@@ -31,12 +33,17 @@ $(function(){
     var data = {};
     data.sort = subjectType;
     data.version = version;
-    $.post(url, data, function(res) {u.setStorage('subject',res);})
+    $.post(url, data, function(res) {
+        u.setStorage('subject',res);
+        result = res;
+    })
+
 });
 
 // 获取版本信息
 $(function () {
     var url = getContextPath() + '/subjectVersion/get?id=' + version;
+    // var url = getContextPath() + '/dict/'
     $('.dttop h3').text();
     $.get(url,function (res) {
         subjectName = res.name;
@@ -46,7 +53,8 @@ $(function () {
 
 // 动态添加元素
 function getSubject(){
-    var subject = u.getStorage('subject');
+    var subject = result;
+    $('#container').html('');
     for (i = 0;i < subject.length; i ++){
         addContent(i,false);
     }
@@ -210,7 +218,7 @@ function addContent(num,error){
     if (error){
         object = errorSubject[num];
     } else {
-        var subject = u.getStorage('subject');
+        var subject = result;
         object = subject[num];
         testSubject.push(object);
     }

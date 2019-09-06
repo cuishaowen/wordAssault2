@@ -6,9 +6,6 @@ var uzStorage = function () {
 // 定义全局变量u
 var u = {};
 
-// 定义课程全局变量
-var staticCourseId = '';
-
 // 设置缓存
 u.setStorage = function (key, value) {
     var v = value;
@@ -171,10 +168,7 @@ function updateWord(userChapterWord) {
     data.skilledWord = userChapterWord.skilledWord;
     data.isMemo = userChapterWord.isMemo;
     console.log('update:',userChapterWord);
-    $.post(
-        url,
-        data,
-        function (res) {
+    $.post(url, data, function (res) {
             getUserChapterWords();
             console.log('updateUserChapterWord:','success');
         }

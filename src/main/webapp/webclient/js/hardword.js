@@ -5,24 +5,17 @@ var result = [];
 var errorSubjects = [];
 // 设置一个公共变量，用于遍历数组
 var pageNum = 0;
-// 请求后台数据加载选择题，并将数据存储进缓存
 $(function (){
-    var chapterId = GetQueryString("chapterId");
-    var url = getContextPath() + '/userchapterword/getWordInformation';
-    var data = {};
-    data.chapterId = chapterId;
-    data.pageNum = pageNum;
-    if (result == null || result == undefined || result == ''){
-        $.post(url, data, function(res) {
-            // 设置缓存
-            u.setStorage('result',res);
-            result = res;
-            pageOne(res);
-        })
-    }
+    var url = getContextPath() + '/userchapterword/getCourseHard';
+    var data ={};
+    data.courseId = GetQueryString("courseId");
+    data.userId = sessionId;
+    $.post(url, data, function (res) {
+        u.setStorage('result',res);
+        result = res;
+        pageOne(res);
+    })
 });
-
-
 // 获取当前操作对象
 function getUserChapterWord(){
     var result = u.getStorage('result');
@@ -45,7 +38,7 @@ function getUserChapterWord(){
 // 是否生词
 function HardWord() {
     var userChapterWord = getUserChapterWord();
-    userChapterWord.studyStatus = '2';
+    userChapterWord.studyStatus = '3';
     userChapterWord.strangeWord = 'T';
     if (userChapterWord.wrongTime == null || userChapterWord.wrongTime == undefined || userChapterWord.wrongTime == ''){
         userChapterWord.wrongTime = 0;
@@ -56,7 +49,7 @@ function HardWord() {
 // 已学
 function alreadyLearn() {
     var userChapterWord = getUserChapterWord();
-    userChapterWord.studyStatus = '2';
+    userChapterWord.studyStatus = '3';
     return userChapterWord;
 }
 getUserChapterWords();
@@ -148,7 +141,6 @@ function nextSubject(select) {
         updateWord(userChapterWord);
         if (pageNum > result.length) {
             errorSubjects.shift();
-            console.log('errorSubjectsRight',errorSubjects);
         }
     }else{
         xuanyiAnsError();
@@ -157,11 +149,9 @@ function nextSubject(select) {
         updateWord(userChapterWord);
         if (pageNum < result.length) {
             errorSubjects.push(result[pageNum-1]);
-            console.log('errorSubjectsError',errorSubjects);
         }else {
             errorSubjects.push(errorSubjects[0]);
             errorSubjects.shift();
-            console.log('errorSubjectsError',errorSubjects);
         }
     }
 }
@@ -327,48 +317,27 @@ $('#aaaa').on('keypress',function(e){
 });
 
 // 点击进入下一特
-$('#next-page').on('click',function () {
-    $('.pingxie_da').hide();
-    $(this).hide();
-    $('#aaaa').attr('disabled',false);
+layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+    var form = layui.form
+        , layer = layui.layer;
+    $('#next-page').on('click', function () {
+        $('.pingxie_da').hide();
+        $(this).hide();
+        $('#aaaa').attr('disabled', false);
 
-    var res = result[pageNum];
-    if (pageNum < result.length) {
-        page2(res);
-    }else {
-        if (errorSubjects.length > 0) {
-            page2(errorSubjects[0]);
-            console.log('errorSubjects0000:', errorSubjects[0]);
+        var res = result[pageNum];
+        if (pageNum < result.length) {
+            page2(res);
         } else {
-            console.log('没有错误的选择题了');
-            alert('恭喜你闯关成功！');
-            var userChapterWords = u.getStorage('userChapterWords');
-            var userChapters = u.getStorage('userChapters');
-            var chapterId = userChapterWords[0].chapterId;
-            var courseId = userChapterWords[0].courseId;
-            var userChapter = {};
-            var  userChapterNext = {};
-            var j  = 0;
-            for (i = 0; i < userChapters.length; i++){
-                j = i + 1;
-                if (j <= userChapters.length) {
-                    if (chapterId == userChapters[i].userChapter.chapterId){
-                        userChapter = userChapters[i].userChapter;
-                        userChapterNext = userChapters[j].userChapter;
-                        break;
-                    }
-                }
-            }
-            if (userChapter.studyStatus != '3'){
-                var studyStatus = '3';
-                updateStatus(chapterId,studyStatus); // 修改此章节完成
-                console.log('userChapterNext', userChapterNext);
-                updateStatus(userChapterNext.chapterId, '1'); // 开通下一章节
-                $('.xl_btns').load(location.href + ' .xl_btns');
-                addLoop();
+            if (errorSubjects.length > 0) {
+                page2(errorSubjects[0]);
+                console.log('errorSubjects0000:', errorSubjects[0]);
+            } else {
+                console.log('没有错误的选择题了');
+                layer.msg('恭喜你闯关成功！');
             }
         }
-    }
+    });
 });
 // 答对
 function pinxieAnsRight(){
@@ -404,4 +373,3 @@ $('#fayin').on('click',function () {
     var audio=new Audio(f);
     audio.play();
 });
-
