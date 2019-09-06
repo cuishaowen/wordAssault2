@@ -134,7 +134,6 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
         return wordInformations;
     }
 
-
 	// 获取章节单词信息
 	public List<WordInformation> getChapterWordList(String chapterId, String courseId){
 		ChapterWord chapterWord = new ChapterWord();
@@ -177,6 +176,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		}
 		return wordInformations;
 	}
+
 
 	// 获取章节例句信息
 	public List<ChapterExample> getChapterExamples(String chapterId,String courseId){

@@ -1,6 +1,7 @@
 package com.thinkgem.jeesite.modules.word.web;
 
 import com.thinkgem.jeesite.modules.word.entity.Word;
+import com.thinkgem.jeesite.modules.word.pojo.WordDccx;
 import com.thinkgem.jeesite.modules.word.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,12 @@ public class WordWebController {
     @RequestMapping(value = "selectTenRandWord")
     public List<Word> selectTenRandWord(String courseId){
         return wordService.selectTenRandWord(courseId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getWordDccx")
+    public WordDccx getWordDccx(String userId, String courseId, String wordId){
+        return wordService.getWordDccx(userId, courseId, wordId);
     }
 
 }
