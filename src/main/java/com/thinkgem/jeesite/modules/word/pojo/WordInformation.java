@@ -3,6 +3,7 @@ package com.thinkgem.jeesite.modules.word.pojo;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.modules.chapterexample.entity.ChapterExample;
+import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.word.entity.Word;
 import com.thinkgem.jeesite.modules.wordexample.entity.WordExample;
 
@@ -18,6 +19,16 @@ public class WordInformation extends DataEntity<WordInformation> {
     private WordExample wordExample;
 
     private ChapterExample chapterExample;
+
+    private UserChapterWord userChapterWord;
+
+    public UserChapterWord getUserChapterWord() {
+        return userChapterWord;
+    }
+
+    public void setUserChapterWord(UserChapterWord userChapterWord) {
+        this.userChapterWord = userChapterWord;
+    }
 
     public List<String> getErrorCh() {
         return errorCh;

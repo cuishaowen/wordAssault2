@@ -1,5 +1,6 @@
 package com.thinkgem.jeesite.modules.userchapterword.web;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
 import com.thinkgem.jeesite.modules.word.pojo.*;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +28,6 @@ public class UserChapterWordWebController {
     @ResponseBody
     @RequestMapping(value = "updateWord", method = RequestMethod.POST)
     public void updateWord(UserChapterWord userChapterWord){
-        System.out.println(userChapterWord);
         userChapterWord.setUpdateDate(new Date());
         userChapterWordService.save(userChapterWord);
     }

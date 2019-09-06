@@ -124,6 +124,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
                     if (wordExamples != null && wordExamples.size() > 0){
                         wordInformation.setWordExample(wordExamples.get(0));
                     }
+                    wordInformation.setUserChapterWord(userChapterWordInf);
                     wordInformation.setWord(word);
                     wordInformation.setErrorCh(threeOtherWordChinese);
                     wordInformations.add(wordInformation);

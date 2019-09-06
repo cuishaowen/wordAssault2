@@ -164,6 +164,23 @@ layui.use(['layer','form','jquery'],function () {
                 content: '还有未做完的题目' //这里content是一个普通的String
             });
         } else {
+            var rightSubject_new = [];
+            for (i = 0; i < testSubject.length; i++){
+                var object = testSubject[i];
+                var english = object.word.english;
+                for (j = 0; j < rightclicked.length; j ++){
+                    if (english == rightclicked[j]){
+                        rightSubject_new.push(object);
+                    }
+                }
+            }
+            for (n = 0; n < rightSubject_new.length; n++){
+                var userChapterWord = rightSubject_new[n].userChapterWord;
+                console.log('userChapterWord',userChapterWord);
+                userChapterWord.studyStatus = '3';
+                userChapterWord.strangeWord = 'F';
+                updateWord(userChapterWord);
+            }
             $('#subject-num').append(testSubject.length);
             $('#right-num').append(rightclicked.length);
             // killHardWord();
