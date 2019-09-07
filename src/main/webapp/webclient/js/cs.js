@@ -283,6 +283,7 @@ layui.use(['layer','form','jquery'],function () {
     });
 });
 
+// 选项卡逻辑
 function addContentOne(num,error){
     var object = {};
     if (error){
@@ -346,6 +347,7 @@ function addContentOne(num,error){
     )
 }
 
+// 听写逻辑
 function addContentTwo(num,error) {
     var object = {};
     if (error){

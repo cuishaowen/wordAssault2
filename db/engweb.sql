@@ -446,7 +446,7 @@ CREATE TABLE user_subject_version
 (
     id_ varchar(64) PRIMARY KEY NOT NULL,
     user_id_ varchar(64) COMMENT '用户id',
-    subject_version_id_ varchar(100) COMMENT '题目版本名称',
+    subject_version_name_ varchar(100) COMMENT '题目版本名称',
     subject_type_ varchar(20) COMMENT '题目类型',
     score_ varchar(20) COMMENT '得分',
     create_date_ date,

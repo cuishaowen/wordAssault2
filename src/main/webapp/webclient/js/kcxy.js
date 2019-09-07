@@ -22,7 +22,6 @@ $(function (){
     }
 });
 
-
 // 获取当前操作对象
 function getUserChapterWord(){
     var result = u.getStorage('result');
