@@ -1,5 +1,5 @@
 $(function () {
-    var url = getContextPath() + '/word/getWordDccx';
+    var url = getContextPath() + '/userchapterword/getWordDccx';
     var data = {};
     data.userId = sessionId;
     data.wordId = GetQueryString('wordId');

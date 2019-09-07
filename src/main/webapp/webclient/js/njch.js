@@ -14,7 +14,7 @@ $(function() {
             $('tbody').append(
                 '<tr>\n' +
                 '<td>\n' +
-                '<a class="yb" href="javascript:void(0)" onclick="detail1()">\n' + res[i].word.english +
+                '<a class="yb" href="javascript:void(0)" onclick="detail1(' + res[i].word.id + ')">\n' + res[i].word.english +
                 '<audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
                 '<source src="'+ voice +'">\n' +
                 '</audio>\n' +

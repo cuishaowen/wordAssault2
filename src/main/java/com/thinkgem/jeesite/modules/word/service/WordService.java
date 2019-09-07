@@ -37,11 +37,6 @@ public class WordService extends CrudService<WordDao, Word> {
     private WordDao wordDao;
     @Autowired
 	private ChapterWordDao chapterWordDao;
-    @Autowired
-	private WordExampleService wordExampleService;
-    @Autowired
-	private UserChapterWordService userChapterWordService;
-
 
 	public Word get(String id) {
 		return super.get(id);
@@ -82,26 +77,6 @@ public class WordService extends CrudService<WordDao, Word> {
 			}
 		}
 		return wordListRes;
-	}
-
-	// 难记词汇 如果错误两次以上 且依然被标记被生词
-	public WordDccx getWordDccx(String userId, String courseId, String wordId){
-		List<UserChapterWord> userChapterWords = userChapterWordService.getUserChapterWordList(userId, courseId);
-		WordDccx wordDccx = new WordDccx();
-		for (UserChapterWord userChapterWordInf: userChapterWords){
-				// 如果错误次数大于两次，且记忆状态为生词
-			if (userChapterWordInf.getWordId().equals(wordId)) {
-				Word word = wordDao.get(wordId);
-				WordExample wordExample = new WordExample();
-				wordExample.setWordId(wordId);
-				List<WordExample> wordExamples = wordExampleService.findList(wordExample);
-				wordDccx.setUserChapterWord(userChapterWordInf);
-				wordDccx.setWord(word);
-				wordDccx.setWordExamples(wordExamples);
-				break;
-			}
-		}
-		return wordDccx;
 	}
 
 	@Transactional(readOnly = false)

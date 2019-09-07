@@ -20,6 +20,12 @@ public class UserChapterWordWebController {
     private UserChapterWordService userChapterWordService;
 
     @ResponseBody
+    @RequestMapping(value = "getWordDccx")
+    public WordDccx getWordDccx(String userId, String courseId, String wordId){
+        return userChapterWordService.getWordDccx(userId, courseId, wordId);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "getUserChapterWordList")
     public List<UserChapterWord> getUserChapterWord(UserChapterWord userChapterWord){
         return userChapterWordService.findList(userChapterWord);

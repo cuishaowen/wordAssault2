@@ -29,10 +29,4 @@ public class WordWebController {
         return wordService.selectTenRandWord(courseId);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "getWordDccx")
-    public WordDccx getWordDccx(String userId, String courseId, String wordId){
-        return wordService.getWordDccx(userId, courseId, wordId);
-    }
-
 }

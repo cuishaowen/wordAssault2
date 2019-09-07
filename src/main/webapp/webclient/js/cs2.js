@@ -27,18 +27,7 @@ function getHighestScore(){
     })
 }
 getHighestScore();
-// 获取语法题
-$(function(){
-    var url = getContextPath() + '/subject/getList';
-    var data = {};
-    data.sort = subjectType;
-    data.version = version;
-    $.post(url, data, function(res) {
-        u.setStorage('subject',res);
-        result = res;
-    })
 
-});
 
 // 获取版本信息
 $(function () {
@@ -51,19 +40,25 @@ $(function () {
     })
 });
 
-// 动态添加元素
-function getSubject(){
-    var subject = result;
-    $('#container').html('');
-    for (i = 0;i < subject.length; i ++){
-        addContent(i,false);
-    }
-}
-
 layui.use(['layer','form','jquery'],function () {
     var form = layui.form;
     var layer = layui.layer;
-    getSubject();
+
+    // 获取语法题
+    $(function(){
+        var url = getContextPath() + '/subject/getList';
+        var data = {};
+        data.sort = subjectType;
+        data.version = version;
+        $.post(url, data, function(res) {
+            u.setStorage('subject',res);
+            $('#container').html('');
+            for (i = 0;i < res.length; i ++){
+                addContent(i,false);
+            }
+            form.render();
+        })
+    });
     function sp(){
         $('.zz').height($(window).height());
         $('.zz').width($(window).width());
@@ -218,7 +213,7 @@ function addContent(num,error){
     if (error){
         object = errorSubject[num];
     } else {
-        var subject = result;
+        var subject = u.getStorage('subject');
         object = subject[num];
         testSubject.push(object);
     }
