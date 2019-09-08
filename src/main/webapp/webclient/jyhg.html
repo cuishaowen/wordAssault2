@@ -40,10 +40,10 @@
         <div class="layui-form-item" style="width:94%;margin:0 auto;">
 
             <div class="layui-inline">
-                <a class="sub"  onclick="bofang()" style="margin:0 auto;float:inherit;">自动跟读</a>
+                <a id="auto-play" class="sub"  onclick="bofang()" style="margin:0 auto;float:inherit;">自动跟读</a>
             </div>
             <div class="layui-inline" style="float:right;height:43px;line-height: 43px;">
-                <div class="layui-input-inline">
+                <div id="today" class="layui-input-inline" style="width: 300px">
                   2019-07-19  共学习了4个词汇
                 </div>
             </div>
@@ -118,12 +118,6 @@
         });
     });
 
-//    $(document).on('click','.yb',function(){
-//        var d = $(this).find('.voicebox source').attr('src');
-//        new Audio(d).play();
-//
-//    })
-
     function detail1(wordId) {
         var idx = layer.open({
             title: '单词查询',
@@ -135,25 +129,28 @@
     var timeoutindex;
     var index =0;
     function bofang(){
+        $('#auto-play').text('暂停播放').removeAttr('onclick').attr("onclick",'stopPlay()');
         timeoutindex=  setInterval('bobo()',1000);
     }
     function bobo(){
-//        $('.sub').unbind('click');
-
-        $('.sub').removeAttr('onclick');
         index++;
-
+        var linkfy = $('.yb').eq(index - 1).parents("tr");
+        $(linkfy).css("backgroundColor", "#f2f2f2");
+        $(linkfy).siblings('tr').css("backgroundColor", "#fff");
         var a = $('.voicebox source').eq(index-1).attr("src");
         var audio=new Audio(a);
         audio.play();
         console.log(index-1);
         if(index>=$('.voicebox source').length){
-            $('.sub').attr("onclick",'bofang()');
+            $('#auto-play').text('自动播放').removeAttr('onclick').attr("onclick",'bofang()');
             index = 0;
             clearInterval(timeoutindex);
         }
+    }
 
-
+    function stopPlay() {
+        $('#auto-play').text('自动播放').removeAttr('onclick').attr("onclick",'bofang()');
+        clearInterval(timeoutindex);
     }
 
 </script>

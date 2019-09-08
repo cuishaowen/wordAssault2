@@ -94,9 +94,9 @@ function pageOne(res) {
     }
     shuffle(errorCh);
     $('.da').hide();
-    $('#ch-right').text(chinese);
+    $('.ch-ans').text(chinese);
     $('#eng-word').text(english);
-    $('#eng-right').text(chinese);
+    // $('#eng-right').text(chinese);
     $('#ch-word').text(chinese);
     $('#fayin audio source').attr('src',voice);
     $('#radio-1').val(errorCh[0]);
@@ -139,7 +139,7 @@ $('#radio-4').on('click',function(){
 function nextSubject(select) {
     pageNum++;
     console.log('pageNum',pageNum);
-    var right = $('#ch-right').text();
+    var right = $('.ch-ans').text();
     if (select == right){
         xuanyiAnsRight();
         radioDisabledTrue();
@@ -190,15 +190,15 @@ $('#nextsub').on('click',function(){
 // 答对
 function xuanyiAnsRight() {
     $('.da').show();
-    $('.da span').show();
-    $('.da b').hide();
+    $('.ch-right').show();
+    $('.ch-error').hide();
     $('#nextsub').show();
 }
 // 答错
 function xuanyiAnsError(){
     $('.da').show();
-    $('.da span').hide();
-    $('.da b').show();
+    $('.ch-right').hide();
+    $('.ch-error').show();
     $('#nextsub').show();
 }
 
@@ -247,7 +247,7 @@ function page2(res) {
     }
     shuffle(errorCh);
     $('#ch-word').text(chinese);
-    $('#eng-right').text(english);
+    $('.eng-ans').text(english);
     $('#fayin2 audio source').attr('src',voice);
     $('#aaaa').val('');
     if (jPanType == '1'){
@@ -372,16 +372,16 @@ $('#next-page').on('click',function () {
 // 答对
 function pinxieAnsRight(){
     $('.pingxie_da').show();
-    $('.pingxie_da span').show();
-    $('.pingxie_da b').hide();
+    $('.eng-right').show();
+    $('.eng-error').hide();
     $('#next-page').show();
     $('#aaaa').attr('disabled',true);
 }
 // 答错
 function pinxieAnsError(){
-    $('.pingxie_da span').hide();
-    $('.pingxie_da b').show();
     $('.pingxie_da').show();
+    $('.eng-right').hide();
+    $('.eng-error').show();
     $('#next-page').show();
     $('#aaaa').attr('disabled',true);
 }

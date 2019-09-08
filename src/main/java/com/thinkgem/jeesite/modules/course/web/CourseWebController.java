@@ -21,4 +21,10 @@ public class CourseWebController {
     public List<Course> courses(){
         return courseService.findList(null);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "get")
+    public Course get(String courseId){
+        return courseService.get(courseId);
+    }
 }

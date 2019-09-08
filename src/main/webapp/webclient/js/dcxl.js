@@ -47,10 +47,7 @@ function waitLearn() {
     var data ={};
     data.courseId = GetQueryString("courseId");
     data.userId = sessionId;
-    $.post(
-        url,
-        data,
-        function (res) {
+    $.post(url, data, function (res) {
             if (res == undefined || res == null || res == '') {
                 res.length = 0;
             }

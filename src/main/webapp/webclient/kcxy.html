@@ -52,8 +52,13 @@
                 <button id="radio-4" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
             </div>
             <div class="da" style="display: none">
-                <b id="ch-error" style="display: none">选择错误</b><br>
-                <span style="display: none">正确答案：<i id="ch-right"></i></span>
+                <div class="ch-error">
+                    <b>选择错误</b><br>
+                </div>
+                <div class="ch-right">
+                    <b>选择正确</b><br>
+                </div>
+                <span>正确答案：<i class="ch-ans"></i></span>
             </div>
         </div>
     </div>
@@ -100,9 +105,18 @@
                     </div>
                 </form>
             </div>
-            <div class="da pingxie_da">
-                <span>正确答案：<i id="eng-right"></i></span>
-                <b id="eng-error">答案错误</b>
+<!--            <div class="da pingxie_da">-->
+<!--                <span>正确答案：<i id="eng-right"></i></span>-->
+<!--                <b id="eng-error">答案错误</b>-->
+<!--            </div>-->
+            <div class="pingxie_da">
+                <div class="eng-error">
+                    <b>选择错误</b><br>
+                </div>
+                <div class="eng-right">
+                    <b>选择正确</b><br>
+                </div>
+                <span>正确答案：<i class="eng-ans"></i></span>
             </div>
         </div>
     </div>
@@ -130,44 +144,7 @@
     layui.use(['form', 'jquery'], function(){
         var form = layui.form
             ,$= layui.$;
-
-        // form.on('radio', function(data){
-        //     var a = $(this).parent('.layui-input-block').find('.layui-unselect div');
-        //     var b = $('#ch-right').text();
-        //     $('.sub').on('click',function(){
-        //         console.log(data.elem); //得到radio原始DOM对象
-        //         console.log(data.value); //被点击的radio的value值
-        //         console.log('atext:',a);
-                // if(a.text() != b){
-                //     $('.da b').show();
-                //     $('.da span').hide();
-                // }else  {  //答案正确
-                //     $('.da span').show();
-                //     $('.da b').hide();
-                //
-                //     $(".pinxie").show();
-                //     $(".xuanyi").hide();
-                // }
-
     });
-            // if(data.value ==1){
-            //     $('.lfi').show();
-            //     $('.lfii').hide();
-            //     $('.lfiii').hide();
-            // };
-            // if(data.value ==2){
-            //     $('.lfi').hide();
-            //     $('.lfii').show();
-            //     $('.lfiii').show();
-            // };
-    //     });
-    // });
-    //
-    // $('.pingxie_da span').hide();
-    // $('.pingxie_da b').hide();
-    // $('.lfii').hide();
-    // $('.lfiii').hide();
-    // $('.pinxie_yb').hide();
     $(document).on('click','.pinxie .word',function(){
         if($('.pinxie_yb').is(':hidden')){
             $('.pinxie_yb').show();
@@ -184,7 +161,7 @@
     var index = 0;
     var word = "";
     $(document).on('click','.lfii .layui-input-block ul li',function(){
-        var engRight = $('#eng-right').text();
+        var engRight = $('.eng-ans').text();
         var a = $(this).text();
         $('.lfiii .layui-input-block ul li').eq(index).text(a);
         word += a;

@@ -332,6 +332,7 @@
         var newUrl = (currenturl.split("?"))[0];
         history.pushState('','',newUrl+'?courseId=' + courseId);//前两个参数可省略
         addLoop();
+        loadPage();
         getWordPage();
     }
 </script>

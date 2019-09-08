@@ -3,7 +3,13 @@ $(function() {
     var data ={};
     data.courseId = GetQueryString("courseId");
     data.userId = sessionId;
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var today = year + '-' + month + '-' + day;
     $.post(url, data, function (res) {
+        $('#today').html('<b>' + today + '&nbsp;&nbsp;本课程添加了<b style="color: rebeccapurple">&nbsp;'+ res.length + '&nbsp;</b>个备忘词汇' + '</b>');
             for (i = 0; i < res.length; i++){
                 $('tbody').append('<tr>\n' +
                     '                        <td>\n' +
@@ -19,4 +25,11 @@ $(function() {
             }
         }
     )
+});
+
+$(function () {
+    var url = getContextPath() + '/course/course/get?courseId=' + GetQueryString("courseId");
+    $.post(url, function (res) {
+        $('cite').text(res.name);
+    })
 });

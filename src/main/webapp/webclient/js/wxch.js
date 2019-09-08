@@ -3,10 +3,13 @@ $(function() {
     var data ={};
     data.courseId = GetQueryString("courseId");
     data.userId = sessionId;
-    $.post(
-        url,
-        data,
-        function (res) {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var today = year + '-' + month + '-' + day;
+    $.post(url, data, function (res) {
+        $('#today').html('<b>' + today + '&nbsp;&nbsp;本课程还剩下<b style="color: rebeccapurple">&nbsp;'+ res.length + '&nbsp;</b>个词汇待学习' + '</b>');
             for (i = 0; i < res.length; i++) {
                 $('tbody').append('<tr>\n' +
                     '                        <td>\n' +
@@ -22,4 +25,12 @@ $(function() {
             }
         }
     )
+});
+
+// 获取课程详情
+$(function () {
+    var url = getContextPath() + '/course/course/get?courseId='+ GetQueryString("courseId");
+    $.post(url,function (res) {
+        $('cite').text(res.name);
+    });
 });

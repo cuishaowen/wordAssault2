@@ -99,9 +99,9 @@
                    <div class="layui-form-item" style="height:60px;">
                        <label class="layui-form-label" style="height:60px;">测试类型</label>
                        <div class="layui-input-block">
-                           <button id="yingyihan" type="button" class=" btn12 btn11-active" value="1" >英译汉</button>
+                           <button id="yingyihan" type="button" class=" btn11 btn11-active" value="2" >英译汉</button>
                            <!--<button type="button" class=" btn12">汉译英</button>-->
-                           <button id="tingxie" type="button" class=" btn12" value="2">听写</button>
+                           <button id="tingxie" type="button" class=" btn11" value="1">听写</button>
                        </div>
                    </div>
 
@@ -228,16 +228,14 @@
 
     $('.btn11').on('click',function(){
         $(this).addClass('btn11-active').siblings().removeClass('btn11-active')
-
     });
-    $('.btn12').on('click',function(){
-
-        if($(this).hasClass('btn11-active')){
-            $(this).removeClass('btn11-active')
-        }else{
-            $(this).addClass('btn11-active')
-        }
-    });
+    // $('.btn12').on('click',function(){
+    //     if($(this).hasClass('btn11-active')){
+    //         $(this).removeClass('btn11-active')
+    //     }else{
+    //         $(this).addClass('btn11-active')
+    //     }
+    // });
     alreadyPurchase();
     function alreadyBuyCourses(courseId) {
     }
