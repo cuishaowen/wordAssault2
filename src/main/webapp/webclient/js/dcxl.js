@@ -3,16 +3,16 @@ function getWordPage(){
     $('#word-page').html('');
     $('#word-page').append(
         '<div class="btn newbtn">\n' +
-        '    <div class="btn1"><a style="background-color: #FB5D74;" href="njch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 生词本</a></div>\n' +
+        '    <div class="btn1"><a style="background-color: #FB5D74;" target="_blank" href="njch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 生词本</a></div>\n' +
         '<!--<div class="btn1"><a href="javascript:void(0)" onclick="detail()"><img src="images/251.png" alt=""> 每日记忆</a></div>-->\n' +
-        '<div class="btn1"><a style="background-color: #C3BAAA;" href="mrjy.html?courseId='+ GetQueryString("courseId") +'" ><img src="images/251.png" alt=""> 每日记忆</a></div>\n' +
-        '<div class="btn1"><a style="background-color: #BCB3B0;" href="beiwang.html?courseId='+ GetQueryString("courseId") +'" ><img src="images/251.png" alt=""> 备忘录</a></div>\n' +
+        '<div class="btn1"><a style="background-color: #C3BAAA;" target="_blank" href="mrjy.html?courseId='+ GetQueryString("courseId") +'" ><img src="images/251.png" alt=""> 每日记忆</a></div>\n' +
+        '<div class="btn1"><a style="background-color: #BCB3B0;" target="_blank" href="beiwang.html?courseId='+ GetQueryString("courseId") +'" ><img src="images/251.png" alt=""> 备忘录</a></div>\n' +
         '\n' +
         '</div>\n' +
         '<div class="btn newbtn">\n' +
-        '    <div class="btn1"><a style="background-color: #9BC8CC;" href="sjch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 熟词集</a></div>\n' +
-        '<div class="btn1"><a style="background-color: #787F84;" href="wxch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 未学词汇</a></div>\n' +
-        '<div class="btn1"><a style="background-color: #AAC3AC;" href="jyhg.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 已学词汇</a></div>\n' +
+        '    <div class="btn1"><a style="background-color: #9BC8CC;" target="_blank" href="sjch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 熟词集</a></div>\n' +
+        '<div class="btn1"><a style="background-color: #787F84;" target="_blank" href="wxch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 未学词汇</a></div>\n' +
+        '<div class="btn1"><a style="background-color: #AAC3AC;" target="_blank" href="jyhg.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 已学词汇</a></div>\n' +
         '<span style="float:right;display: block;width:auto;height:43px;line-height: 43px;"></span>\n' +
         '    </div>'
     );
@@ -27,10 +27,7 @@ function completeWord() {
     var data = {};
     data.courseId = GetQueryString("courseId");
     data.userId = sessionId;
-    $.post(
-        url,
-        data,
-        function (res) {
+    $.post(url, data, function (res) {
             if (res == undefined || res == null || res == '') {
                 res.length = 0;
             }

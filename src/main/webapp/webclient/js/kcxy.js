@@ -111,23 +111,43 @@ function pageOne(res) {
 
 // 获取当前点击按钮的值
 $('#radio-1').on('click',function(){
-    console.log(':',$(this).val());
     var select = $(this).val();
+    var right = $('.ch-ans').text();
+    if (select == right) {
+        $(this).addClass('btn-right');
+    } else {
+        $(this).addClass('btn-error');
+    }
     nextSubject(select);
 });
 $('#radio-2').on('click',function(){
-    console.log(':',$(this).val());
     var select = $(this).val();
+    var right = $('.ch-ans').text();
+    if (select == right) {
+        $(this).addClass('btn-right');
+    } else {
+        $(this).addClass('btn-error');
+    }
     nextSubject(select);
 });
 $('#radio-3').on('click',function(){
-    console.log(':',$(this).val());
     var select = $(this).val();
+    var right = $('.ch-ans').text();
+    if (select == right) {
+        $(this).addClass('btn-right');
+    } else {
+        $(this).addClass('btn-error');
+    }
     nextSubject(select);
 });
 $('#radio-4').on('click',function(){
-    console.log(':',$(this).val());
     var select = $(this).val();
+    var right = $('.ch-ans').text();
+    if (select == right) {
+        $(this).addClass('btn-right');
+    } else {
+        $(this).addClass('btn-error');
+    }
     nextSubject(select);
 });
 
@@ -165,6 +185,7 @@ function nextSubject(select) {
     }
 }
 $('#nextsub').on('click',function(){
+    $('button').removeClass('btn-right').removeClass('btn-error');
     $(this).hide();
     radioDisabledFalse();
     var res = result[pageNum];
