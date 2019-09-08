@@ -23,4 +23,10 @@ public class ChapterWebController {
         chapter.setParentId(courseId);
         return chapterService.findList(chapter);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "get")
+    public Chapter get(String chapterId){
+        return chapterService.get(chapterId);
+    }
 }

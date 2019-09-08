@@ -18,15 +18,30 @@ $(function(){
         url = getContextPath() + '/userchapterword/getCourseWordInformation';
         data.courseId = courseId;
     }
-    $.post(
-        url,
-        data,
-        function(res) {
+    $.post(url, data, function(res) {
             // 设置缓存
             u.setStorage('result',res);
             console.log('result',u.getStorage('result'));
-        }
-    )
+        });
+});
+
+// 获取章节和课程信息
+$(function () {
+    var courseId = GetQueryString('courseId');
+    var chapterId = GetQueryString('chapterId');
+    if (chapterId == null && chapterId == undefined){
+        $('#chapter').text('(全书)');
+    }else{
+        var url1 = getContextPath() + '/chapter/get?chapterId=' + chapterId;
+        $.get(url1,function (res) {
+            $('#chapter').text('('+ res.name +')');
+        })
+    }
+    var url = getContextPath() + '/course/course/get?courseId=' + courseId;
+    $.get(url,function (res) {
+        $('#course').text(res.name);
+    })
+
 });
 
 // 动态添加元素
@@ -71,7 +86,7 @@ layui.use(['layer','form','jquery'],function () {
         $('.zz').width($(window).width());
         var a = $('.zz').height();
         $('.zz1').css('margin-top',(a-454)/2);
-        $('.wordvoice audio')[0].pause();
+        // $('.wordvoice audio')[0].pause();
     }
     sp();
     window.onresize = sp;
