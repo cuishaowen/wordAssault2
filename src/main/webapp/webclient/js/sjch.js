@@ -11,11 +11,14 @@ $(function getSkilled() {
     $.post(url, data, function (res) {
         $('#today').html('<b>' + today + '&nbsp;&nbsp;添加了<b style="color: rebeccapurple">&nbsp;'+ res.length + '&nbsp;</b>个熟记词汇' + '</b>');
             for (i = 0; i < res.length; i++) {
+                var ameVoice = res[i].word.ameVoice;
+                var engVoice = res[i].word.engVoice;
+                var voice = ameVoice ? ameVoice : engVoice;
                 $('tbody').append('<tr>\n' +
                     '                        <td>\n' +
                     '                            <a class="yb" href="javascript:void(0)" onclick="detail1('+ res[i].word.id +')">\n' + res[i].word.english +
                     '                                <audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
-                    '                                    <source src="音频/anyone.mp3">\n' +
+                    '                                    <source src="'+ voice +'">\n' +
                     '                                </audio>\n' +
                     '                            </a>\n' +
                     '                            </td>\n' +
