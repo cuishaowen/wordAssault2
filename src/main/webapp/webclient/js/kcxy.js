@@ -60,6 +60,8 @@ function alreadyLearn() {
 }
 getUserChapterWords();
 // ----------------------------------------------------第一页逻辑--------------------------------------------
+
+
 /**
  * 加载第一个页面数据
  * @param res
@@ -77,6 +79,7 @@ function pageOne(res) {
     var ameVoice = object.word.ameVoice;
     var voice = ameVoice ? ameVoice : engVoice;
     var audio=new Audio(voice);
+    var img = object.word.img;
     audio.play();
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
@@ -107,40 +110,13 @@ function pageOne(res) {
     $('#radio-3').text('C. '+ errorCh[2]);
     $('#radio-4').val(errorCh[3]);
     $('#radio-4').text('D. '+ errorCh[3]);
+    $('#word-img img').attr('src',img);
+    $('#eng-ex').text(exampleEng);
+    $('#ch-ex').text(exampleCh);
 }
 
 // 获取当前点击按钮的值
-$('#radio-1').on('click',function(){
-    var select = $(this).val();
-    var right = $('.ch-ans').text();
-    if (select == right) {
-        $(this).addClass('btn-right');
-    } else {
-        $(this).addClass('btn-error');
-    }
-    nextSubject(select);
-});
-$('#radio-2').on('click',function(){
-    var select = $(this).val();
-    var right = $('.ch-ans').text();
-    if (select == right) {
-        $(this).addClass('btn-right');
-    } else {
-        $(this).addClass('btn-error');
-    }
-    nextSubject(select);
-});
-$('#radio-3').on('click',function(){
-    var select = $(this).val();
-    var right = $('.ch-ans').text();
-    if (select == right) {
-        $(this).addClass('btn-right');
-    } else {
-        $(this).addClass('btn-error');
-    }
-    nextSubject(select);
-});
-$('#radio-4').on('click',function(){
+$('#radio-1,#radio-2,#radio-3,#radio-4').on('click',function(){
     var select = $(this).val();
     var right = $('.ch-ans').text();
     if (select == right) {
@@ -184,8 +160,23 @@ function nextSubject(select) {
         }
     }
 }
-$('#nextsub').on('click',function(){
+$('#more-msg').on('click',function(){
     $('button').removeClass('btn-right').removeClass('btn-error');
+    $('#xt-form').hide();  // 选项卡隐藏
+    $('#xt-form2').show(); // 详情卡显示
+    $('#word-img').show(); // 图片显示
+    $('#ex').show();       // 例句显示
+    $('#more-msg').hide(); // 详情按钮隐藏
+    $('#nextsub').show();  // 下一题按钮显示
+    $('.da').hide();       // 选择结果隐藏
+});
+
+$('#nextsub').on('click',function(){
+    $('#xt-form').show();  // 选项卡隐藏
+    $('#xt-form2').hide(); // 详情卡显示
+    $('#word-img').hide(); // 图片显示
+    $('#ex').hide();       // 例句显示
+    $('.da').hide();        // 选择结果隐藏
     $(this).hide();
     radioDisabledFalse();
     var res = result[pageNum];
@@ -213,14 +204,16 @@ function xuanyiAnsRight() {
     $('.da').show();
     $('.ch-right').show();
     $('.ch-error').hide();
-    $('#nextsub').show();
+    $('#more-msg').show();
+    // $('#nextsub').show();
 }
 // 答错
 function xuanyiAnsError(){
     $('.da').show();
     $('.ch-right').hide();
     $('.ch-error').show();
-    $('#nextsub').show();
+    $('#more-msg').show();
+    // $('#nextsub').show();
 }
 
 
@@ -251,6 +244,7 @@ function page2(res) {
     }else{
         object = res;
     }
+    var img = object.word.img;
     var english = object.word.english;
     var ameVoice = object.word.ameVoice;
     var engVoice = object.word.engVoice;
@@ -259,10 +253,16 @@ function page2(res) {
     audio.play();
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
-    var exampleArr = object.wordExample.example.split("$$$");
+    var exampleArr = '';
+    if (object.wordExample != null){
+        exampleArr = object.wordExample.example.split("$$$");
+    }else{
+        exampleArr = '***$$$***';
+    }
     var exampleEng = exampleArr[0];
     var exampleCh = exampleArr[1];
     var errorCh = object.errorCh;
+
     if (pageNum < result.length){
         errorCh.push(chinese);
     }
@@ -271,6 +271,9 @@ function page2(res) {
     $('.eng-ans').text(english);
     $('#fayin2 audio source').attr('src',voice);
     $('#aaaa').val('');
+    $('#pinxie-word-img img').attr('src',img);
+    $('#pinxie-eng-ex').text(exampleEng);
+    $('#pinxie-ch-ex').text(exampleCh);
     if (jPanType == '1'){
         var arr = [];
         for (var i = 0; i < english.length; i++) {
@@ -291,7 +294,6 @@ function page2(res) {
                 $('#a-word').append('<li class="lfi1">' + abc[j] + '</li>\n');
                 $('#aa-word').append('<li class="lfi1">' + arr[j] + '</li>\n');
             }
-
             $('#a-word-click').append('<li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
         }
         $('.lfi').hide();
@@ -348,6 +350,7 @@ $('#aaaa').on('keypress',function(e){
 
 // 点击进入下一特
 $('#next-page').on('click',function () {
+    $('#pinxie-xt-form').hide();          // 详情卡显示
     $('.pingxie_da').hide();
     $(this).hide();
     $('#aaaa').attr('disabled',false);
@@ -390,22 +393,6 @@ $('#next-page').on('click',function () {
         }
     }
 });
-// 答对
-function pinxieAnsRight(){
-    $('.pingxie_da').show();
-    $('.eng-right').show();
-    $('.eng-error').hide();
-    $('#next-page').show();
-    $('#aaaa').attr('disabled',true);
-}
-// 答错
-function pinxieAnsError(){
-    $('.pingxie_da').show();
-    $('.eng-right').hide();
-    $('.eng-error').show();
-    $('#next-page').show();
-    $('#aaaa').attr('disabled',true);
-}
 
 //发音图标
 $('#fayin').on('click',function () {
@@ -418,10 +405,32 @@ $('#fayin2').on('click',function () {
     var audio=new Audio(f);
     audio.play();
 });
-//发音图标
-$('#fayin').on('click',function () {
-    var f = $('.wordvoice audio source').attr('src');
-    var audio=new Audio(f);
-    audio.play();
+// 答对
+function pinxieAnsRight(){
+    $('.pingxie_da').show();
+    $('.eng-right').show();
+    $('.eng-error').hide();
+    $('#pinxie-more-msg').show();
+    // $('#next-page').show();
+    $('#aaaa').attr('disabled',true);
+}
+// 答错
+function pinxieAnsError(){
+    $('.pingxie_da').show();
+    $('.eng-right').hide();
+    $('.eng-error').show();
+    $('#pinxie-more-msg').show();
+    // $('#next-page').show();
+    $('#aaaa').attr('disabled',true);
+}
+
+$('#pinxie-more-msg').on('click',function () {
+    $('.pingxie_da').hide();        // 答题结果隐藏
+    $('#next-page').show();         // 下一页按钮显示
+    $('#pinxie-ex').show();         // 例句显示
+    $('#pinxie-word-img').show();   // 图片显示
+    $('#pinxie-more-msg').hide();   // 详情按钮隐藏
+    $('.layui-form-item').hide();   // 答题页隐藏
+    $('#pinxie-xt-form').show();          // 详情卡显示
 });
 

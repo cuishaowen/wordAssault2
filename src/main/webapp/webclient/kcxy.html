@@ -11,6 +11,7 @@
     <meta name="format-detection" content="email=no" />
     <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
     <title>单词突击</title>
+
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
@@ -43,31 +44,40 @@
 
 <body>
     <div class="xt xuanyi" id="xuanyiBox">
-        <div class="container" id="xt-container">
-            <div class="xt-title">
-                <span id="eng-word" class="word"></span>
-                <span id="phoneticTranscription" class="yinbiao"></span>
-                <a href="javascript:void(0)" class="wordvoice" id="fayin">
-                    <audio class="voicebox" controls autoplay preload="auto" style="display: none;">
-                        <source src="">
-                    </audio>
-                </a>
+        <div class="xt-title">
+            <span id="eng-word" class="word"></span>
+            <span id="phoneticTranscription" class="yinbiao"></span>
+            <a href="javascript:void(0)" class="wordvoice" id="fayin">
+                <audio class="voicebox" controls autoplay preload="auto" style="display: none;">
+                    <source src="">
+                </audio>
+            </a>
+        </div>
+        <div style="margin-top: 10px" class="xt-content" id="xt-form" >
+            <button id="radio-1" type="button" style="height: 40px;text-align: left;" class="btn btn-default" value=""></button>
+            <button id="radio-2" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
+            <button id="radio-3" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
+            <button id="radio-4" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
+        </div>
+        <div style="margin-top: 10px" class="xt-content layui-clear" id="xt-form2" style="display: none;">
+            <div id="word-img" style="display: none" class="layui-col-sm6">
+                <img  src="" style="height:240px;width: 300px">
             </div>
-            <div style="margin-top: 10px" class="xt-content" id="xt-form">
-                <button id="radio-1" type="button" style="height: 40px;text-align: left;" class="btn btn-default" value=""></button>
-                <button id="radio-2" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
-                <button id="radio-3" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
-                <button id="radio-4" class="btn btn-default" style="height: 40px;text-align: left;" type="button" value="" ></button>
+            <div id="ex" style="display: none" class="layui-col-sm6">
+                <h5>
+                    <p  id="eng-ex">1111</p><br>
+                    <p  id="ch-ex">2222</p>
+                </h5>
             </div>
-            <div class="da" style="display: none">
-                <div class="ch-error">
-                    <b style="color: red">选择错误</b><br>
-                </div>
-                <div class="ch-right">
-                    <b style="color: green">选择正确</b><br>
-                </div>
-                <span>正确答案：<i class="ch-ans"></i></span>
+        </div>
+        <div class="da" style="display: none">
+            <div class="ch-error">
+                <b style="color: red">选择错误</b><br>
             </div>
+            <div class="ch-right">
+                <b style="color: green">选择正确</b><br>
+            </div>
+            <span>正确答案：<i class="ch-ans"></i></span>
         </div>
     </div>
     <div class="xt pinxie" id="pinxieBox">
@@ -84,12 +94,6 @@
         <div class="xt-content">
             <div class="xt1">
                 <form id="pinxie-form" class="layui-form layui-form-pane" action="">
-<!--                    <div class="layui-form-item">-->
-<!--                        <div class="layui-input-block">-->
-<!--                            <input type="radio" name="sex" value="1" title="硬键盘" checked="">-->
-<!--                            <input type="radio" name="sex" value="2" title="软键盘">-->
-<!--                        </div>-->
-<!--                    </div>-->
                     <div class="layui-form-item lfi">
                         <div class="layui-input-block">
                             <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
@@ -116,20 +120,33 @@
 <!--                <span>正确答案：<i id="eng-right"></i></span>-->
 <!--                <b id="eng-error">答案错误</b>-->
 <!--            </div>-->
-            <div class="pingxie_da">
-                <div class="eng-error">
-                    <b style="color: red">选择错误</b><br>
-                </div>
-                <div class="eng-right">
-                    <b style="color: green">选择正确</b><br>
-                </div>
-                <span>正确答案：<i class="eng-ans"></i></span>
+        </div>
+        <div style="margin-top: 10px" class="xt-content layui-clear" id="pinxie-xt-form" style="display: none;">
+            <div id="pinxie-word-img" style="display: none" class="layui-col-sm6">
+                <img  src="" style="height:240px;width: 300px">
             </div>
+            <div id="pinxie-ex" style="display: none" class="layui-col-sm6">
+                <h5>
+                    <p  id="pinxie-eng-ex">1111</p><br>
+                    <p  id="pinxie-ch-ex">2222</p>
+                </h5>
+            </div>
+        </div>
+        <div class="pingxie_da">
+            <div class="eng-error">
+                <b style="color: red">答题错误</b><br>
+            </div>
+            <div class="eng-right">
+                <b style="color: green">答题正确</b><br>
+            </div>
+            <span>正确答案：<i class="eng-ans"></i></span>
         </div>
     </div>
     <div class="btn2">
         <div class="btn21">
             <!--<a href="javascript:void(0)">上一题</a>-->
+            <a id="pinxie-more-msg" href="javascript:void(0)" style="margin-left: 95px;display: none" >更多资料</a>
+            <a id="more-msg" href="javascript:void(0)" style="margin-left: 95px;display: none" >更多资料</a>
             <a id="nextsub" href="javascript:void(0)" style="margin-left: 95px;display: none" >下一题</a>
             <a id="next-page" href="javascript:void(0)" style="margin-right: 85px;display: none" >下一题</a>
         </div>
@@ -198,7 +215,6 @@
                 }
             }
         }
-
     });
 </script>
 <script src="./js/kcxy.js"></script>
