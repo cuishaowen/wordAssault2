@@ -310,16 +310,21 @@
             "cache" : false,
             "async" : false,
         }).success(function(data){
-            $('#kahao').val("ZHS"+data.kahao);
-            $('#xuexiao').val(data.xuexiao);
-            $('#city').val(data.city);
-            $('#province').val(data.province);
-            $('#weixin').val(data.weixin);
-            $('#banji').val(data.banji);
-            $('#phone').val(data.phone);
-            $("input[name='sex']").val([data.sex]);
-            $("input[name='jpanType']").val([data.jPanType]);
-            $("input[name='mapType']").val([data.mp3Type]);
+            if (data.code==1){
+                //未能获取到用户信息，跳转至登录页面，重新登录
+                window.location.href="Login.html";
+            } else {
+                $('#kahao').val("ZHS"+data.kahao);
+                $('#xuexiao').val(data.xuexiao);
+                $('#city').val(data.city);
+                $('#province').val(data.province);
+                $('#weixin').val(data.weixin);
+                $('#banji').val(data.banji);
+                $('#phone').val(data.phone);
+                $("input[name='sex']").val([data.sex]);
+                $("input[name='jpanType']").val([data.jPanType]);
+                $("input[name='mapType']").val([data.mp3Type]);
+            }
         });
     }
 

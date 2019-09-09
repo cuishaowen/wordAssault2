@@ -167,7 +167,15 @@ public class EnguserWebController {
     public Map<String,Object> getUserInfo(HttpServletRequest request, HttpSession httpSession) {
         Map<String,Object> resultmap=new HashMap<String, Object>();
         if (httpSession != null) {
-            String id=httpSession.getAttribute("id").toString();
+            Object id_=httpSession.getAttribute("id");
+            String id="";
+            if (id_!=null){
+               id=id_.toString();
+            }else {
+                resultmap.put("code",1);
+                resultmap.put("msg","session无用户id");
+            }
+
             Enguser entity = enguserService.get(id);
             if (entity==null){
               //说明没有此对象
