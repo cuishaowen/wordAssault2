@@ -26,7 +26,7 @@
 		SELECT DATE_FORMAT(a.LOGIN_IN_TIME_,'%Y-%m-%d') as loginTime, a.CURRENT_STUDY_TIME_ as studyTime
 		FROM enguser_option a
 		WHERE a.USER_ID_= #{userId}
-		AND DATE_SUB(CURDATE(),INTERVAL 7 DAY) &lt;= a.LOGIN_IN_TIME_ AND a.LOGIN_OUT_TIME_ IS NOT NULL
+		AND DATE_SUB(CURDATE(),INTERVAL 7 DAY) &lt;= a.LOGIN_IN_TIME_ AND a.LOGIN_OUT_TIME_ IS NOT NULL ORDER BY loginTime
 	</select>
 
 	<select id="get" resultType="EnguserOption">
