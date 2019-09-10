@@ -167,6 +167,7 @@
             dataPost.courseId = data.value;
             $('#chapter').html('');
             $.post(url, dataPost, function(res) {
+                    $('#chapter').append('<option value="0" selected="">全本</option>');
                     for (i = 0; i < res.length; i++){
                         $('#chapter').append(
                             '<option value="'+ res[i].id +'">' + res[i].name + '</option>'

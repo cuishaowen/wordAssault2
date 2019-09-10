@@ -288,13 +288,13 @@ function page2(res) {
             var flag = randNum();
             shuffle(abc);
             if (flag == 'T'){
-                $('#a-word').append('<li class="lfi1">' + arr[j] + '</li>\n');
-                $('#aa-word').append('<li class="lfi1">' + abc[j] + '</li>\n');
+                $('#a-word').append('<li class="lfi1 word-btn'+ j +'" onclick="keybroad_select_word(this)">' + arr[j] + '</li>\n');
+                $('#aa-word').append('<li class="lfi1 word-btn'+ j +'" onclick="keybroad_select_word(this)">' + abc[j] + '</li>\n');
             }else{
-                $('#a-word').append('<li class="lfi1">' + abc[j] + '</li>\n');
-                $('#aa-word').append('<li class="lfi1">' + arr[j] + '</li>\n');
+                $('#a-word').append('<li class="lfi1 word-btn'+ j +'" onclick="keybroad_select_word(this)">' + abc[j] + '</li>\n');
+                $('#aa-word').append('<li class="lfi1 word-btn'+ j +'" onclick="keybroad_select_word(this)">' + arr[j] + '</li>\n');
             }
-            $('#a-word-click').append('<li style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
+            $('#a-word-click').append('<li id="li'+ j +'" style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
         }
         $('.lfi').hide();
         $('.lfii').show();
@@ -348,6 +348,48 @@ $('#aaaa').on('keypress',function(e){
     }
 });
 
+// 点击每一个英文按钮事件
+function keybroad_select_word(o) {
+    var oclass = $(o).attr('class');
+    var arr = oclass.split(' ');
+    var lastClass = arr[1];
+    $('li').siblings('.'+ lastClass).removeClass('selected');
+    if (!$(o).hasClass('selected')) {
+        $(o).addClass('selected');
+    }
+    var engRight = $('.eng-ans').text();
+    var length = $('.lfii .layui-input-block ul li').length;
+    var select = '';
+    for (i = 0; i < length; i++) {
+        var text = $('.word-btn' + i + '.selected').text();
+        $('#li' + i).text(text);
+        select += text;
+    }
+    if(select.length == engRight.length){
+        pageNum++;
+        if (select == engRight) {
+            pinxieAnsRight();
+            var userChapterWord = alreadyLearn();
+            updateWord(userChapterWord);
+            if (pageNum > result.length) {
+                errorSubjects.shift();
+                console.log('errorSubjectsRight',errorSubjects);
+            }
+        }else{
+            pinxieAnsError();
+            var userChapterWord = HardWord();
+            updateWord(userChapterWord);
+            if (pageNum < result.length) {
+                errorSubjects.push(result[pageNum-1]);
+            }else {
+                errorSubjects.push(errorSubjects[0]);
+                errorSubjects.shift();
+                console.log('errorSubjectsError',errorSubjects);
+            }
+        }
+    }
+}
+
 // 点击进入下一特
 $('#next-page').on('click',function () {
     $('#pinxie-xt-form').hide();          // 详情卡显示
@@ -363,8 +405,10 @@ $('#next-page').on('click',function () {
             page2(errorSubjects[0]);
             console.log('errorSubjects0000:', errorSubjects[0]);
         } else {
-            console.log('没有错误的选择题了');
-            alert('恭喜你闯关成功！');
+            layui.use(['form','layer'],function () {
+                var layer = layui.layer;
+                layer.msg('恭喜你闯关成功！');
+            });
             var userChapterWords = u.getStorage('userChapterWords');
             var userChapters = u.getStorage('userChapters');
             var chapterId = userChapterWords[0].chapterId;
@@ -411,6 +455,7 @@ function pinxieAnsRight(){
     $('.eng-right').show();
     $('.eng-error').hide();
     $('#pinxie-more-msg').show();
+    $('.lfi1').removeAttr('onclick');
     // $('#next-page').show();
     $('#aaaa').attr('disabled',true);
 }
@@ -420,6 +465,7 @@ function pinxieAnsError(){
     $('.eng-right').hide();
     $('.eng-error').show();
     $('#pinxie-more-msg').show();
+    $('.lfi1').removeAttr('onclick');
     // $('#next-page').show();
     $('#aaaa').attr('disabled',true);
 }
@@ -431,6 +477,7 @@ $('#pinxie-more-msg').on('click',function () {
     $('#pinxie-word-img').show();   // 图片显示
     $('#pinxie-more-msg').hide();   // 详情按钮隐藏
     $('.layui-form-item').hide();   // 答题页隐藏
-    $('#pinxie-xt-form').show();          // 详情卡显示
+    $('#pinxie-xt-form').show();    // 详情卡显示
+    $('.lfi1').attr('disabled',false);
 });
 

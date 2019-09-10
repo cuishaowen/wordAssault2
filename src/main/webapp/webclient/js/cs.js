@@ -122,7 +122,6 @@ layui.use(['layer','form','jquery'],function () {
                 if ($.inArray(english,errorclicked) >= 0) {
                     errorclicked.splice($.inArray(english,errorclicked),1);
                 }
-
             }
         }else {
             // 答错添加答错列表
@@ -206,9 +205,13 @@ layui.use(['layer','form','jquery'],function () {
             $('#right-num').append(rightclicked.length);
             $('#pre-score').text(preScore);
             if (getScore >= 60){
+                $('#cs-fail').hide();
+                $('#cs-success').show();
                 $('#success').show();
                 $('#failure').hide();
             } else{
+                $('#cs-fail').show();
+                $('#cs-success').hide();
                 $('#success').hide();
                 $('#failure').show();
             }
@@ -222,13 +225,9 @@ layui.use(['layer','form','jquery'],function () {
             var data = {};
             data.userId = sessionId;
             data.courseId = GetQueryString('courseId');
-            $.post(
-                url,
-                data,
-                function (res) {
-                    return res;
-                }
-            )
+            $.post(url, data, function (res) {
+                return res;
+            })
         }
 
         function updateScore(score) {
@@ -274,9 +273,13 @@ layui.use(['layer','form','jquery'],function () {
                 $('.answer').show();
             } else{
                 for (n = 0; n < errorSubject.length; n++){
-                    addContentOne(n,true);
+                    layui.use(['form'],function () {
+                        var form = layui.form;
+                        addContentOne(n,true);
+                        form.render();
+                    });
                 }
-                $('#ch-right').show();
+                $('.da').show();
             }
         }
         $('.btn2').html('');

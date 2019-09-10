@@ -26,11 +26,12 @@
     }
     .layui-input-block{margin-left:0!important;}
     .pinxie{display: none;}
-    .btn2{margin-top: 150px;}
     .da{margin-top: 15px;}
     .xt{
         background: none !important;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
+        height: 350px;
+        max-height: 400px;
     }
     .btn-right {
         border-width: 2px;
@@ -40,8 +41,15 @@
         border-width: 2px;
         border-color: red;
     }
+    .selected {
+        background-color: rgba(29, 129, 131, 0.5);
+        color: #ff5614;
+    }
+    /*#a-word-click-form {*/
+    /*    margin-bottom: 10px;*/
+    /*    height: 30px;*/
+    /*}*/
 </style>
-
 <body>
     <div class="xt xuanyi" id="xuanyiBox">
         <div class="xt-title">
@@ -92,14 +100,14 @@
             <span id="ch-word" class="yinbiao pinxie_yb" style="margin-left:10px;"></span>
         </div>
         <div class="xt-content">
-            <div class="xt1">
+            <div class="xt1" style="width: 100%">
                 <form id="pinxie-form" class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item lfi">
                         <div class="layui-input-block">
                             <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
                         </div>
                     </div>
-                    <div id="a-word-form" class="layui-form-item lfii">
+                    <div id="a-word-form" class="layui-form-item lfii" style="">
                         <div class="layui-input-block">
                             <ul id="a-word" class="ul"></ul>
                         </div>
@@ -182,39 +190,39 @@
     /**
      * 每点击一次按钮触发一次事件，当达到
      */
-    var index = 0;
+    // var index = 0;
     var word = "";
     $(document).on('click','.lfii .layui-input-block ul li',function(){
-        var engRight = $('.eng-ans').text();
-        var a = $(this).text();
-        $('.lfiii .layui-input-block ul li').eq(index).text(a);
-        word += a;
-        console.log('word:  ',word);
-        index++;
-        if (index >= engRight.length) {
-            pageNum++;
-            console.log('pageNum',pageNum);
-            if (word == engRight) {
-                pinxieAnsRight();
-                var userChapterWord = alreadyLearn();
-                updateWord(userChapterWord);
-                if (pageNum > result.length) {
-                    errorSubjects.shift();
-                    console.log('errorSubjectsRight',errorSubjects);
-                }
-            }else{
-                pinxieAnsError();
-                var userChapterWord = HardWord();
-                updateWord(userChapterWord);
-                if (pageNum < result.length) {
-                    errorSubjects.push(result[pageNum-1]);
-                }else {
-                    errorSubjects.push(errorSubjects[0]);
-                    errorSubjects.shift();
-                    console.log('errorSubjectsError',errorSubjects);
-                }
-            }
-        }
+
+        // var a = $(this).text();
+        // $('.lfiii .layui-input-block ul li').eq(index).text(a);
+        // word += a;
+        // console.log('word:  ',word);
+        // index++;
+        // if (index >= engRight.length) {
+        //     pageNum++;
+        //     console.log('pageNum',pageNum);
+        //     if (word == engRight) {
+        //         pinxieAnsRight();
+        //         var userChapterWord = alreadyLearn();
+        //         updateWord(userChapterWord);
+        //         if (pageNum > result.length) {
+        //             errorSubjects.shift();
+        //             console.log('errorSubjectsRight',errorSubjects);
+        //         }
+        //     }else{
+        //         pinxieAnsError();
+        //         var userChapterWord = HardWord();
+        //         updateWord(userChapterWord);
+        //         if (pageNum < result.length) {
+        //             errorSubjects.push(result[pageNum-1]);
+        //         }else {
+        //             errorSubjects.push(errorSubjects[0]);
+        //             errorSubjects.shift();
+        //             console.log('errorSubjectsError',errorSubjects);
+        //         }
+        //     }
+        // }
     });
 </script>
 <script src="./js/kcxy.js"></script>
