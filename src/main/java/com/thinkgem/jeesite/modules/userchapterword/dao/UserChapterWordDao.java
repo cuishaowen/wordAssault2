@@ -8,6 +8,7 @@ import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,15 @@ import java.util.Map;
 public interface UserChapterWordDao extends CrudDao<UserChapterWord> {
 
     List<Map<String,String>> findWeekStudyWords(String userId);
+
     String getCourseScoreByIds(@Param("userId")String userId,@Param("courseId") String courseId);
 
+    void updateSelectById(
+            @Param("ids") String[] ids,
+            @Param("strangeWord") String strangeWord,
+            @Param("skilledWord") String skilledWord,
+            @Param("studyStatus") String studyStatus,
+            @Param("isMemo") String isMemo,
+            @Param("updateDate") Date updateDate
+            );
 }

@@ -171,5 +171,25 @@
 		DELETE FROM user_chapter_word
 		WHERE id_ = #{id}
 	</update>
-	
+
+	<update id="updateSelectById">
+		UPDATE user_chapter_word SET
+			<if test="strangeWord != null and strangeWord != ''">
+				STRANGE_WORD_ = #{strangeWord},
+			</if>
+			<if test="skilledWord != null and skilledWord != ''">
+				SKILLED_WORD_ = #{skilledWord},
+			</if>
+			<if test="studyStatus != null and studyStatus != ''">
+				STUDY_STATUS_ = #{studyStatus},
+			</if>
+			<if test="isMemo != null and isMemo != ''">
+				is_memo_ = #{isMemo},
+			</if>
+			update_date_ = #{updateDate}
+		WHERE id_ in
+		<foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</update>
 </mapper>

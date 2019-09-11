@@ -386,4 +386,13 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		return userChapterWordDao.getCourseScoreByIds(userId,courseId);
 	}
 
+	@Transactional(readOnly = false)
+	public void updateSelectById(UserChapterWord userChapterWord,String[] idArr) {
+		String strangeWord = userChapterWord.getStrangeWord();
+		String skilledWord = userChapterWord.getSkilledWord();
+		String studyStatus = userChapterWord.getStudyStatus();
+		String isMemo = userChapterWord.getIsMemo();
+		userChapterWordDao.updateSelectById(idArr,strangeWord,skilledWord,studyStatus,isMemo,new Date());
+	}
+
 }

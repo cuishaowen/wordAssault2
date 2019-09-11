@@ -174,7 +174,7 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 				userCourse.setIsOpen("1");
 				userCourse.setEngUserId(id);
 				userCourse.setCourseId(courseFree.getId());
-				userCourseService.save(userCourse);
+				userCourseService.openCourse(userCourse);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package com.thinkgem.jeesite.modules.userchapterword.web;
 
-import com.alibaba.druid.support.json.JSONUtils;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
 import com.thinkgem.jeesite.modules.word.pojo.*;
@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "userchapterword")
 public class UserChapterWordWebController {
+    private final static String IS_MEMO_F= "F";
+    private final static String SKILL_WORD_F = "F";
 
     @Autowired
     private UserChapterWordService userChapterWordService;
@@ -159,4 +161,31 @@ public class UserChapterWordWebController {
         return userChapterWordService.getCourseScoreByIds(userId, courseId);
     }
 
+    /**
+     * 批量修改备忘状态
+     * @param ids
+     */
+    @ResponseBody
+    @RequestMapping(value="updateIsMemoById")
+    public void updateSelectById(StringBuffer ids){
+        String idStr = ids.toString();
+        String[] idArr = idStr.split(",");
+        UserChapterWord userChapterWord = new UserChapterWord();
+        userChapterWord.setIsMemo(IS_MEMO_F);
+        userChapterWordService.updateSelectById(userChapterWord,idArr);
+    }
+
+    /**
+     * 批量修改熟词状态
+     * @param ids
+     */
+    @ResponseBody
+    @RequestMapping(value="updateSkillWordById")
+    public void updateSkillWordById(StringBuffer ids){
+        String idStr = ids.toString();
+        String[] idArr = idStr.split(",");
+        UserChapterWord userChapterWord = new UserChapterWord();
+        userChapterWord.setSkilledWord(SKILL_WORD_F);
+        userChapterWordService.updateSelectById(userChapterWord,idArr);
+    }
 }
