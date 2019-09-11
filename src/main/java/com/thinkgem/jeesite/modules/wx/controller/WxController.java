@@ -113,7 +113,7 @@ public class WxController extends AppController {
             List<Map<String,String>> weekStudyWordsList=userChapterWordService.findWeekStudyWords(id);
 
             if (weekStudyWordsList!=null&&weekStudyWordsList.size()!=0){
-                Map<String,String> wordsMap=new HashMap<String, String>();
+                Map<String,String> wordsMap=new TreeMap<String, String>();
                 for (Map<String,String> map:weekStudyWordsList){
                     String wordTime=map.get("updateTime");//学习的时间
                     Object countNum = map.get("countNum");
@@ -155,7 +155,7 @@ public class WxController extends AppController {
             if (enguserOptionList.size()!=0&&enguserOptionList!=null){
                 //数据不为空，则进行数据归纳
                 //定义两个数组，学习时间数组和学习天数数组
-                Map<String,String> TimeMap=new HashMap<String, String>();
+                Map<String,String> TimeMap=new TreeMap<String, String>();
                 for (Map<String,String> map:enguserOptionList
                         ) {
                     String loginTime=map.get("loginTime");
