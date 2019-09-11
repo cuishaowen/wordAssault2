@@ -526,15 +526,19 @@
                     var courseInfoS=data.courseInfoEntities;
                     for (var i=0;i<courseInfoS.length;i++){
                         var courseInfo=courseInfoS[i];
-                        tbodyHtml="<tr><td>"+courseInfo.courseName+"</td><td>本书已学单词:" +courseInfo.completeword+
-                            "；未学单词:" +courseInfo.waitLearningword+
-                            "；现有生词:" +courseInfo.courseHardWord+
-                            "；熟词:" +courseInfo.skilledWord+
-                            "；备忘单词:" +courseInfo.strengthenMemoryWord+
-                            "</td><td>"+courseInfo.courseScore+"</td></tr>";
-                    }
-                    $("#tbody").append(tbodyHtml);
-                }else{
+                        var count=courseInfo.courseScore;
+                        if (count==null||count==undefined){
+                            count=0;
+                        }
+                    tbodyHtml+="<tr><td>"+courseInfo.courseName+"</td><td>本书已学单词:" +courseInfo.completeword+
+                        "；未学单词:" +courseInfo.waitLearningword+
+                        "；现有生词:" +courseInfo.courseHardWord+
+                        "；熟词:" +courseInfo.skilledWord+
+                        "；备忘单词:" +courseInfo.strengthenMemoryWord+
+                        "</td><td>"+count+"</td></tr>";
+                }
+                $("#tbody").append(tbodyHtml);
+            }else{
                     alert(data.msg);
                 }
             },
@@ -552,4 +556,5 @@
         history.pushState('', '', newUrl + '?courseId=' + courseId);//前两个参数可省略
     }
 </script>
+
 </html>
