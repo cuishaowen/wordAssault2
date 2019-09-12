@@ -153,22 +153,19 @@
                   for (var i = 0; i < data.length; i++){
                       var name = data[i].name;
                       if (name.indexOf('一年级') !== -1 || name.indexOf('二年级') !== -1 || name.indexOf('三年级') !== -1 || name.indexOf('四年级') !== -1 || name.indexOf('五年级') !== -1 || name.indexOf('六年级') !== -1 || name.indexOf('小学') !== -1){
-                          $('#primary_school').append('<div class="layui-col-md2" onclick="note(\'' + data[i].id +'\')">'+ name + '</a> </div>');
+                          $('#primary_school').append('<div class="layui-col-md2 layui-inline" onclick="note(\'' + data[i].id +'\')">'+ name + '</a> </div>');
                       }
                       if (name.indexOf('七年级') !== -1 || name.indexOf('八年级') !== -1 || name.indexOf('九年级') !== -1 || name.indexOf('初中') !== -1){
-                          $('#junior_school').append('<div class="layui-col-md2" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
+                          $('#junior_school').append('<div class="layui-col-md2 layui-inline" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
                       }
                       if (name.indexOf('高中') !== -1 || name.indexOf('高考') !== -1){
-                          $('#high_school').append('<div class="layui-col-md2" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
-                          $('#primary_school').append('<div class="layui-col-md2 layui-hide courseId">'+ data[i].id + '</div>');
+                          $('#high_school').append('<div class="layui-col-md2 layui-inline" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
                       }
                       if (name.indexOf('四级') !== -1 || name.indexOf('六级') !== -1 || name.indexOf('大学') !== -1){
-                          $('#university').append('<div class="layui-col-md2" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
-                          $('#primary_school').append('<div class="layui-col-md2 layui-hide courseId">'+ data[i].id + '</div>');
+                          $('#university').append('<div class="layui-col-md2 layui-inline" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
                       }
                       if (name.indexOf('新概念') !== -1 || name.indexOf('其他') !== -1){
-                          $('#other').append('<div class="layui-col-md2" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
-                          $('#primary_school').append('<div class="layui-col-md2 layui-hide courseId">'+ data[i].id + '</div>');
+                          $('#other').append('<div class="layui-col-md2 layui-inline" onclick="note(\''+ data[i].id +'\')">'+ name + '</div>');
                       }
                   }
               }

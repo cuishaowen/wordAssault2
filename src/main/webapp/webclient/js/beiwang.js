@@ -10,33 +10,86 @@ $(function() {
     var today = year + '-' + month + '-' + day;
     $.post(url, data, function (res) {
         $('#today').html('<b>' + today + '&nbsp;&nbsp;本课程添加了<b style="color: rebeccapurple">&nbsp;'+ res.length + '&nbsp;</b>个备忘词汇' + '</b>');
-            for (i = 0; i < res.length; i++){
-                var ameVoice = res[i].word.ameVoice;
-                var engVoice = res[i].word.engVoice;
-                var voice = ameVoice ? ameVoice : engVoice;
-                $('tbody').append('<tr>\n' +
-                    '<td>\n' +
-                    '<div class="form-control" style="display: none">\n' +
-                    '<input class="checkbox" type="checkbox" value="'+ res[i].userChapterWord.id +'">\n' +
-                    '</div>\n' +
-                    '<a class="yb" href="javascript:void(0)" onclick="detail1(' + res[i].word.id + ')">\n' + res[i].word.english +
-                    '<audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
-                    '<source src="'+ voice + '">\n' +
-                    '</audio>\n' +
-                    '</a>\n' +
-                    '</td>\n' +
-                    '<td>'+ res[i].word.phoneticTranscription + '</td>\n' +
-                    '<td>'+res[i].word.chinese+'</td>\n' +
-                    '</tr>'
-                )
-            }
-            layui.use(['form'],function () {
-                var form = layui.form;
-                form.render();
+        layui.use(['form','laypage'],function () {
+            var form = layui.form
+                ,laypage = layui.laypage;
+            laypage.render({
+                elem: 'demo0' //注意，这里的 test1 是 ID，不用加 # 号
+                ,count: res.length //数据总数，从服务端得到
+                ,jump: function(obj, first){
+                    var currentPage = obj.curr;
+                    var currentNum = currentPage*10 - 10;
+                    if (res.length < 10){
+                        apendData(res,0);
+                    } else if(res.length >= 10 && res.length - currentPage*10 < 0){
+                        apendData(res,currentNum);
+                    }else{
+                        apendData1(res,currentNum);
+                    }
+                }
             });
+            form.render();
+        });
         }
     )
 });
+
+function apendData(res,num){
+    $('tbody').html('');
+    for (i = num; i < res.length; i++){
+        var ameVoice = res[i].word.ameVoice;
+        var engVoice = res[i].word.engVoice;
+        var voice = ameVoice ? ameVoice : engVoice;
+        $('tbody').append('<tr>\n' +
+            '<td>\n' +
+            '<div class="form-control" style="display: none">\n' +
+            '<input class="checkbox" type="checkbox" value="'+ res[i].userChapterWord.id +'">\n' +
+            '</div>\n' +
+            '<a class="yb" href="javascript:void(0)" onclick="detail1(' + res[i].word.id + ')">\n' + res[i].word.english +
+            '<audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
+            '<source src="'+ voice + '">\n' +
+            '</audio>\n' +
+            '</a>\n' +
+            '</td>\n' +
+            '<td>'+ res[i].word.phoneticTranscription + '</td>\n' +
+            '<td>'+res[i].word.chinese+'</td>\n' +
+            '</tr>'
+        )
+    }
+}
+
+function apendData1(res,num){
+    $('tbody').html('');
+    for (i = num; i < num + 10; i++){
+        var ameVoice = res[i].word.ameVoice;
+        var engVoice = res[i].word.engVoice;
+        var voice = ameVoice ? ameVoice : engVoice;
+        $('tbody').append('<tr>\n' +
+            '<td>\n' +
+            '<div class="form-control" style="display: none">\n' +
+            '<input class="checkbox" type="checkbox" value="'+ res[i].userChapterWord.id +'">\n' +
+            '</div>\n' +
+            '<a class="yb" href="javascript:void(0)" onclick="detail1(' + res[i].word.id + ')">\n' + res[i].word.english +
+            '<audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
+            '<source src="'+ voice + '">\n' +
+            '</audio>\n' +
+            '</a>\n' +
+            '</td>\n' +
+            '<td>'+ res[i].word.phoneticTranscription + '</td>\n' +
+            '<td>'+res[i].word.chinese+'</td>\n' +
+            '</tr>'
+        )
+    }
+}
+
+function detail1(wordId) {
+    var idx = layer.open({
+        title: '单词查询',
+        type: 2,
+        area: ['900px', '650px'],
+        content: 'dccx.html?wordId=' + wordId + '&courseId=' + GetQueryString('courseId') //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+    });
+}
 
 $(function () {
     var url = getContextPath() + '/course/course/get?courseId=' + GetQueryString("courseId");

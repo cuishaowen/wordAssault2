@@ -333,7 +333,7 @@ function addContentOne(num,error){
     '<div class="xt">\n' +
         '<div class="xt-title">\n' +
         '                <span>'+ (num+1) +')</span>\n' +
-        '               <span>'+ english + '</span><span>'+  phoneticTranscription +'</span>\n' +
+        '                <span>'+ english + '</span>&nbsp;&nbsp;<span>('+  phoneticTranscription +')</span>\n' +
         '                <a href="javascript:void(0)" class="wordvoice">\n' +
         '                    <audio class="voicebox" controls="" preload="auto" style="display: none;">\n' +
         '                        <source class="auto-play" src="'+ voice +'" type="audio/mpeg">\n' +
