@@ -315,7 +315,7 @@
                         <div class="jj_right">
                             <div class="img-box">
                                 <img src="images/EnSound39.jpg" alt="">
-                                <audio controls preload="auto">
+                                <audio controls preload="auto" id="Audio">
                                     <source src="videos/EnSound39.mp3" type="audio/mpeg">
                                     您的浏览器不支持 audio 元素。
                                 </audio>
@@ -392,23 +392,30 @@
         $(this).siblings().css('background-color','#fff');
         $(this).find('i').css({'background':'url(images/221.png)no-repeat center','background-size':'100% 100%'})
         $(this).siblings().find('i').css({'background':'url(images/ico8.png)no-repeat center','background-size':'100% 100%'})
+
     });
 
     $(document).on('click','.layui-tab-title  li:first-child',function(){
         $('.li1').css({'background':'url(images/4.png)no-repeat center','background-size':'100% 100%'});
         $('.li2').css({'background':'url(images/31.png)no-repeat center','background-size':'100% 100%'});
         $('.li3').css({'background':'url(images/2.png)no-repeat center','background-size':'100% 100%'})
+        var audio = document.getElementById('Audio');
+        audio.pause();
     });
     $(document).on('click','.layui-tab-title  li:nth-child(2)',function(){
         $('.li1').css({'background':'url(images/41.png)no-repeat center','background-size':'100% 100%'});
         $('.li2').css({'background':'url(images/3.png)no-repeat center','background-size':'100% 100%'});
         $('.li3').css({'background':'url(images/2.png)no-repeat center','background-size':'100% 100%'})
+        var audio = document.getElementById('Audio');
+        audio.pause();
     });
 
     $(document).on('click','.layui-tab-title  li:last-child',function(){
         $('.li1').css({'background':'url(images/41.png)no-repeat center','background-size':'100% 100%'});
         $('.li2').css({'background':'url(images/31.png)no-repeat center','background-size':'100% 100%'});
         $('.li3').css({'background':'url(images/21.png)no-repeat center','background-size':'100% 100%'})
+        var audio = document.getElementById('Audio');
+        audio.pause();
     });
 
     $(document).on('click','.a1',function(){
@@ -597,7 +604,6 @@
             , laydate = layui.laydate
             , laypage = layui.laypage;
     });
-
 
     function detail() {
         var idx = layer.open({
