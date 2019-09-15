@@ -663,6 +663,9 @@
         Audio.play();
     });
     alreadyPurchase();
+    function alreadyBuyCourses(courseId) {
+        window.location.href = getContextPath() + '/webclient/dcxl.html?courseId=' + courseId;
+    }
 </script>
 <script src="js/bgmusic.js"></script>
 </html>
