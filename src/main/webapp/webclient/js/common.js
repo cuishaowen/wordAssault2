@@ -314,10 +314,12 @@ $('#music-B').on('click',function () {
 // 暂停
 $('#music-R').on('click',function () {
     var music = $('#music');
+    music.volume = 0.2;
     $('#music-B').show();
     $('#music-R').hide();
     music[0].play();
 });
+
 
 
 
