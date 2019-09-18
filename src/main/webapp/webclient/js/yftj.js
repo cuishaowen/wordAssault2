@@ -24,11 +24,6 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'element'],function
 
     form.on('select',function (data) {
         version = data.elem.value;
-
-        $.post(
-
-        );
-        console.log('version',version);
     });
 
     form.on('submit(*)',function (data) {

@@ -1,8 +1,8 @@
+
 var curWwwPath=window.document.location.href;
 var pathName=window.document.location.pathname;
 var pos=curWwwPath.indexOf(pathName);
 var localhostPaht=curWwwPath.substring(0,pos);
-//var path=localhostPaht + '/WORD/';
 var path="";
 
 var rightcount = 0;
@@ -23,8 +23,8 @@ var outtime = 120;
 var usedtime = 0;
 var bodypage = null;
 var music = true;
-function lianliankan(data1, data2, t,tit_title) {
 
+function lianliankan(data1, data2, t,tit_title) {
     array_e = data1;
     array_c = data2;
     outtime = t;
@@ -32,8 +32,8 @@ function lianliankan(data1, data2, t,tit_title) {
     {
         outtime = 120;
     }
-    debugger
-    var main = $("<div id='llk' class='llk'></div>")
+    debugger;
+    var main = $("<div id='llk' class='llk'></div>");
     main.height(document.body.scrollHeight);
     main.width(document.body.scrollWidth);
 
@@ -47,16 +47,12 @@ function lianliankan(data1, data2, t,tit_title) {
 
     var time = $('<div id="mytime"></div>');
     var min = $('<span class="time" id="m">' + getMin ()+ '</span><span style="margin-left: 3px;border:none;">:</span>');
-
     time.append(min);
     var sec = $('<span class="time" id="s">'+getSec()+'</span>');
     time.append(sec);
-
-
-
     var m = $("<div class='music openm'></div>");
     m.bind("click", function () {
-        music = !music
+        music = !music;
         if (music) {
             m.removeClass("closem");
             m.addClass("openm");
@@ -70,7 +66,6 @@ function lianliankan(data1, data2, t,tit_title) {
         }
     });
     time.append(m);
-
 
     var quitm = $("<div class='quitclose'></div>");
     quitm.bind("click", function () {
@@ -92,7 +87,6 @@ function lianliankan(data1, data2, t,tit_title) {
     bodypage.append(page);
     bodypage.addClass("body_page");
 
-
     main.append(bodypage);
 
     $("body").append(main);
@@ -102,7 +96,6 @@ function lianliankan(data1, data2, t,tit_title) {
     audiomian = document.getElementById('bgaudio');
     audiomian.play();
     time_fun();
-
 }
 function two_char(n) {
     return n >= 10 ? n : "0" + n;
@@ -130,9 +123,8 @@ function getSec(){
     }
     return s;
 }
-var timeInter111 = {};
+var timeInter111 = null;
 function time_fun() {
-
     timeInter111 = setInterval(function () {
         usedtime = usedtime + 1;
         outtime = outtime - 1;
@@ -150,19 +142,19 @@ function out(){
     $("#llk").remove();
 }
 function gameover() {
-    $("#mytime").text('');
+    clearInterval(timer);
+    $("#mytime").html('');
     var html = ' <div class="over_1">游戏结束</div>';
     html+=' <div class="over_split"></div>';
     html+='<div class="over_c">';
     html += '    <div class="over_img"></div>';
     html += '    <div class="over_3">共用时<span>' + usedtime + '</span>秒</div>';
     html+='    <div class="over_4">总点击次数<span>'+(rightcount+errorcount)+'</span>,点对<span>'+rightcount+'</span>次,点错<span>'+errorcount+'</span>次</div>';
-    html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);" onclick="getWords()">继续游戏</a> </div>';
+    html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);" onclick="openlianliankan()">继续游戏</a> </div>';
     html+=' </div>';
 
     $('.container').html(html);
     clearInterval(timeInter111);
-
 }
 function init() {
     array_e_temp = [];
@@ -185,12 +177,9 @@ function init() {
     list.sort(randomsort);
     list2.sort(randomsort);
 
-
     for (var i = 0; i < array_c_temp.length; i++) {
         var temp = array_c_temp[i][0].split('；');
         temp = temp[0].split(';');
-        //temp = temp[0].split('(');
-        //temp = temp[0].split('（');
         temp=temp[0].replace('（','(');
         temp = temp.replace('）',')');
         temp=temp.replace('[','(');
@@ -216,7 +205,7 @@ var compare = function (x, y) {//比较函数
     } else {
         return 0;
     }
-}
+};
 function bao() {
     init();
     container = "";
@@ -248,6 +237,7 @@ function bao() {
     }
     $('.container').html(container + container1);
 }
+
 function box(obj) {
     if (obj.children('span').hasClass('active')) {
         obj.children('span').removeClass('active');
@@ -280,7 +270,7 @@ function box(obj) {
             $('.qiqiu').show();
             setTimeout(function () {
                 $('.qiqiu').hide();
-            }, 500)
+            }, 500);
             setTimeout(function () {
                 var1 = '';
                 var2 = '';
@@ -292,7 +282,6 @@ function box(obj) {
                 wcL = '';
                 $('.jia').css({ 'left': wcL, 'top': wcT, 'display': 'none' }).removeClass('fadeInTop');
                 if ($('.fadeOut').length == list2.length * 2) {
-
                     if (array_e.length >= 10) {
                         bao();
                     }
@@ -338,28 +327,25 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'jquery'],function 
         , layedit = layui.layedit
         , laydate = layui.laydate
         , laypage = layui.laypage;
+
     function openllkan() {
         if (courseId == null || courseId == '') {
-            layer.open({
-                title: '提示'
-                , content: '请选择课程'
-            });
+            layer.msg('请选择课程');
         } else {
-            getWords();
+            getWords(courseId);
         }
     }
-    alreadyBuy();
     openllkan();
 });
 
-function getWords() {
+function getWords(courseId) {
     var url = getContextPath() + '/word/selectTenRandWord';
     $('.container').html('');
     var data = {};
     data.courseId = courseId;
     $.post(url, data, function (res) {
-        u.setStorage('llkWord', res);
         for (i = 0; i < res.length; i++) {
+            // array_e.push(res[i].english);
             $('.container').append(
                 '<div class="box color1" onclick="box($(this))"><span data-src="' + res[i].id + '">' + res[i].english + '</span></div>'
             )
@@ -370,6 +356,7 @@ function getWords() {
             if (chinese.length > 12){
                 var arr_ch = chinese.split("；");
                 chinese = arr_ch[0];
+                // array_c.push(chinese);
             }
             $('.container').append(
                 '<div class="box color1" onclick="box($(this))"><span data-src="' + res[j].id + '">' + chinese + '</span></div>'
@@ -379,7 +366,7 @@ function getWords() {
 }
 
 // 已购买课程
-function alreadyBuy() {
+$(function() {
     var url = getContextPath() + '/usercourse/usercourse/getCourseOpenOrClose?enguserId=' + sessionId;
     $.post(
         url,
@@ -391,11 +378,52 @@ function alreadyBuy() {
             }
         }
     )
-}
+});
+var maxtime = 3 * 60; //
+
+// 打开连连看
 function openlianliankan(courseId){
-    window.location.href = getContextPath() + '/webclient/llkNew.html?courseId=' + courseId;
-    getWords();
+    usedtime = 0;
+    errorcount = 0;
+    rightcount = 0;
+    maxtime = 3 * 60;
+    clearInterval(timer);
+    clearInterval(timeInter111);
+    timer = setInterval("CountDown()", 1000);
+    getWords(courseId);
+    timeInter111 = setInterval(function () {
+        usedtime = usedtime + 1;
+        outtime = outtime - 1;
+        if (outtime <= 0)
+        {
+            gameover();
+            return;
+        }
+        $("#m").text(getMin());
+        $("#s").text(getSec());
+    }, 1000);
+    var audiomian = document.getElementById('bgaudio');
+    audiomian.play();
+    // lianliankan(array_e,array_c,120,1);
 }
+
+function CountDown() {
+    if (maxtime >= 0) {
+        minutes = Math.floor(maxtime / 60);
+        seconds = Math.floor(maxtime % 60);
+        msg = minutes + ":" + seconds;
+        $('#mytime').text("0" + msg);
+        --maxtime;
+    } else {
+        gameover();
+        clearInterval(timer);
+    }
+}
+
+var timer = null;
+
 $('.faguanbtn').on('click',function () {
     getWords();
 });
+
+

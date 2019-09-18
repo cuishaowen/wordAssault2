@@ -57,6 +57,8 @@ public class WordService extends CrudService<WordDao, Word> {
 	public List<Word> selectTenRandWord(String courseId){
 		ChapterWord chapterWord = new ChapterWord();
 		chapterWord.setCourseId(courseId);
+
+		// 查询课程关联的所有章节单词信息
 		List<ChapterWord> chapterWords = chapterWordDao.findList(chapterWord);
 		List<Word> wordList = new ArrayList<Word>();
 		List<Word> wordListRes = new ArrayList<Word>();
@@ -69,12 +71,9 @@ public class WordService extends CrudService<WordDao, Word> {
 				wordList.add(word);
 			}
 		}
-		for (int i = 0; i < wordList.size(); i++){
-			int index = (int)(Math.random()*(wordList.size()-1));
-			wordListRes.add(wordList.get(index));
-			if (wordListRes.size() == 10){
-				break;
-			}
+		int[] indexs = randomCommon(0,wordList.size()-1,10);
+		for (int i = 0; i < 10; i++){
+			wordListRes.add(wordList.get(indexs[i]));
 		}
 		return wordListRes;
 	}
@@ -94,4 +93,33 @@ public class WordService extends CrudService<WordDao, Word> {
 	    wordDao.insert(word);
     }
 
+	/**
+	 * 随机指定范围内N个不重复的数
+	 * 最简单最基本的方法
+	 * @param min 指定范围最小值
+	 * @param max 指定范围最大值
+	 * @param n 随机数个数
+	 */
+	public int[] randomCommon(int min, int max, int n){
+		if (n > (max - min + 1) || max < min) {
+			return null;
+		}
+		int[] result = new int[n];
+		int count = 0;
+		while(count < n) {
+			int num = (int) (Math.random() * (max - min)) + min;
+			boolean flag = true;
+			for (int j = 0; j < n; j++) {
+				if(num == result[j]){
+					flag = false;
+					break;
+				}
+			}
+			if(flag){
+				result[count] = num;
+				count++;
+			}
+		}
+		return result;
+	}
 }

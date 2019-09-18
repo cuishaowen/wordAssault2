@@ -102,9 +102,9 @@
                    <div class="layui-form-item" style="height:60px;">
                        <label class="layui-form-label" style="height:60px;">测试类型</label>
                        <div class="layui-input-block">
-                           <button id="yingyihan" type="button" class=" btn11 btn11-active" value="2" >英译汉</button>
+                           <button id="yingyihan" type="button" class=" btn11 btn11-active" value="3" >英译汉</button>
                            <!--<button type="button" class=" btn12">汉译英</button>-->
-                           <button id="tingxie" type="button" class=" btn11" value="1">听写</button>
+                           <button id="tingxie" type="button" class=" btn11" value="">听写</button>
                        </div>
                    </div>
 
@@ -128,7 +128,7 @@
     $(document).on('click','.gm-kc ul li',function(){
         $(this).css('background-color','#E7F5FC');
         $(this).siblings().css('background-color','#fff');
-        $(this).find('i').css({'background':'url(images/221.png)no-repeat center','background-size':'100% 100%'})
+        $(this).find('i').css({'background':'url(images/221.png)no-repeat center','background-size':'100% 100%'});
         $(this).siblings().find('i').css({'background':'url(images/ico8.png)no-repeat center','background-size':'100% 100%'})
     });
     layui.use('element', function(){
@@ -152,6 +152,7 @@
 
 </script>
 <script>
+    $('#tingxie').val(jPanType);
     layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
         var form = layui.form
             , layer = layui.layer
@@ -202,7 +203,6 @@
             }
         })
     });
-
 
     function coursesOpen() {
         var coursesOpen = u.getStorage('openCourses');

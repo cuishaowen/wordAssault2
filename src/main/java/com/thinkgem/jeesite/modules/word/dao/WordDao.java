@@ -18,7 +18,6 @@ import java.util.List;
 @MyBatisDao
 public interface WordDao extends CrudDao<Word> {
 
-
     List<Word> selectRandWordWithoutThis(@Param("id") String id);
 
 }

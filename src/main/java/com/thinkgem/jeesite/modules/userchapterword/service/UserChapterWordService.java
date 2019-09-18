@@ -116,9 +116,9 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		return wordInformations;
 	}
 
-	// 根据章节获取所有章节单词信息  单词例句
+	// 根据课程获取所有章节单词信息  单词例句
 	public List<WordInformation> getCourseWordInformation(String courseId){
-		return this.getWordInformation(courseId);
+		return this.getChapterWordList(null,courseId);
 	}
 
     // 难记词汇 如果错误两次以上 且依然被标记被生词
@@ -154,7 +154,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
         return wordInformations;
     }
 
-	// 获取章节单词信息
+	// 获取课程或章节单词信息
 	public List<WordInformation> getChapterWordList(String chapterId, String courseId){
 		ChapterWord chapterWord = new ChapterWord();
 
@@ -168,7 +168,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		return  getWordList(chapterWord);
 	}
 
-	// 查询章节单词下的所有单词信息
+	// 查询课程或章节单词下的所有单词信息
 	public List<WordInformation> getWordList(ChapterWord chapterWord){
 		List<WordInformation> wordInformations = new ArrayList<WordInformation>();
 
@@ -196,7 +196,6 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		}
 		return wordInformations;
 	}
-
 
 	// 获取章节例句信息
 	public List<ChapterExample> getChapterExamples(String chapterId,String courseId){

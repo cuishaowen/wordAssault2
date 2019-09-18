@@ -110,8 +110,6 @@ layui.use(['layer','form','jquery'],function () {
                 }
             }
         }
-        console.log('答对的题目',rightclicked);
-        console.log('答错的题目',errorclicked);
     });
 
     // 听写
@@ -152,8 +150,6 @@ layui.use(['layer','form','jquery'],function () {
                 }
             }
         }
-        console.log('答对的题目',rightclicked);
-        console.log('答错的题目',errorclicked);
     });
 
     // 提示未写完，写完则弹出得分窗口
@@ -176,7 +172,6 @@ layui.use(['layer','form','jquery'],function () {
             }
             for (n = 0; n < rightSubject_new.length; n++){
                 var userChapterWord = rightSubject_new[n].userChapterWord;
-                console.log('userChapterWord',userChapterWord);
                 userChapterWord.studyStatus = '3';
                 userChapterWord.strangeWord = 'F';
                 updateWord(userChapterWord);
@@ -185,6 +180,7 @@ layui.use(['layer','form','jquery'],function () {
             $('#right-num').append(rightclicked.length);
             // killHardWord();
             $('.zz').fadeIn(300);
+            $('.btn3').attr('disabled',true);
         }
     });
 
@@ -195,7 +191,6 @@ layui.use(['layer','form','jquery'],function () {
         //     userChapterWord.strangeWord = 'F';
         //     return userChapterWord;
         // }
-
     // 关闭窗口
     $('.cha1').on('click',function(){
         $('.zz').fadeOut(300);
@@ -259,7 +254,8 @@ function addContentOne(num,error){
     var english = object.word.english;
     var engVoice = object.word.engVoice;
     var ameVoice = object.word.ameVoice;
-    var voice = ameVoice ? ameVoice : engVoice;
+    var voice;
+    ameVoice ?  voice = ameVoice : voice = engVoice;
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
     console.log('chinese',chinese);
@@ -322,7 +318,8 @@ function addContentTwo(num,error) {
     var english = object.word.english;
     var engVoice = object.word.engVoice;
     var ameVoice = object.word.ameVoice;
-    var voice = ameVoice ? ameVoice : engVoice;
+    var voice;
+    ameVoice ?  voice = ameVoice : voice = engVoice;
     var phoneticTranscription = object.word.phoneticTranscription;
     var chinese = object.word.chinese;
     var exampleArr = '';

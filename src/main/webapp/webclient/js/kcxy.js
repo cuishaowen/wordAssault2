@@ -77,7 +77,8 @@ function pageOne(res) {
     var english = object.word.english;
     var engVoice = object.word.engVoice;
     var ameVoice = object.word.ameVoice;
-    var voice = ameVoice ? ameVoice : engVoice;
+    var voice;
+    ameVoice ?  voice = ameVoice : voice = engVoice;
     var audio=new Audio(voice);
     var img = object.word.img;
     audio.play();
@@ -248,7 +249,8 @@ function page2(res) {
     var english = object.word.english;
     var ameVoice = object.word.ameVoice;
     var engVoice = object.word.engVoice;
-    var voice = ameVoice ? ameVoice : engVoice;
+    var voice;
+    ameVoice ?  voice = ameVoice : voice = engVoice;
     var audio=new Audio(voice);
     audio.play();
     var phoneticTranscription = object.word.phoneticTranscription;
