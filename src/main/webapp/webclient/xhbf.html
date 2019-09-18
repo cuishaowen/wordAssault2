@@ -182,36 +182,34 @@
         var audio=new Audio(f);
         audio.play();
     });
+    var timeoutindex = null;
     //自动播放
     function bofang(){
-        timeoutindex=  setInterval('bobo()',1500);
-
+        clearInterval(timeoutindex);
+        timeoutindex =  setInterval('bobo()',1500);
     }
     function bobo(){
-        if(!play)
-        {
+        if(!play) {
             console.log($('.dc-left ul li').length);
-            if((bfindex+2)>=$('.dc-left ul li').length){
+            if((bfindex+1)>=$('.dc-left ul li').length){
                 play = !play;
                 $('.play').text("自动播放");
-                // $('.play').attr("onclick",'bofang()');
                 bfindex = 0;
-                // clearInterval(timeoutindex);
+                clearInterval(timeoutindex);
+            }else{
+                next();
             }
-            next();
+        } else {
+            clearInterval(timeoutindex);
         }
-        else {clearInterval(timeoutindex);}
-
     }
     //播放按事件
     $('.play').on('click',function () {
-        if(play)
-        {
+        if(play) {
             $(this).text("暂停播放");
-        }
-        else
-        {
+        } else {
             $(this).text("自动播放");
+            clearInterval(timeoutindex);
         }
         play=!play;
     });
@@ -257,17 +255,11 @@
         getStatus();
     });
 
-
     function next() {
-
         var ii= $('.li-active').index();
-
         $('.kt').removeAttr("disabled");
-
         if($('.dc-left ul li').hasClass('li-active')){
-
             ii++;
-
             $('.dc-left ul li').eq(ii).addClass('li-active');
             $('.dc-left ul li').eq(ii).siblings().removeClass('li-active');
             var a = $('.dc-left ul li').eq(ii).find('i').text();
@@ -292,14 +284,10 @@
             var f = $('.btns audio ').attr('src');
             var audio=new Audio(f);
             audio.play();
-
             if(ii>=i-1){
-
                 $('.kj').attr("disabled",true);
-
             }
             bfindex=ii;
-
         }
         getStatus();
     }
