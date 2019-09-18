@@ -54,7 +54,7 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'element'],function
             $('.tj_da').show();
             $('.tj_da .error').show();
             $('.tj_da .right').hide();
-            $('.tj_da .analysis').hide();
+            $('.tj_da .analysis').show();
         }
     });
 
@@ -100,18 +100,24 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'element'],function
         $('.beizhu').text('【' + object.subjectTypeLabel + '】');
         $('.xt-content').html('').append(
             '<form class="layui-form layui-form-pane" action="">\n' +
-            '                                       <div class="layui-form-item subject">\n' +
-            '                                           <div class="layui-input-block">\n' +
-            '                                               <input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="'+ selectA +'">\n' +
-            '                                           </div>\n' +
-            '                                           <div class="layui-input-block">\n' +
-            '                                               <input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="'+ selectB +'">\n' +
-            '                                           </div>\n' +
-            '                                           <div class="layui-input-block">\n' +
-            '                                               <input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="'+ selectC +'">\n' +
-            '                                           </div>\n' +
-            '                                       </div>\n' +
-            '                                   </form>'
+            '<div class="layui-form-item subject">\n' +
+            '<div class="layui-input-block">\n' +
+            '<input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="'+ selectA +'">\n' +
+            '</div>\n' +
+            '<div class="layui-input-block">\n' +
+            '<input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="'+ selectB +'">\n' +
+            '</div>\n' +
+            ' <div class="layui-input-block">\n' +
+            '<input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="'+ selectC +'">\n' +
+            '</div>\n' +
+            '</div>\n' +
+            '<div class="tj_da">\n' +
+            '<p class="error">答案错误</p>\n' +
+            '<p class="right">答案正确</p>\n' +
+            '<p class="analysis">【解析】解析内容解析内容解析内容</p>\n' +
+            '</div>\n' +
+            '</form>'
+
         );
         if (selectD != null && selectD != ''){
             $('.subject').append(

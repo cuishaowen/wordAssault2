@@ -99,13 +99,15 @@ layui.use(['layer','form','jquery'],function () {
 //         console.log('答错的题目',errorclicked);
 //     });
     // 交卷逻辑 提示未写完，写完则弹出得分窗口
-    $('.btn3').on('click',function(){
+    $('#submit-paper').on('click',function(){
         if (errorclicked.length + rightclicked.length < testSubject.length) {
             layer.open({
                 title: '提示',
                 content: '还有未做完的题目' //这里content是一个普通的String
             });
         }else{
+            $('#submit-paper').hide();
+            $('#error-subject').show();
             getScore();
             var scoreSubject = 100/testSubject.length;
             var currentScore = Math.round(scoreSubject*rightclicked.length);

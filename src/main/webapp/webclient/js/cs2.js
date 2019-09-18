@@ -120,13 +120,15 @@ layui.use(['layer','form','jquery'],function () {
     });
 
     // 提示未写完，写完则弹出得分窗口
-    $('.btn3').on('click',function(){
+    $('#submit-paper').on('click',function(){
         if (errorclicked.length + rightclicked.length < testSubject.length) {
             layer.open({
                 title: '提示',
                 content: '还有未做完的题目' //这里content是一个普通的String
             });
         }else{
+            $('#submit-paper').hide();
+            $('#error-subject').show();
             var scoreSubject = 100/testSubject.length;
             var getScore = scoreSubject*rightclicked.length;
             var curScore = Math.round(getScore);

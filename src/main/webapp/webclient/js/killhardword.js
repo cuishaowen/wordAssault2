@@ -1,23 +1,10 @@
 var testSubject = [];
 var errorSubject = [];
 var val = GetQueryString('val');
-$(function(){
-    var courseId = GetQueryString('courseId');
-    var data = {};
-    data.courseId = courseId;
-    data.userId = sessionId;
-    var url = getContextPath() + '/userchapterword/getCourseHard';
-    $.post(url, data, function(res) {
-            // 设置缓存
-            u.setStorage('result',res);
-            console.log('result',u.getStorage('result'));
-        }
-    )
-});
 
 // 动态添加元素
-function getWord(){
-    var result = u.getStorage('result');
+function getWord(res){
+    var result = res;
     var i = 0;
     var j = randNum(result.length);
     if (result.length > 10){
@@ -46,18 +33,30 @@ function getWord(){
 layui.use(['layer','form','jquery'],function () {
     var form = layui.form;
     var layer = layui.layer;
-    getWord();
+    getData();
     function sp(){
         $('.zz').height($(window).height());
         $('.zz').width($(window).width());
         var a = $('.zz').height();
         $('.zz1').css('margin-top',(a-454)/2);
-        $('.wordvoice audio')[0].pause();
+        // $('.wordvoice audio')[0].pause();
     }
     sp();
     window.onresize = sp;
     form.render();
 
+    function getData(){
+        var courseId = GetQueryString('courseId');
+        var data = {};
+        data.courseId = courseId;
+        data.userId = sessionId;
+        var url = getContextPath() + '/userchapterword/getCourseHard';
+        $.post(url, data, function(res) {
+            // 设置缓存
+            getWord(res);
+            form.render();
+        })
+    }
 
     /**
      * 设定一个答对数组,只要点对了，就push,
@@ -110,7 +109,10 @@ layui.use(['layer','form','jquery'],function () {
                 }
             }
         }
+        console.log('errorClick',errorclicked);
+        console.log('rightClick',rightclicked);
     });
+
 
     // 听写
     $('.input-value').on('blur',function () {
@@ -152,14 +154,29 @@ layui.use(['layer','form','jquery'],function () {
         }
     });
 
+        // 是否生词
+        // function killHardWord() {
+        //     var userChapterWord = getUserChapterWord();
+        //     userChapterWord.studyStatus = '3';
+        //     userChapterWord.strangeWord = 'F';
+        //     return userChapterWord;
+        // }
+    // 关闭窗口
+    $('.cha1').on('click',function(){
+        $('.zz').fadeOut(300);
+    });
+
+
     // 提示未写完，写完则弹出得分窗口
-    $('.btn3').on('click',function() {
+    $('#submit-paper').on('click',function() {
         if (errorclicked.length + rightclicked.length < testSubject.length) {
             layer.open({
                 title: '提示',
                 content: '还有未做完的题目' //这里content是一个普通的String
             });
         } else {
+            $('#submit-paper').hide();
+            $('#error-subject').show();
             var rightSubject_new = [];
             for (i = 0; i < testSubject.length; i++){
                 var object = testSubject[i];
@@ -180,20 +197,7 @@ layui.use(['layer','form','jquery'],function () {
             $('#right-num').append(rightclicked.length);
             // killHardWord();
             $('.zz').fadeIn(300);
-            $('.btn3').attr('disabled',true);
         }
-    });
-
-        // 是否生词
-        // function killHardWord() {
-        //     var userChapterWord = getUserChapterWord();
-        //     userChapterWord.studyStatus = '3';
-        //     userChapterWord.strangeWord = 'F';
-        //     return userChapterWord;
-        // }
-    // 关闭窗口
-    $('.cha1').on('click',function(){
-        $('.zz').fadeOut(300);
     });
 
     // 获取错题
@@ -220,7 +224,7 @@ layui.use(['layer','form','jquery'],function () {
                 for (n = 0; n < errorSubject.length; n++){
                     addContentOne(n,true);
                 }
-                $('#ch-right').show();
+                $('.da').show();
             }
         }
         $('.btn2').html('');
@@ -229,6 +233,7 @@ layui.use(['layer','form','jquery'],function () {
     // 查看错题
     $('.lb').on('click',function(){
         getErrorSubject();
+        form.render();
     });
     //发音图标
     $('.wordvoice').on('click',function () {
@@ -241,6 +246,7 @@ layui.use(['layer','form','jquery'],function () {
         audio.play();
     });
 });
+
 
 function addContentOne(num,error){
     var object = {};
@@ -366,4 +372,5 @@ function randNum(len){
     var a = Math.floor((Math.random()*len));
     return a;
 }
+
 

@@ -194,7 +194,13 @@ $('#nextsub').on('click',function(){
             $('#xuanyiBox').hide();
             $('#pinxieBox').show();
             $('.pingxie_da').hide();
-
+            layui.use(['form'],function () {
+                var form = layui.form
+                    ,layer = layui.layer;
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                parent.layer.title('单词拼写', index);  //再改变当前层的标题
+                form.render();
+            });
             page2(result[pageNum]);
         }
 
