@@ -142,7 +142,6 @@ function out(){
     $("#llk").remove();
 }
 function gameover() {
-    clearInterval(timer);
     $("#mytime").html('');
     var html = ' <div class="over_1">游戏结束</div>';
     html+=' <div class="over_split"></div>';
@@ -152,9 +151,8 @@ function gameover() {
     html+='    <div class="over_4">总点击次数<span>'+(rightcount+errorcount)+'</span>,点对<span>'+rightcount+'</span>次,点错<span>'+errorcount+'</span>次</div>';
     html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);" onclick="openlianliankan()">继续游戏</a> </div>';
     html+=' </div>';
-
     $('.container').html(html);
-    clearInterval(timeInter111);
+    clearInterval(timer);
 }
 function init() {
     array_e_temp = [];
@@ -379,34 +377,20 @@ $(function() {
         }
     )
 });
-var maxtime = 3 * 60; //
+var maxtime = 2 * 60; //
 
 // 打开连连看
 function openlianliankan(courseId){
     usedtime = 0;
     errorcount = 0;
     rightcount = 0;
-    maxtime = 3 * 60;
+    maxtime = 2 * 60;
     clearInterval(timer);
-    clearInterval(timeInter111);
     timer = setInterval("CountDown()", 1000);
     getWords(courseId);
-    timeInter111 = setInterval(function () {
-        usedtime = usedtime + 1;
-        outtime = outtime - 1;
-        if (outtime <= 0)
-        {
-            gameover();
-            return;
-        }
-        $("#m").text(getMin());
-        $("#s").text(getSec());
-    }, 1000);
     var audiomian = document.getElementById('bgaudio');
     audiomian.play();
-    // lianliankan(array_e,array_c,120,1);
 }
-
 function CountDown() {
     if (maxtime >= 0) {
         minutes = Math.floor(maxtime / 60);
@@ -414,14 +398,13 @@ function CountDown() {
         msg = minutes + ":" + seconds;
         $('#mytime').text("0" + msg);
         --maxtime;
+        usedtime += 1;
     } else {
         gameover();
         clearInterval(timer);
     }
 }
-
 var timer = null;
-
 $('.faguanbtn').on('click',function () {
     getWords();
 });

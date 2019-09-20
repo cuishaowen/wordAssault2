@@ -224,8 +224,7 @@ function addLoop() {
     data.courseId = courseId;
     data.userId = sessionId;
     $.post(url, data, function(res){
-            var j = 1;
-            var k = 0;
+            var j = 1, k = 0;
             u.setStorage('userChapters',res);
             console.log('res:',res);
             for (var m = 0; m < res.length; m++){

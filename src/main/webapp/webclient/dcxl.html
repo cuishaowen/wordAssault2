@@ -108,27 +108,20 @@
                 <div class="bg-title">
                     <span style="background:url('images/103.png')no-repeat center;background-size:100% 100%;width:20px; height: 20px;"></span> 单词突击
                 </div>
-            <!--<div class="bg-title">-->
-                <!--<span></span> 音标学习-->
-            <!--</div>-->
             <div class="dc_tab">
                 <ul class="dc-tab-title">
                     <li class="dc_active">
                         <div class="tab_img img1"></div>
                         <p>单词领读</p>
-                        </li>
+                    </li>
                     <li >
                         <div class="tab_img img2"></div>
                         <p>单词闯关</p>
-                        </li>
-                    <!--<li>-->
-                        <!--<img class="tab_img" src="images/8-1.png">-->
-                        <!--<p>连连看</p>-->
-                        <!--</li>-->
+                    </li>
                     <li class="dchg_btn" onclick="dchg(this)">
                         <div class="tab_img img3"></div>
                         <p>单词回顾</p>
-                        </li>
+                    </li>
                 </ul>
                 <div class="dc-tab-content">
                     <div id="Loop" class="dc_tab_item dc_item_active">
@@ -230,7 +223,7 @@
 
 </script>
 <script>
-    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer'], function () {
+    layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer','element'], function () {
         var form = layui.form
             , layer = layui.layer
             , layedit = layui.layedit
@@ -244,22 +237,19 @@
             area: ['940px', '500px'],
             content: 'kcxy.html?chapterId='+ chapterId,
             end: function () {
-                $('.beizu').load(location.href + ' .beizu');
-                // $('.xl_btns').load(location.href + ' .xl_btns');
                 loadPage();
                 var userchapters = u.getStorage('userChapters');
                 var userchapter = {};
                 for (i = 0; i < userchapters.length; i++){
                     if (chapterId == userchapters[i].userChapter.chapterId){
                         userchapter = userchapters[i].userChapter;
+                        break;
                     }
                 }
                 if (userchapter.studyStatus == 1){
                     updateStatus(userchapter.chapterId,'2');
-                    $('.xl_btns').load(location.href + ' .xl_btns');
                     addLoop();
                 }
-                // addLoop();
             }
         }
         );
@@ -328,10 +318,7 @@
 
     alreadyPurchase();
     function alreadyBuyCourses(courseId){
-        // window.location.href = getContextPath() + '/webclient/dcxl.html?courseId=' + courseId;
-
         var currenturl = window.location.href;
-        console.log(currenturl);
         var newUrl = (currenturl.split("?"))[0];
         history.pushState('','',newUrl+'?courseId=' + courseId);//前两个参数可省略
         addLoop();

@@ -35,6 +35,13 @@
     .tm {
         margin-bottom: 100px
     }
+    .layui-input-block {
+        margin-left: 0;
+    }
+    .selected {
+        background-color: rgba(29, 129, 131, 0.5);
+        color: #ff5614;
+    }
 </style>
 <body>
 <div class="zz">
@@ -102,8 +109,8 @@
     $('.layui-btn-danger').on('click',function(){
         $('.zz').fadeOut(300);
     });
-    $('.wordvoice').on('click',function(){
-        $(this).find('audio')[0].play();
-    });
+    // $('.wordvoice').on('click',function(){
+    //     $(this).find('audio')[0].play();
+    // });
 </script>
 </html>

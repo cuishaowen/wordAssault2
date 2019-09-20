@@ -34,7 +34,67 @@ layui.use(['layer','form','jquery'],function () {
     }
     sp();
     window.onresize = sp;
-    form.render();
+
+    // 请求后端获取数据
+    function getSubject(){
+        var courseId = GetQueryString('courseId');
+        var chapterId = GetQueryString('chapterId');
+        var url = '';
+        var data = {};
+
+        // 查章节
+        if (chapterId != null && chapterId != 0 && chapterId != undefined && chapterId != '') {
+            url = getContextPath() + '/userchapterword/getWordInformation';
+            data.chapterId = chapterId;
+        }else{
+            // 查全书
+            if (courseId != null && courseId != undefined){
+                url = getContextPath() + '/userchapterword/getCourseWordInformation';
+                data.courseId = courseId;
+            }
+        }
+
+        $.post(url, data, function(res) {
+            // 动态添加数据
+            console.log('数据',res);
+            getWord(res);
+        });
+    }
+
+    // 动态添加元素
+    function getWord(res){
+        var result = res;
+        var i = 0;
+        if (result.length > 10){
+            if (val == 1){
+                for (i = 0;i < 10; i ++){
+                    addContentThree(i,false,res);
+                }
+            } else if (val == 2) {
+                for (i = 0;i < 10; i ++){
+                    addContentTwo(i,false,res);
+                }
+            }else{
+                for (i = 0;i < 10; i ++){
+                    addContentOne(i,false,res);
+                }
+            }
+        } else {
+            if (val == 1){
+                for (i = 0; i < result.length; i++){
+                    addContentThree(i,false,res);
+                }
+            } else if (val == 2) {
+                for (i = 0; i < result.length; i++){
+                    addContentTwo(i,false,res);
+                }
+            }else {
+                for (i = 0; i < result.length; i++){
+                    addContentOne(i,false,res);
+                }
+            }
+        }
+    }
 
     /**
      * 设定一个答对数组,只要点对了，就push,
@@ -57,47 +117,6 @@ layui.use(['layer','form','jquery'],function () {
         console.log('答错的题目',errorclicked);
     });
 
-// // 听写
-//     $('.input-value').on('blur',function () {
-//         var inputValue = $(this).val();
-//         var rightValue = $(this).next().text();
-//         if (inputValue == rightValue){
-//             if (rightclicked.length < 1){
-//                 rightclicked.push(rightValue);
-//             }else{
-//                 // 校验 是否存在 , 不存在就push  已经存在就什么都不做
-//                 if ($.inArray(rightValue,rightclicked) < 0) {
-//                     rightclicked.push(rightValue);
-//                 }
-//             }
-//             // 答对逻辑中，如果存在就移除，如果不存在就什么也不做
-//             if (errorclicked.length >= 1){
-//                 if ($.inArray(rightValue,errorclicked) >= 0) {
-//                     errorclicked.splice($.inArray(rightValue,errorclicked),1);
-//                 }
-//             }
-//         }else {
-//             // 答错添加答错列表
-//             if (errorclicked.length < 1){
-//                 errorclicked.push(rightValue);
-//             }else{
-//                 // 校验 是否存在 , 不存在就push  已经存在就什么都不做
-//                 if ($.inArray(rightValue,errorclicked) < 0) {
-//                     errorclicked.push(rightValue);
-//                 }
-//             }
-//             // 移除答对列表
-//             if (rightclicked.length >= 1){
-//                 // 校验是否存在，如果存在就移除，如果不存在就什么也不做
-//                 console.log($.inArray(rightValue,rightclicked));
-//                 if ($.inArray(rightValue,rightclicked) >= 0) {
-//                     rightclicked.splice($.inArray(rightValue,rightclicked),1);
-//                 }
-//             }
-//         }
-//         console.log('答对的题目',rightclicked);
-//         console.log('答错的题目',errorclicked);
-//     });
     // 交卷逻辑 提示未写完，写完则弹出得分窗口
     $('#submit-paper').on('click',function(){
         if (errorclicked.length + rightclicked.length < testSubject.length) {
@@ -204,78 +223,6 @@ layui.use(['layer','form','jquery'],function () {
         getErrorSubject();
     });
 
-    //发音图标
-    $('.wordvoice').on('click',function () {
-        console.log('playMp3');
-        var f = $(this).children('.voicebox');
-        var source = f.children('.auto-play');
-        var src = source.attr('src');
-        console.log(src);
-        var audio=new Audio(src);
-        audio.play();
-    });
-
-    // 请求后端获取数据
-    function getSubject(){
-        var courseId = GetQueryString('courseId');
-        var chapterId = GetQueryString('chapterId');
-        var url = '';
-        var data = {};
-
-        // 查章节
-        if (chapterId != null && chapterId != 0 && chapterId != undefined && chapterId != '') {
-            url = getContextPath() + '/userchapterword/getWordInformation';
-            data.chapterId = chapterId;
-        }else{
-            // 查全书
-            if (courseId != null && courseId != undefined){
-                url = getContextPath() + '/userchapterword/getCourseWordInformation';
-                data.courseId = courseId;
-            }
-        }
-
-        $.post(url, data, function(res) {
-            // 动态添加数据
-            console.log('数据',res);
-            getWord(res);
-        });
-    }
-
-    // 动态添加元素
-    function getWord(res){
-        var result = res;
-        var i = 0;
-        if (result.length > 10){
-            if (val == 1){
-                for (i = 0;i < 10; i ++){
-                    addContentThree(i,false,res);
-                }
-            } else if (val == 2) {
-                for (i = 0;i < 10; i ++){
-                    addContentTwo(i,false,res);
-                }
-            }else{
-                for (i = 0;i < 10; i ++){
-                    addContentOne(i,false,res);
-                }
-            }
-        } else {
-            if (val == 1){
-                for (i = 0; i < result.length; i++){
-                    addContentThree(i,false,res);
-                }
-            } else if (val == 2) {
-                for (i = 0; i < result.length; i++){
-                    addContentTwo(i,false,res);
-                }
-            }else {
-                for (i = 0; i < result.length; i++){
-                    addContentOne(i,false,res);
-                }
-            }
-        }
-    }
-
     // 选项卡逻辑
     function addContentOne(num,error,res){
         var object = {};
@@ -306,11 +253,11 @@ layui.use(['layer','form','jquery'],function () {
         errorCh.push(chinese);
         shuffle(errorCh);
         $('#container').append(
-        '<div class="xt">\n' +
+            '<div class="xt">\n' +
             '<div class="xt-title">\n' +
             '                <span>'+ (num+1) +')</span>\n' +
-            '                <span>'+ english + '</span>&nbsp;&nbsp;<span>('+  phoneticTranscription +')</span>\n' +
-            '                <a href="javascript:void(0)" class="wordvoice">\n' +
+            '                <span>'+ english + '</span>&nbsp;&nbsp;<span>[ '+  phoneticTranscription +' ]</span>\n' +
+            '                <a href="javascript:void(0)" class="wordvoice" onclick="playMp3(this)">\n' +
             '                    <audio class="voicebox" controls="" preload="auto" style="display: none;">\n' +
             '                        <source class="auto-play" src="'+ voice +'" type="audio/mpeg">\n' +
             '                    </audio>\n' +
@@ -375,7 +322,7 @@ layui.use(['layer','form','jquery'],function () {
             '            <div class="xt-title">\n' +
             '                <span>'+ (num + 1) +')</span>\n' +
             '                <span class="xianshi">词义显示</span>\n' +
-            '                <a href="javascript:void(0)" class="wordvoice">\n' +
+            '                <a href="javascript:void(0)" class="wordvoice" onclick="playMp3(this)">\n' +
             '                    <audio class="voicebox" controls="" preload="auto" style="display: none;">\n' +
             '                        <source class="auto-play" src="'+ voice +'" type="audio/mpeg">\n' +
             '                    </audio>\n' +
@@ -413,7 +360,7 @@ layui.use(['layer','form','jquery'],function () {
             '            <div class="xt-title">\n' +
             '                <span>'+ (num + 1) +')</span>\n' +
             '                <span class="xianshi">词义显示</span>\n' +
-            '                <a href="javascript:void(0)" class="wordvoice">\n' +
+            '                <a href="javascript:void(0)" class="wordvoice" onclick="playMp3(this)">\n' +
             '                    <audio class="voicebox" controls="" preload="auto" style="display: none;">\n' +
             '                        <source class="auto-play" src="'+ voice +'" type="audio/mpeg">\n' +
             '                    </audio>\n' +
@@ -476,8 +423,6 @@ layui.use(['layer','form','jquery'],function () {
         $('.lfii').show();
         $('.lfiii').show();
     }
-
-
 });
 
 // 硬键盘
@@ -500,6 +445,7 @@ function enter(){
         e.preventDefault();
     }
 }
+
 // 软键盘
 function keybroad_select_word(o,english) {
     var oclass = $(o).attr('class');
@@ -573,6 +519,17 @@ function randNum(){
     }else{
         return 'F';
     }
+}
+
+//发音图标
+function playMp3(o) {
+    console.log('playMp3');
+    var f = $(o).children('.voicebox');
+    var source = f.children('.auto-play');
+    var src = source.attr('src');
+    console.log(src);
+    var audio=new Audio(src);
+    audio.play();
 }
 
 

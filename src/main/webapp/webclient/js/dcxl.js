@@ -1,7 +1,6 @@
 // 点击进入不同的词汇分组页面
 function getWordPage(){
-    $('#word-page').html('');
-    $('#word-page').append(
+    $('#word-page').html('').append(
         '<div class="btn newbtn">\n' +
         '    <div class="btn1"><a style="background-color: #FB5D74;" target="_blank" href="njch.html?courseId='+ GetQueryString("courseId") +'"><img src="images/251.png" alt=""> 生词本</a></div>\n' +
         '<!--<div class="btn1"><a href="javascript:void(0)" onclick="detail()"><img src="images/251.png" alt=""> 每日记忆</a></div>-->\n' +
@@ -17,7 +16,6 @@ function getWordPage(){
         '    </div>'
     );
 }
-getWordPage();
 
 /**
  * 本书已学单词
@@ -133,7 +131,6 @@ function getSkilled() {
     )
 }
 
-
 function loadPage() {
     getCourseHard();
     getKillCourseHard();
@@ -142,5 +139,3 @@ function loadPage() {
     waitLearn();
     completeWord();
 }
-addLoop();
-loadPage();
