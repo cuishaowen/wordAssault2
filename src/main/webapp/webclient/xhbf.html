@@ -36,6 +36,34 @@
             margin-top: 8px;
             zoom: 80%;
         }
+        .liju:hover{
+            border-radius: 5px;
+            -moz-box-shadow:2px 2px 5px #999999;
+            -webkit-box-shadow:2px 2px 5px #999999;
+            box-shadow:2px 2px 5px #999999;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            color: black;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 450px;
+            background-color: rgba(200, 200, 200,0.85);
+            color: black;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* 定位 */
+            position: absolute;
+            z-index: 1;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
@@ -87,9 +115,10 @@
                     </div>
                     <div class="top3">
                         <p>例句</p>
-                        <div class="liju">
+                        <div class="liju tooltip">
                             <div class="lj1"></div>
                             <div class="lj2"></div>
+                            <span class="tooltiptext">提示文本</span>
                         </div>
                     </div>
                 </div>
@@ -115,10 +144,41 @@
 </body>
 <script src="layui/layui.js"></script>
 <script src="js/jquery-2.1.4.js"></script>
+<script src="https://cdn.bootcss.com/tooltip.js/1.3.2/tooltip.js"></script>
 <script src="./static/honeySwitch.js"></script>
 <script src="../static/common/website.js"></script>
 <script src="js/common.js"></script>
 <script>
+   // $('.lj1').on('mouseover',function () {
+   //     var text = $('.li-active .lj_dis .lj_dis1').text();
+   //     console.log(text);
+   //     tooltip(text);
+   // });
+   function exampleOut(e,f){
+       var tip = $('.tooltiptext');
+       tip.show();
+       var html = '';
+       if (e.length > 64){
+           $('.lj1').text(e.split(',')[0] + '. . . . . . . . ');
+           html += '<p>'+ e +'</p><br>';
+           tip.html(html);
+       }else{
+           $('.lj1').text(e);
+       }
+
+       if (f.length > 30){
+           $('.lj2').text(f.split('，')[0] + '. . . . . . . .');
+           html += '<p>'+ f +'</p>';
+           tip.html(html);
+       }else{
+           $('.lj2').text(f);
+       }
+       tip.html(html);
+       if (html == ''){
+           tip.hide();
+       }
+   }
+
     function asd(){
         $(document).ready(function(){
             var el=$('.dc-left ul').find('.li-active');
@@ -131,14 +191,27 @@
             var d = $(el).find('audio source').attr('src');
             var wordId = $(el).find('.wordId-left').text();
             var img = $(el).find('.dc_img').attr('src');
+            
+            var arr = a.split(' ');
+            var html = '<p style="font-size: 23px">';
+            if (arr.length > 1){
+                for (i = 0; i < arr.length; i++){
+                    html += ''+ arr[i] + '&nbsp;'
+                }
+                $('.yb').hide();
+                html += '</p>';
+                $('.fayin').html(html);
+            }else{
+                $('.fayin').html(a);
+            }
 
+            exampleOut(e,f);
             $('.dc_img img').attr('src',img);
             $('#wordId-right').text(wordId);
-            $('.fayin').text(a);
             $('.yb').text(yb);
             $('.jieshi').text(b);
-            $('.lj1').text(e);
-            $('.lj2').text(f);
+
+
             $('.gj span b').text(c+1);
             $('.btns audio ').attr('src',d);
             var f = $('.btns audio ').attr('src');
@@ -229,13 +302,24 @@
         var wordId = $(this).find('.wordId-left').text();
         var img = $(this).find('.dc_img').attr('src');
 
+        var arr = a.split(' ');
+        var html = '<p style="font-size: 23px">';
+        if (arr.length > 1){
+            for (i = 0; i < arr.length; i++){
+                html += ''+ arr[i] + '&nbsp;'
+            }
+            $('.yb').hide();
+            html += '</p>';
+            $('.fayin').html(html);
+        }else{
+            $('.fayin').html(a);
+        }
         $('.dc_img img').attr('src',img);
         $('#wordId-right').text(wordId);
-        $('.fayin').text(a);
+        // $('.fayin').text(a);
         $('.yb').text(yb);
         $('.jieshi').text(b);
-        $('.lj1').text(e);
-        $('.lj2').text(f);
+        exampleOut(e,f);
         $('.gj span b').text(c+1);
         $('.btns audio ').attr('src',d);
         var f = $('.btns audio ').attr('src');
@@ -275,11 +359,22 @@
             $('#wordId-right').text(wordId);
             $('.btns audio ').attr('src',d);
             $('.wordvoice audio source').attr('src',d);
-            $('.fayin').text(a);
+            var arr = a.split(' ');
+            var html = '<p style="font-size: 23px">';
+            if (arr.length > 1){
+                for (i = 0; i < arr.length; i++){
+                    html += ''+ arr[i] + '&nbsp;'
+                }
+                $('.yb').hide();
+                html += '</p>';
+                $('.fayin').html(html);
+            }else{
+                $('.fayin').html(a);
+            }
+            // $('.fayin').text(a);
             $('.yb').text(yb);
             $('.jieshi').text(b);
-            $('.lj1').text(e);
-            $('.lj2').text(f);
+            exampleOut(e,f);
             $('.gj span b').text(ii+1);
             var f = $('.btns audio ').attr('src');
             var audio=new Audio(f);
@@ -313,11 +408,22 @@
             $('#wordId-right').text(wordId);
             $('.btns audio ').attr('src',d);
             $('.wordvoice audio source').attr('src',d);
-            $('.fayin').text(a);
+            var arr = a.split(' ');
+            var html = '<p style="font-size: 23px">';
+            if (arr.length > 1){
+                for (i = 0; i < arr.length; i++){
+                    html += ''+ arr[i] + '&nbsp;'
+                }
+                $('.yb').hide();
+                html += '</p>';
+                $('.fayin').html(html);
+            }else{
+                $('.fayin').html(a);
+            }
+            // $('.fayin').text(a);
             $('.yb').text(yb);
             $('.jieshi').text(b);
-            $('.lj1').text(e);
-            $('.lj2').text(f);
+            exampleOut(e,f);
             $('.gj span b').text(ii+1);
             var f = $('.btns audio ').attr('src');
             var audio=new Audio(f);

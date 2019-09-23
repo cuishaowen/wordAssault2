@@ -68,7 +68,7 @@
 		</div>
 	</form>
 	<div class="footer">
-		Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="${pageContext.request.contextPath}${fns:getFrontPath()}">${fns:getConfig('productName')}</a> - Powered By <a href="http://www.anssy.com" target="_blank">Anssy</a>  ${fns:getConfig('version')}
+		Copyright &copy; 2019-${fns:getConfig('copyrightYear')} <a href="http://www.abczxs.com" target="_blank">${fns:getConfig('footerName')}</a> - Powered By <a href="#">zhixiangshu</a>  ${fns:getConfig('version')}
 	</div>
 	<script src="${ctxStatic}/flash/zoom.min.js" type="text/javascript"></script>
 </body>

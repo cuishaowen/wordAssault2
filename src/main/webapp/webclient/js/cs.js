@@ -46,24 +46,65 @@ layui.use(['layer','form','jquery'],function () {
         if (chapterId != null && chapterId != 0 && chapterId != undefined && chapterId != '') {
             url = getContextPath() + '/userchapterword/getWordInformation';
             data.chapterId = chapterId;
+            $.post(url, data, function(res) {
+                // 动态添加数据
+                console.log('数据',res);
+                getWord(res);
+            });
         }else{
             // 查全书
             if (courseId != null && courseId != undefined){
                 url = getContextPath() + '/userchapterword/getCourseWordInformation';
                 data.courseId = courseId;
+                $.post(url, data, function(res) {
+                    // 动态添加数据
+                    console.log('数据',res);
+                    getWord100(res);
+                });
             }
         }
+    }
 
-        $.post(url, data, function(res) {
-            // 动态添加数据
-            console.log('数据',res);
-            getWord(res);
-        });
+    // 动态添加元素
+    function getWord100(res){
+        var result = res;
+        shuffle(res);
+        var i = 0;
+        if (result.length > 100){
+            if (val == 1){
+                for (i = 0;i < 100; i ++){
+                    addContentThree(i,false,res);
+                }
+            } else if (val == 2) {
+                for (i = 0;i < 100; i ++){
+                    addContentTwo(i,false,res);
+                }
+            }else{
+                for (i = 0;i < 100; i ++){
+                    addContentOne(i,false,res);
+                }
+            }
+        } else {
+            if (val == 1){
+                for (i = 0; i < result.length; i++){
+                    addContentThree(i,false,res);
+                }
+            } else if (val == 2) {
+                for (i = 0; i < result.length; i++){
+                    addContentTwo(i,false,res);
+                }
+            }else {
+                for (i = 0; i < result.length; i++){
+                    addContentOne(i,false,res);
+                }
+            }
+        }
     }
 
     // 动态添加元素
     function getWord(res){
         var result = res;
+        shuffle(res);
         var i = 0;
         if (result.length > 10){
             if (val == 1){

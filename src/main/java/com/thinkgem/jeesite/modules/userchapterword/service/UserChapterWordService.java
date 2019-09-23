@@ -3,10 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.userchapterword.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.chapter.entity.Chapter;
@@ -19,6 +16,7 @@ import com.thinkgem.jeesite.modules.chapterword.service.ChapterWordService;
 import com.thinkgem.jeesite.modules.chapterword.utils.ChapterWordUtils;
 import com.thinkgem.jeesite.modules.course.entity.Course;
 import com.thinkgem.jeesite.modules.course.service.CourseService;
+import com.thinkgem.jeesite.modules.userchapterword.util.UserChapterWordUtil;
 import com.thinkgem.jeesite.modules.word.entity.Word;
 import com.thinkgem.jeesite.modules.word.pojo.*;
 import com.thinkgem.jeesite.modules.word.service.WordService;
@@ -105,14 +103,9 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		List<WordInformation> wordInformations = new ArrayList<WordInformation>();
 
 		// 获取章节下所有的例子信息
-		List<ChapterExample> chapterExamples = this.getChapterExamples(chapterId,null);
-
-		// 如果这个章节或课程下没有例子信息，则查询该章节下的chapter_word;
-		if (chapterExamples == null || chapterExamples.size() < 1){
-			wordInformations = getChapterWordList(chapterId,null);
-		}else {
-			wordInformations = getWordExampleErrorCh(chapterExamples);
-		}
+//		List<ChapterExample> chapterExamples = this.getChapterExamples(chapterId,null);
+		wordInformations = getChapterWordList(chapterId,null);
+//		wordInformations = getWordExampleErrorCh(chapterExamples);
 		return wordInformations;
 	}
 
@@ -171,26 +164,37 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 	// 查询课程或章节单词下的所有单词信息
 	public List<WordInformation> getWordList(ChapterWord chapterWord){
 		List<WordInformation> wordInformations = new ArrayList<WordInformation>();
-
+		List<Word> wordList = wordService.findList(new Word());
 		List<ChapterWord> chapterWords = chapterWordService.findList(chapterWord);
 		for (ChapterWord chapterWordInf : chapterWords){
 			String wordIds = chapterWordInf.getWordIds();
 			String[] arr = wordIds.split(",");
-			for (String wordId : arr){
+			for (String wordId : arr) {
+				List<String> threeOtherWordChinese = new ArrayList<String>();
 				WordInformation wordInformation = new WordInformation();
-
-				List<String> threeOtherWordChinese = this.getThreeOtherWords(wordId);
-				Word word = wordService.get(wordId);
 				WordExample wordExample = new WordExample();
 				wordExample.setWordId(wordId);
 				List<WordExample> wordExamples = wordExampleService.findList(wordExample);
 
-				if (wordExamples != null && wordExamples.size() > 0){
+				if (wordExamples != null && wordExamples.size() > 0) {
 					wordInformation.setWordExample(wordExamples.get(0));
 				}
-				wordInformation.setWord(word);
-				wordInformation.setErrorCh(threeOtherWordChinese);
 
+				Iterator<Word> iterator = wordList.iterator();
+				while (iterator.hasNext()) {
+					Word word = iterator.next();
+					if (word.getId().equals(wordId)) {
+						wordInformation.setWord(word);
+						iterator.remove();
+					}
+				}
+				// 获取三个其他中文释义
+				int[] threeIndexs = UserChapterWordUtil.randomSet(0,wordList.size(),3);
+				for (int i = 0; i < 3; i++){
+					String otherWordChinese = wordList.get(threeIndexs[i]).getChinese();
+					threeOtherWordChinese.add(otherWordChinese);
+				}
+				wordInformation.setErrorCh(threeOtherWordChinese);
 				wordInformations.add(wordInformation);
 			}
 		}
@@ -239,7 +243,6 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 			threeOtherChinese.add(wordError.getChinese());
 		}
 		return threeOtherChinese;
-
 	}
 
 	// 获取每日学习单词数量
