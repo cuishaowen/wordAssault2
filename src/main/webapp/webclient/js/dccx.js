@@ -13,6 +13,11 @@ $(function () {
         $('#yinbiao').text(word.phoneticTranscription);
         $('#zhongwen').text(word.chinese);
         $('.examples').html('');
+        var voice = '';
+        var ameVoice = res.word.ameVoice;
+        var engVoice = res.word.engVoice;
+        ameVoice ? voice = ameVoice : voice = engVoice;
+        $('.wordvoice audio source').attr('src',voice);
         for (i = 0; i < examples.length; i++){
             var ex = examples[i].example;
             var example = ex.split("$$$");
@@ -103,3 +108,10 @@ function deleteSkilled() {
     userChapterWord.skilledWord = 'F';
     updateWord(userChapterWord);
 }
+
+//发音图标
+$('#fayin').on('click',function () {
+    var f = $('.wordvoice audio source').attr('src');
+    var audio=new Audio(f);
+    audio.play();
+});

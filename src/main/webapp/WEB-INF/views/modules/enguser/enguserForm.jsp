@@ -44,8 +44,12 @@
 			<div class="control-group">
 				<label class="control-label">用户名：</label>
 				<div class="controls">
-					<form:input path="login" htmlEscape="false" maxlength="20" class="input-medium"/>
+					<form:input path="login" htmlEscape="false" maxlength="20" class="input-medium loginName"/>
 				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">检测结果：</label>
+				<div class="controls" id="hasLogin"></div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">密码:</label>
@@ -64,5 +68,28 @@
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
+<script>
+	$('.loginName').on('blur',function(){
+		// alert($(this).val());
+		var loginName = $(this).val();
+		var hasLogin = $('#hasLogin');
+		var url = '${ctx}/enguser/enguser/getListByLikeLoginName?loginName=' + loginName;
+		$.get(url,function (res) {
+			hasLogin.html('');
+			if (res.length > 1){
+				for(i = 0; i < res.length; i++){
+					hasLogin.append(
+							'<div style="color: red">'+ res[i].loginName +'</div>'
+					)
+				}
+				hasLogin.append('<div style="color: red;margin-top: 20px">提示：系统将会从最大值开始新增</div>')
+			} else{
+				hasLogin.html('<span style="color: green">该用户名下没有注册用户</span>')
+			}
+
+
+		})
+	});
+</script>
 </body>
 </html>

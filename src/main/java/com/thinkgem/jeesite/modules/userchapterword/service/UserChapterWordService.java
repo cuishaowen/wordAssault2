@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.userchapterword.service;
 
+import java.text.ParseException;
 import java.util.*;
 
 import com.thinkgem.jeesite.common.utils.DateUtils;
@@ -17,6 +18,8 @@ import com.thinkgem.jeesite.modules.chapterword.utils.ChapterWordUtils;
 import com.thinkgem.jeesite.modules.course.entity.Course;
 import com.thinkgem.jeesite.modules.course.service.CourseService;
 import com.thinkgem.jeesite.modules.userchapterword.util.UserChapterWordUtil;
+import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
+import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
 import com.thinkgem.jeesite.modules.word.entity.Word;
 import com.thinkgem.jeesite.modules.word.pojo.*;
 import com.thinkgem.jeesite.modules.word.service.WordService;
@@ -30,6 +33,8 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.userchapterword.dao.UserChapterWordDao;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * userchapterwordService
@@ -50,10 +55,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 	private WordExampleService wordExampleService;
 	@Autowired
 	private UserChapterWordDao userChapterWordDao;
-	@Autowired
-	private ChapterService chapterService;
-	@Autowired
-	private CourseService courseService;
+
 
 	public UserChapterWord get(String id) {
 		return super.get(id);
@@ -184,6 +186,8 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 				while (iterator.hasNext()) {
 					Word word = iterator.next();
 					if (word.getId().equals(wordId)) {
+						String chinese = spliceCh(word.getChinese());
+						word.setChinese(chinese);
 						wordInformation.setWord(word);
 						iterator.remove();
 					}
@@ -191,7 +195,7 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 				// 获取三个其他中文释义
 				int[] threeIndexs = UserChapterWordUtil.randomSet(0,wordList.size(),3);
 				for (int i = 0; i < 3; i++){
-					String otherWordChinese = wordList.get(threeIndexs[i]).getChinese();
+					String otherWordChinese = spliceCh(wordList.get(threeIndexs[i]).getChinese());
 					threeOtherWordChinese.add(otherWordChinese);
 				}
 				wordInformation.setErrorCh(threeOtherWordChinese);
@@ -246,14 +250,14 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 	}
 
 	// 获取每日学习单词数量
-	public List<EverydayMemoryWord> getEveryWord(String userId, String courseId, String date){
+	public List<EverydayMemoryWord> getEveryWord(String userId, String courseId, String date) throws ParseException {
 		List<EverydayMemoryWord> everydayMemoryWords = new ArrayList<EverydayMemoryWord>();
 		UserChapterWord userChapterWord = new UserChapterWord();
-		Date newDate = DateUtils.parseDate(date);
-		userChapterWord.setCourseId(courseId);
-		userChapterWord.setEngUserId(userId);
-		userChapterWord.setUpdateDate(newDate);
-		List<UserChapterWord> userChapterWords = this.findList(userChapterWord);
+		String startDateStr = date + " 00:00:00";
+		String endDateStr = date + " 23:59:59";
+		Date startDate = DateUtils.parseDate(startDateStr,"yyyy-MM-dd HH:mm:ss");
+		Date endDate = DateUtils.parseDate(endDateStr,"yyyy-MM-dd HH:mm:ss");
+		List<UserChapterWord> userChapterWords = userChapterWordDao.findListByDate(courseId, userId, startDate, endDate);
 		for (UserChapterWord userChapterWordInf : userChapterWords){
 			EverydayMemoryWord everydayMemoryWord = new EverydayMemoryWord();
 			Word word = wordService.get(userChapterWordInf.getWordId());
@@ -395,6 +399,67 @@ public class UserChapterWordService extends CrudService<UserChapterWordDao, User
 		String studyStatus = userChapterWord.getStudyStatus();
 		String isMemo = userChapterWord.getIsMemo();
 		userChapterWordDao.updateSelectById(idArr,strangeWord,skilledWord,studyStatus,isMemo,new Date());
+	}
+
+
+	public List<WordInformation> getCSWord(String courseId, String chapterId){
+		ChapterWord chapterWord = new ChapterWord();
+
+		if (chapterId != null && !chapterId.equals("")){
+			chapterWord.setChapterId(chapterId);
+		}
+
+		if (chapterId == null && courseId != null){
+			chapterWord.setCourseId(courseId);
+		}
+		return  getCSWordInformation(chapterWord);
+	}
+
+	// 根据课程获取所有章节单词信息  单词例句
+	public List<WordInformation> getCSWordInformation(ChapterWord chapterWord){
+		List<WordInformation> wordInformations = new ArrayList<WordInformation>();
+		List<Word> wordList = wordService.findList(new Word());
+		List<ChapterWord> chapterWords = chapterWordService.findList(chapterWord);
+		for (ChapterWord chapterWordInf : chapterWords){
+			String wordIds = chapterWordInf.getWordIds();
+			String[] arr = wordIds.split(",");
+			for (String wordId : arr) {
+				List<String> threeOtherWordChinese = new ArrayList<String>();
+				WordInformation wordInformation = new WordInformation();
+				Iterator<Word> iterator = wordList.iterator();
+				while (iterator.hasNext()) {
+					Word word = iterator.next();
+					if (word.getId().equals(wordId)) {
+						String chinese = spliceCh(word.getChinese());
+						word.setChinese(chinese);
+						wordInformation.setWord(word);
+					}
+				}
+				// 获取三个其他中文释义
+				int[] threeIndexs = UserChapterWordUtil.randomSet(0,wordList.size(),3);
+				for (int i = 0; i < 3; i++){
+					String otherWordChinese = spliceCh(wordList.get(threeIndexs[i]).getChinese());
+					threeOtherWordChinese.add(otherWordChinese);
+				}
+				wordInformation.setErrorCh(threeOtherWordChinese);
+				wordInformations.add(wordInformation);
+			}
+		}
+		return wordInformations;
+	}
+
+	public String spliceCh(String chinese){
+		String ch_new ="";
+		int length = 3;
+		if (chinese.length() > 29){
+			String[] arr = chinese.split("；");
+			for (int i = 0; i < length; i++){
+				ch_new += arr[i];
+			}
+		}else{
+			ch_new = chinese;
+		}
+		return ch_new;
 	}
 
 }

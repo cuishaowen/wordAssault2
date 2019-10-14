@@ -21,6 +21,14 @@
     .layui-nav * { font-size: 16px;}
     .layui-form-label{width:120px;!important;}
     .layui-input-block {margin-left: 150px;}
+
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -ms-animation: spin3 .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+        -moz-animation: spin4 .7s infinite linear;
+    }
+
 </style>
 <body class="bgbody">
 <ul class="layui-nav layui-bg-blue">
@@ -37,7 +45,7 @@
     <li class="layui-nav-item tc" lay-unselect="">
         <a href="javascript:;">
             <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
-            张三</a>
+            <strong id="loginUserName"></strong></a>
         <dl class="layui-nav-child">
             <dd><a href="jbsz.html">个人设置</a></dd>
             <dd><a href="#" onclick="loginOut()" >退出登陆</a></dd>
@@ -208,7 +216,7 @@
         var coursesOpen = u.getStorage('openCourses');
         for (i = 0; i < coursesOpen.length; i++) {
             $('#coursesOpen').append(
-                '<option value="'+ coursesOpen[i].id+ '">' + coursesOpen[i].name + '</option>'
+                '<option value="'+ coursesOpen[i].course.id+ '">' + coursesOpen[i].course.name + '</option>'
             );
         }
     }

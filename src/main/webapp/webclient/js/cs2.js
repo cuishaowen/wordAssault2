@@ -54,7 +54,7 @@ layui.use(['layer','form','jquery'],function () {
             u.setStorage('subject',res);
             $('#container').html('');
             for (i = 0;i < res.length; i ++){
-                addContent(i,false);
+                addContent(i);
             }
             form.render();
         })
@@ -115,8 +115,8 @@ layui.use(['layer','form','jquery'],function () {
                 }
             }
         }
-        console.log('答对的题目',rightclicked);
-        console.log('答错的题目',errorclicked);
+        console.log('答对的题目11',rightclicked);
+        console.log('答错的题目11',errorclicked);
     });
 
     // 提示未写完，写完则弹出得分窗口
@@ -144,7 +144,7 @@ layui.use(['layer','form','jquery'],function () {
                 $('#failure').show();
             }
             $('.cur-score').text(curScore);
-            ErrorSubject();
+            // ErrorSubject();
             saveErrorSubject();
             $('.zz').fadeIn(300);
         }
@@ -166,59 +166,53 @@ layui.use(['layer','form','jquery'],function () {
         $('.zz').fadeOut(300);
     });
 
-    // 获取错题信息
-    function ErrorSubject() {
-        for (i = 0; i < testSubject.length; i++) {
-            var object = testSubject[i];
-            var id = object.id;
-            for (j = 0; j < errorclicked.length; j++) {
-                if (id == errorclicked[j]) {
-                    errorSubject.push(object);
-                }
-            }
-        }
-    }
-    // 获取错题
-    function getErrorSubject() {
-        console.log('errorSubject',errorSubject);
-        $('#container').html('');
-        for (n = 0; n < errorSubject.length; n++) {
-            addContent(n, true);
-        }
-        $('.answer').show();
-        $('.btn2').html('');
-    }
+    // // 获取错题信息
+    // function ErrorSubject() {
+    //     for (i = 0; i < testSubject.length; i++) {
+    //         var object = testSubject[i];
+    //         var id = object.id;
+    //         for (j = 0; j < errorclicked.length; j++) {
+    //             if (id == errorclicked[j]) {
+    //                 errorSubject.push(object);
+    //             }
+    //         }
+    //     }
+    // }
     // 查看错题
     $('.lb').on('click',function(){
         getErrorSubject();
         form.render();
     });
+    // 获取错题
+    function getErrorSubject() {
+        // console.log('errorSubject111',errorSubject);
+        for (i = 0; i < rightclicked.length; i++){
+            $('#'+ rightclicked[i]).hide();
+        }
+        $('.answer').show();
+        $('.btn2').html('');
+        // $('#container').html('');
+        // for (n = 0; n < errorSubject.length; n++) {
+        //     addContent(n, true);
+        // }
+    }
+
 
     // 将错题持久化
     function saveErrorSubject(){
-        for (i = 0; i < errorSubject.length; i++){
-            var data = {};
-            data.userId = sessionId;
-            data.subjectVersionId = version;
-            data.subjectId = errorSubject[i].id;
-            data.isWrong = 'T';
-            var url = getContextPath() + '/userSubject/save';
-            $.post(url,data,function (res) {
-                layer.msg('错题保存成功');
-            })
-        }
+        var url = getContextPath() + '/userSubject/saveData';
+        var data={'errorClickedJson': JSON.stringify(errorclicked),'version': version};
+        console.log('errorSubjectJson',data);
+        $.post(url,data,function (res) {
+            layer.msg('错题保存成功');
+        })
     }
 });
 
-function addContent(num,error){
-    var object = {};
-    if (error){
-        object = errorSubject[num];
-    } else {
-        var subject = u.getStorage('subject');
-        object = subject[num];
-        testSubject.push(object);
-    }
+function addContent(num){
+    var subject = u.getStorage('subject');
+    var object = subject[num];
+    testSubject.push(object);
     var id = object.id;
     var question = object.question;
     var selectA = object.selectA;
@@ -227,66 +221,37 @@ function addContent(num,error){
     var selectD = object.selectD;
     var answer = object.answer;
     var analysis = object.analysis;
-    if (selectD == null || selectD == ''){
-        $('#container').append(
-            '<div class="xt">\n' +
-            '<div class="xt-title">\n' +
-            '                <span>'+ (num+1) +')</span>\n' +
-            '               <span>'+ question +'</span>\n' +
-            '            </div>\n' +
-            '            <div class="xt-content">\n' +
-            '                <form class="layui-form layui-form-pane" action="">\n' +
-            '                    <div class="layui-form-item">\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="'+ id + '$$$' + answer +'" title="'+ selectA +'">\n' +
-            '                        </div>\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="'+ id + '$$$' + answer +'" title="'+ selectB +'">\n' +
-            '                        </div>\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="'+ id + '$$$' + answer +'" title="'+ selectC +'">\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '                </form>\n' +
-            '            </div>\n' +
-            '       </div>\n' +
-            '       <div class="da answer" style="color:#d81e06;font-size: 24px;display: none;height: 100px;width: 700px;margin: 10px auto;">\n' +
-            '       <span>正确答案：<i>'+ answer +'</i></span>\n' +
-            '       <span>解析：<i>'+ analysis +'</i></span>\n' +
-            '       </div>'
-        )
-    } else {
-        $('#container').append(
-            '<div class="xt">\n' +
-            '<div class="xt-title">\n' +
-            '                <span>' + (num + 1) + ')</span>\n' +
-            '               <span>' + question + '</span>\n' +
-            '            </div>\n' +
-            '            <div class="xt-content">\n' +
-            '                <form class="layui-form layui-form-pane" action="">\n' +
-            '                    <div class="layui-form-item">\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="' + selectA + '">\n' +
-            '                        </div>\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="' + selectB + '">\n' +
-            '                        </div>\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="' + selectC + '">\n' +
-            '                        </div>\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="' + selectD + '">\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '                </form>\n' +
-            '            </div>\n' +
-            '       </div>\n' +
-            '       <div class="da answer" style="color:#d81e06;font-size: 24px;display: none; height: 100px;width: 700px;margin: 10px auto;">\n' +
-            '       <span>正确答案：<i>' + answer + '</i></span>\n' +
-            '       <span>解析：<i>' + analysis + '</i></span>\n' +
-            '       </div>'
-        )
-    }
+    var str = '<div class="layui-input-block">\n' +
+          '<input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="' + selectD + '">\n' +
+          '</div>\n';
+    $('#container').append(
+        '<div class="xt" id="'+ id +'">\n' +
+        '<div class="xt-title">\n' +
+        '                <span>'+ (num+1) +')</span>\n' +
+        '               <span>'+ question +'</span>\n' +
+        '            </div>\n' +
+        '            <div class="xt-content">\n' +
+        '                <form class="layui-form layui-form-pane" action="">\n' +
+        '                    <div class="layui-form-item">\n' +
+        '                        <div class="layui-input-block">\n' +
+        '                            <input type="radio" name="xt" value="'+ id + '$$$' + answer +'" title="'+ selectA +'">\n' +
+        '                        </div>\n' +
+        '                        <div class="layui-input-block">\n' +
+        '                            <input type="radio" name="xt" value="'+ id + '$$$' + answer +'" title="'+ selectB +'">\n' +
+        '                        </div>\n' +
+        '                        <div class="layui-input-block">\n' +
+        '                            <input type="radio" name="xt" value="'+ id + '$$$' + answer +'" title="'+ selectC +'">\n' +
+        '                        </div>\n' + (selectD ? str : '') +
+        '                    </div>\n' +
+        '                </form>\n' +
+        '            </div>\n' +
+        '           <div class="da answer" style="color:#d81e06;font-size: 18px;display: none;height: 100px;width: 700px;margin: 10px auto;text-align: left">\n' +
+        '               <span>正确答案：<i>'+ answer +'</i></span>\n' +
+        '               <span>解析：<i>'+ analysis +'</i></span>\n' +
+        '           </div>\n' +
+        '       </div>'
+
+    )
 }
 
 

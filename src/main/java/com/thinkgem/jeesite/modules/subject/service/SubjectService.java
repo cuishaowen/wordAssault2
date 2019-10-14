@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.subject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
@@ -68,7 +69,9 @@ public class SubjectService extends CrudService<SubjectDao, Subject> {
 		return dictService.findList(dict);
 	}
 
-
+	public List<String> getSubjectSort(String version){
+		return subjectDao.getSubjectSort(version);
+	}
 
 
 }

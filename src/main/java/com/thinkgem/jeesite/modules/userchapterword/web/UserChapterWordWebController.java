@@ -1,6 +1,5 @@
 package com.thinkgem.jeesite.modules.userchapterword.web;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.thinkgem.jeesite.modules.userchapterword.entity.UserChapterWord;
 import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
 import com.thinkgem.jeesite.modules.word.pojo.*;
@@ -8,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class UserChapterWordWebController {
 
     @ResponseBody
     @RequestMapping(value = "getEveryDayWord")
-    public List<EverydayMemoryWord> getEveryWord(String userId, String courseId, String date){
+    public List<EverydayMemoryWord> getEveryWord(String userId, String courseId, String date) throws ParseException {
         return userChapterWordService.getEveryWord(userId, courseId, date);
     }
 
@@ -134,6 +133,18 @@ public class UserChapterWordWebController {
     @RequestMapping(value = "getCourseWordInformation")
     public List<WordInformation> getCourseWordInformation(String courseId){
         return userChapterWordService.getCourseWordInformation(courseId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getAllCourseWordInformation")
+    public List<WordInformation> getCSCourseWordInformation(String courseId){
+        return userChapterWordService.getCSWord(courseId,null);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getCSChapterWordInformation")
+    public List<WordInformation> getCSChapterWordInformation(String chapterId){
+        return userChapterWordService.getCSWord(null,chapterId);
     }
 
 //    /**

@@ -37,7 +37,7 @@
     <li class="layui-nav-item tc" lay-unselect="">
         <a href="javascript:;">
             <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
-            张三</a>
+            <strong id="loginUserName"></strong></a>
         <dl class="layui-nav-child">
             <dd><a href="jbsz.html">个人设置</a></dd>
             <dd><a href="#" onclick="loginOut()">退出登陆</a></dd>
@@ -515,7 +515,6 @@
 
     //获取该用户课程详情
     getCourseInfo();
-
     function getCourseInfo() {
         var tbodyHtml="";
         $.ajax({
@@ -525,28 +524,22 @@
             async:false,
             data:{},
             success:function (data) {
-                if (data.code==0){
-                    var courseInfoS=data.courseInfoEntities;
-                    for (var i=0;i<courseInfoS.length;i++){
-                        var courseInfo=courseInfoS[i];
-                        var count=courseInfo.courseScore;
-                        if (count==null||count==undefined){
-                            count=0;
-                        }
-                    tbodyHtml+="<tr><td>"+courseInfo.courseName+"</td><td>本书已学单词:" +courseInfo.completeword+
-                        "；未学单词:" +courseInfo.waitLearningword+
-                        "；现有生词:" +courseInfo.courseHardWord+
-                        "；熟词:" +courseInfo.skilledWord+
-                        "；备忘单词:" +courseInfo.strengthenMemoryWord+
-                        "</td><td>"+count+"</td></tr>";
+                console.log('data',data);
+                var courseInfoS=data;
+                for (var i=0;i<courseInfoS.length;i++){
+                    var courseInfo=courseInfoS[i];
+                    var count=courseInfo.score;
+                    if (count==null||count==undefined){
+                        count=0;
+                    }
+                tbodyHtml+="<tr><td>"+courseInfo.courseName+"</td><td>本书已学单词:" + courseInfo.completionWords +
+                    "；未学单词:" +courseInfo.waitLearningWords+
+                    "；现有生词:" +courseInfo.hardWords+
+                    "；熟词:" +courseInfo.skilledWords+
+                    "；备忘单词:" +courseInfo.strengthenMemoryWords+
+                    "</td><td>"+count+"</td></tr>";
                 }
                 $("#tbody").append(tbodyHtml);
-            }else{
-                    alert(data.msg);
-                }
-            },
-            error:function () {
-                alert("操作失败,请练习客服");
             }
         });
     }

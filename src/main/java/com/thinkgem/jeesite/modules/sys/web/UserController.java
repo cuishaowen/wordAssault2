@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
+import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
+import com.thinkgem.jeesite.modules.userenguser.pojo.UserEngUserPojo;
+import com.thinkgem.jeesite.modules.userenguser.service.UserEnguserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +52,8 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private UserEnguserService userEnguserService;
 	
 	@ModelAttribute
 	public User get(@RequestParam(required=false) String id) {
@@ -68,8 +73,8 @@ public class UserController extends BaseController {
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<User> page = systemService.findUser(new Page<User>(request, response), user);
-        model.addAttribute("page", page);
+		Page<User> userPage = systemService.findUser(new Page<User>(request, response), user);
+        model.addAttribute("page", userPage);
 		return "modules/sys/userList";
 	}
 	

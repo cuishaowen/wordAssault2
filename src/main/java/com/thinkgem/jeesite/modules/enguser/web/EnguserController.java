@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.thinkgem.jeesite.modules.enguser.pojo.Engusers;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.MD5Util;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
 import com.thinkgem.jeesite.modules.usercourse.pojo.CourseIsOpen;
@@ -30,6 +31,7 @@ import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
 import com.thinkgem.jeesite.modules.enguser.service.EnguserService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -113,11 +115,15 @@ public class EnguserController extends BaseController {
         return "redirect:"+Global.getAdminPath()+"/enguser/enguser/list?repage";
     }
 
-    @RequiresPermissions("enguser:enguser:edit")
+    @RequiresPermissions("enguser:enguser:update")
     @RequestMapping(value = "update")
     public String update(Enguser enguser,RedirectAttributes redirectAttributes){
 		if (enguser.getSex().equals("男")){
 			enguser.setSex("1");
+		}
+		if (StringUtils.isNotEmpty(enguser.getPassword())){
+			String newPassword = MD5Util.encode2hex(enguser.getPassword());
+			enguser.setPassword(newPassword);
 		}
 	    enguserService.update(enguser);
 	    addMessage(redirectAttributes,"修改用户信息成功");
@@ -159,6 +165,16 @@ public class EnguserController extends BaseController {
 		addMessage(redirectAttributes, "批量新增用户成功");
 		return "redirect:"+Global.getAdminPath()+"/enguser/enguser/?repage";
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "getListByLikeLoginName")
+	public List<Enguser> getListByLikeLoginName(String loginName){
+		Enguser enguser = new Enguser();
+		enguser.setLoginName(loginName);
+		List<Enguser> engusers = enguserService.findList(enguser);
+		return engusers;
+	}
+
 
 
 }

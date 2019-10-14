@@ -60,7 +60,7 @@
     <li class="layui-nav-item tc" lay-unselect="">
         <a href="javascript:void(0);">
             <img src="images/20150607110911_kY5cP.jpeg" class="layui-nav-img">
-            </a>
+            <strong id="loginUserName"></strong></a>
         <dl class="layui-nav-child">
             <dd><a href="jbsz.html">个人设置</a></dd>
             <dd><a href="#" onclick="loginOut()">退出登陆</a></dd>
@@ -141,36 +141,25 @@
                            </div>
                            <div class="dc_tab_item" style="height: 316px;">
                                <div class="timu" style="margin: 0 auto;height: 30px">
-                                   <span class="beizhu timu" style="font-size: 20px;margin-left: 0;"> 【名词】</span>
+                                   <span class="beizhu timu" style="font-size: 20px;margin-left: 0;"></span>
                                </div>
                               <div class="timu">
-                                  <p class="yufa" style="line-height: 30px">1) An  old <span></span> wants  to  see  you</p>
+                                  <p class="yufa" style="line-height: 30px"></p>
                               </div>
                                <div class="xt-content">
                                    <form class="layui-form layui-form-pane" action="">
                                        <div class="layui-form-item">
-                                           <div class="layui-input-block">
-                                               <input type="radio" name="xt" value="1" title="people"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>people</div></div>
-                                           </div>
-                                           <div class="layui-input-block">
-                                               <input type="radio" name="xt" value="2" title="person"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>person</div></div>
-                                           </div>
-                                           <div class="layui-input-block">
-                                               <input type="radio" name="xt" value="3" title="the people"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>the people</div></div>
-                                           </div>
-                                           <div class="layui-input-block">
-                                               <input type="radio" name="xt" value="4" title="the person"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>the person</div></div>
-                                           </div>
+                                           <div style="font-size: 30px;text-align: center">没有错题~</div>
                                        </div>
                                    </form>
                                </div>
                                <div class="newbtns" >
-                                   <a id="removeErrSubject" class="faguanbtn">移出错题本</a>
-                                   <a id="nextSubject" class="faguanbtn">下一题</a>
+                                   <a id="removeErrSubject" class="faguanbtn" style="display: none">移出错题本</a>
+                                   <a id="nextSubject" class="faguanbtn" style="display: none">下一题</a>
                                </div>
                                <div class="jdt">
                                <div class="zj">
-                                   <span>第<i id="indexS">1</i>题 共计：<i id="totalS">10</i>题</span>
+                                   <span>第<i id="indexS">0</i>题 共计：<i id="totalS">0</i>题</span>
                                </div>
                                <div class="layui-progress">
                                    <div class="layui-progress-bar layui-bg-blue" lay-filter="demo" lay-percent="0%" style="background-color:#22A9FB !important; "></div>
@@ -243,9 +232,9 @@
         var data = {};
         data.type = 'subject_type';
         $.post(url1,data,function (res) {
-            for (i=0; i < res.length; i++){
+            for (i=0; i < 16; i++){
                 $('#subjectType').append(
-                    '<button type="button" class="btn11 hasbuy float-shadow" style="margin-bottom: 20px;" onclick="getBtnValue(' + res[i].value + ')" value="' + res[i].value + '">'+ res[i].label +'</button>'
+                    '<button type="button" class="btn11 " disabled="disabled" style="margin-bottom: 20px;" onclick="getBtnValue(' + res[i].value + ')" value="' + res[i].value + '">'+ res[i].label +'</button>'
                 )
             }
         });

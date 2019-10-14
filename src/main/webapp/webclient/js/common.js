@@ -1,3 +1,5 @@
+// 自动播放时间设置
+window.autoPlay = 2000;
 //定义全局变量函数
 var uzStorage = function () {
     var ls = window.localStorage;
@@ -50,35 +52,34 @@ function GetQueryString(name) {
     return context == null || context == "" || context == "undefined" ? "" : context;
 }
 var urlId = GetQueryString("id");
-console.log(urlId);
 
-var loginName = "";// 登录名字
-var sessionId= "";// id
-var userName = "";// 昵称
-var num = "";// 编号
-var loginTimes = "";// 登录次数
-var optionsId = "";// 操作对象id
-var jPanType = ''; // 软硬键盘设置 (1软键盘，2硬键盘)
-var mp3Type = '';  // 发音设置  (1英式发音，2美式发音)
-$.ajax({
-    "url" : getContextPath() +"/enguser/enguser/getUserSession",
-    "method" : "POST",
-    "cache" : false,
-    "async" : false,
-}).success(function(data){
-    if(data.loginName != null){
-        console.log(data);
-        loginName = data.loginName;
-        sessionId = data.id;
-        userName = data.name;
-        num = data.num;
-        loginTimes = data.loginTimes;
-        optionsId = data.optionsId;
-        jPanType = data.JpanType;
-        mp3Type = data.Mp2Type;
-        u.setStorage('userInformation',data);
-    }
-});
+var userInformation = u.getStorage('userInformation');
+var loginName = userInformation.loginName;// 登录名字
+var sessionId= userInformation.id;// id
+var userName = userInformation.name;// 昵称
+var num = userInformation.num;// 编号
+var loginTimes = userInformation.loginTimes;// 登录次数
+var optionsId = userInformation.optionsId;// 操作对象id
+var jPanType = userInformation.JpanType; // 软硬键盘设置 (1软键盘，2硬键盘)
+var mp3Type = userInformation.Mp2Type;  // 发音设置  (1英式发音，2美式发音)
+function getSession() {
+    var url = getContextPath() +"/enguser/enguser/getUserSession";
+    $.post(url,function (data) {
+        if(data.loginName != null){
+            loginName = data.loginName;
+            sessionId = data.id;
+            userName = data.name;
+            num = data.num;
+            loginTimes = data.loginTimes;
+            optionsId = data.optionsId;
+            jPanType = data.JpanType;
+            mp3Type = data.Mp2Type;
+            u.setStorage('userInformation',data);
+        }
+    });
+}
+
+
 
 // 用户信息
 $('#userName').text(userName);
@@ -111,6 +112,9 @@ function loginOut() {
 
 // 已购买课程
 function alreadyPurchase() {
+    // if (sessionId == null || sessionId == '' || sessionId == undefined){
+    //     sessionId = urlId;
+    // }
     var url = getContextPath() + '/usercourse/usercourse/getCourseOpenOrClose?enguserId=' + sessionId;
     $.post(
         url,
@@ -118,7 +122,7 @@ function alreadyPurchase() {
             var openCourses = res.openCourseList;
             u.setStorage('openCourses',openCourses);
             for (var i = 0; i < openCourses.length; i++){
-                $('#alreadyPurchase').append('<li onclick="alreadyBuyCourses(\''+ openCourses[i].id +'\')">' + openCourses[i].name + '<i></i></li>');
+                $('#alreadyPurchase').append('<li onclick="alreadyBuyCourses(\''+ openCourses[i].course.id +'\')">' + openCourses[i].course.name + '<i></i></li>');
             }
         }
     )
@@ -149,7 +153,6 @@ function getUserChapterWords() {
         data,
         function (res) {
             u.setStorage('userChapterWords',res);
-            console.log('userChapterWords',res);
         }
     )
 }
@@ -167,10 +170,8 @@ function updateWord(userChapterWord) {
     data.strangeWord = userChapterWord.strangeWord;
     data.skilledWord = userChapterWord.skilledWord;
     data.isMemo = userChapterWord.isMemo;
-    console.log('update:',userChapterWord);
     $.post(url, data, function (res) {
             getUserChapterWords();
-            console.log('updateUserChapterWord:','success');
         }
     )
 }
@@ -200,24 +201,14 @@ function updateStatus(chapterId,studyStatus) {
     data.userId = sessionId;
     data.studyStatus = studyStatus;
     data.isOpen = '1';
-    console.log('updateStatusDate',data);
     var url = getContextPath() + '/userChapter/userChapter/updateUserChapter';
-    $.post(
-        url,
-        data,
-        function (res) {
-            console.log('updateStatus','修改用户章节学习状态成功')
-        }
-    );
+    $.post(url, data, function (res) {});
 }
 
 /**
  * 获取课程下的所有章节
  */
 function addLoop() {
-    $('#Loop').html('');
-    // $('#shaoguan').load(location.href + ' #shaoguan');
-    $('.container').html('');
     var courseId = GetQueryString('courseId');
     var url =  getContextPath() + '/userChapter/userChapter/getUserChapterList';
     var data = {};
@@ -226,67 +217,74 @@ function addLoop() {
     $.post(url, data, function(res){
             var j = 1, k = 0;
             u.setStorage('userChapters',res);
-            console.log('res:',res);
+            var date = res[0].userChapter.blankOne;
+            var dateEnd = res[0].userChapter.blankTwo;
+            $('#Loop').html('').append('<div style="text-align: right;margin-right: 60px;padding-top: 10px;padding-bottom: 10px"><span>开通日期：'+ date +'&nbsp;&nbsp;<br>结束日期：'+ dateEnd +'&nbsp;&nbsp;</span></div>');
+            $('.container').html('').append('<div style="text-align: right;margin-right: 20px;padding-bottom: 10px;padding-top: 10px"><span>开通日期：'+ date +'&nbsp;&nbsp;<br>结束日期：'+ dateEnd +'&nbsp;&nbsp;</span></div>');
             for (var m = 0; m < res.length; m++){
                 if ( m % 2 != 1){ // 如果 i 是偶数  i = 0 i = 2
-                    $('#Loop').append('<div id="xl'+ j +'" class="xl_btns"></div>');
-                    $('.container').append('<div id="xxl'+ j +'" class="xl_btns"></div>');
+                    $('#Loop').append('<div id="xl'+ j +'" class="xl_btns lingdu"></div>');
+                    $('.container').append('<div id="xxl'+ j +'" class="xl_btns chuangguan"></div>');
                     j++;
                 }
+            }
+            if (j > 5){
+                $('.page-two').show();
+                $('.state').hide();
+            }else{
+                $('.page-two').hide();
+                $('.state').show();
             }
             for (var i = 0; i < res.length; i++){
                 if (i % 2 != 1){
                     k++;
                 }
                 var chapter = res[i].chapter;
-                console.log('chapter:',chapter);
                 var userChapter = res[i].userChapter;
                 // 如果是开通状态
                 if (userChapter.isOpen == 1){
                     if (userChapter.studyStatus == 1){  // 未开始
                         $('#xl' + k).append(
-                            '<a class="xl_btn state3 outline-outward" href="javascript:void (0);" onclick="detail3(\''+chapter.id +'\')">\n' +
+                            '<a class="xl_btn state3 outline-outward '+chapter.id+'" href="javascript:void (0);" onclick="detail3(\''+chapter.id +'\')">\n' +
                             '<span class="dy">'+ chapter.name + '</span>\n' +
                             '<span class="remark">可开始</span>\n' +
                             '</a>\n');
                         $('#xxl' + k).append(
-                            '<a class="xl_btn state3 outline-outward" href="javascript:void (0);" onclick="detail(\''+chapter.id +'\')">\n' +
+                            '<a class="xl_btn state3 outline-outward '+chapter.id+'" href="javascript:void (0);" onclick="detail(\''+chapter.id +'\')">\n' +
                             '<span class="dy">'+ chapter.name + '</span>\n' +
                             '<span class="remark">准备闯关</span>\n' +
                             '</a>\n');
                     }else if (userChapter.studyStatus == 2 ) { // 学习中
-                        $('#xl' + k).append('<a class="xl_btn state2 outline-outward" href="javascript:void (0);" onclick="detail3(\''+chapter.id +'\')">\n' +
+                        $('#xl' + k).append('<a  class="xl_btn state2 outline-outward '+chapter.id+'" href="javascript:void (0);" onclick="detail3(\''+chapter.id +'\')">\n' +
                             '<span class="dy">'+ chapter.name + '</span>\n' +
                             '<span class="remark">学习中</span>\n' +
                             '</a>');
                         $('#xxl' + k).append(
-                            '<a class="xl_btn state2 outline-outward" href="javascript:void (0);" onclick="detail(\''+chapter.id +'\')">\n' +
+                            '<a  class="xl_btn state2 outline-outward '+chapter.id+'" href="javascript:void (0);" onclick="detail(\''+chapter.id +'\')">\n' +
                             '<span class="dy">'+ chapter.name + '</span>\n' +
                             '<span class="remark">继续闯关</span>\n' +
                             '</a>\n');
                     }else if(userChapter.studyStatus == 3) {  // 已完成
-                        $('#xl' + k).append('<a class="xl_btn state1 outline-outward" href="javascript:void (0);" onclick="detail3(\''+chapter.id +'\')">\n' +
+                        $('#xl' + k).append('<a  class="xl_btn state1 outline-outward '+chapter.id+'" href="javascript:void (0);" onclick="detail3(\''+chapter.id +'\')">\n' +
                             '<span class="dy">'+ chapter.name + '</span>\n' +
                             '<span class="remark">已完成</span>\n' +
                             '</a>');
                         $('#xxl' + k).append(
-                            '<a class="xl_btn state1 outline-outward" href="javascript:void (0);" onclick="detail(\''+chapter.id +'\')">\n' +
+                            '<a  class="xl_btn state1 outline-outward '+chapter.id+'" href="javascript:void (0);" onclick="detail(\''+chapter.id +'\')">\n' +
                             '<span class="dy">'+ chapter.name + '</span>\n' +
                             '<span class="remark">闯关成功</span>\n' +
                             '</a>\n');
                     }
                 }else {
-                    $('#xl' + k).append('<a class="xl_btn state3 outline-outward" href="javascript:void (0);">\n' +
+                    $('#xl' + k).append('<a  class="xl_btn state3 outline-outward '+chapter.id+'" href="javascript:void (0);">\n' +
                         '<span class="dy">'+ chapter.name + '</span>\n' +
                         '<span class="remark">未开放</span>\n' +
                         '</a>');
                     $('#xxl' + k).append(
-                        '<a class="xl_btn state3 outline-outward" href="javascript:void (0);">\n' +
+                        '<a  class="xl_btn state3 outline-outward '+chapter.id+'" href="javascript:void (0);">\n' +
                         '<span class="dy">'+ chapter.name + '</span>\n' +
                         '<span class="remark">等待闯关</span>\n' +
                         '</a>\n');
-                    console.log('id:' ,'#xl'+k );
-                    console.log(i);
                 }
             }
             if ($('#xl' + k + ' a').length == 1){
@@ -303,22 +301,6 @@ function addLoop() {
         }
     )
 }
-// 播放
-$('#music-B').on('click',function () {
-    var music = $('#music');
-    $('#music-B').hide();
-    $('#music-R').show();
-    music[0].pause();
-});
-// 暂停
-$('#music-R').on('click',function () {
-    var music = $('#music');
-    music.volume = 0.2;
-    $('#music-B').show();
-    $('#music-R').hide();
-    music[0].play();
-});
-
 
 
 

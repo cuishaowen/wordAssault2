@@ -40,18 +40,23 @@ function appendData(res,num){
         var ameVoice = res[i].word.ameVoice;
         var engVoice = res[i].word.engVoice;
         var voice = ameVoice ? ameVoice : engVoice;
+        var phoneticTranscription = res[i].word.phoneticTranscription;
+        var english = res[i].word.english;
         $('tbody').append('<tr>\n' +
             '<td>\n' +
             '<div class="form-control" style="display: none">\n' +
             '<input class="checkbox" type="checkbox" value="'+ res[i].userChapterWord.id +'">\n' +
             '</div>\n' +
             '<a class="yb" href="javascript:void(0)" onclick="detail1('+ res[i].word.id +')">\n' + res[i].word.english +
+            '</a>\n' +
+            '</td>\n' +
+            '<td>\n' +
+            '<a href="javascript:void(0)" id="fayin" onclick="fayin(this)">\n' + (phoneticTranscription ? phoneticTranscription : english) +
             '<audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
             '<source src="'+ voice +'">\n' +
             '</audio>\n' +
             '</a>\n' +
             '</td>\n' +
-            '<td>' + res[i].word.phoneticTranscription + '</td>\n' +
             '<td>'+res[i].word.chinese+'</td>\n' +
             '</tr>')
     }
@@ -63,18 +68,23 @@ function appendData1(res,num){
         var ameVoice = res[i].word.ameVoice;
         var engVoice = res[i].word.engVoice;
         var voice = ameVoice ? ameVoice : engVoice;
+        var phoneticTranscription = res[i].word.phoneticTranscription;
+        var english = res[i].word.english;
         $('tbody').append('<tr>\n' +
             '<td>\n' +
             '<div class="form-control" style="display: none">\n' +
             '<input class="checkbox" type="checkbox" value="'+ res[i].userChapterWord.id +'">\n' +
             '</div>\n' +
             '<a class="yb" href="javascript:void(0)" onclick="detail1('+ res[i].word.id +')">\n' + res[i].word.english +
+            '</a>\n' +
+            '</td>\n' +
+            '<td>\n' +
+            '<a href="javascript:void(0)" id="fayin" onclick="fayin(this)">\n' + (phoneticTranscription ? phoneticTranscription : english) +
             '<audio class="voicebox" controls  preload="auto" style="display: none;">\n' +
             '<source src="'+ voice +'">\n' +
             '</audio>\n' +
             '</a>\n' +
             '</td>\n' +
-            '<td>' + res[i].word.phoneticTranscription + '</td>\n' +
             '<td>'+res[i].word.chinese+'</td>\n' +
             '</tr>')
     }
@@ -132,3 +142,11 @@ $('#remove').on('click',function () {
         $('.form-control').css('display','inline-block');
     }
 });
+
+//发音图标
+function fayin(o){
+    var a = $(o);
+    var f = a.children('audio').children('source').attr('src');
+    var audio=new Audio(f);
+    audio.play();
+}

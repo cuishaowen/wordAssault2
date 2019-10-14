@@ -413,10 +413,6 @@ $('#next-page').on('click',function () {
             page2(errorSubjects[0]);
             console.log('errorSubjects0000:', errorSubjects[0]);
         } else {
-            layui.use(['form','layer'],function () {
-                var layer = layui.layer;
-                layer.msg('恭喜你闯关成功！');
-            });
             var userChapterWords = u.getStorage('userChapterWords');
             var userChapters = u.getStorage('userChapters');
             var chapterId = userChapterWords[0].chapterId;
@@ -429,19 +425,24 @@ $('#next-page').on('click',function () {
                 if (j <= userChapters.length) {
                     if (chapterId == userChapters[i].userChapter.chapterId){
                         userChapter = userChapters[i].userChapter;
-                        userChapterNext = userChapters[j].userChapter;
+                        var userchapterJ = userChapters[j];
+                        if (userChapter.studyStatus != '3'){
+                            userChapters[i].userChapter.studyStatus = '3';
+                            u.setStorage('userChapters',userChapters);
+                            updateStatus(chapterId,'3'); // 修改此章节完成
+                            if (userchapterJ != null && userchapterJ != undefined && userchapterJ != ''){
+                                userChapterNext = userChapters[j].userChapter;
+                                console.log('userChapterNext', userChapterNext);
+                                updateStatus(userChapterNext.chapterId, '1'); // 开通下一章节
+                            }
+                        }
                         break;
                     }
                 }
             }
-            if (userChapter.studyStatus != '3'){
-                var studyStatus = '3';
-                updateStatus(chapterId,studyStatus); // 修改此章节完成
-                console.log('userChapterNext', userChapterNext);
-                updateStatus(userChapterNext.chapterId, '1'); // 开通下一章节
-                $('.xl_btns').load(location.href + ' .xl_btns');
-                addLoop();
-            }
+            layui.use(['form','layer'],function () {
+                parent.layer.closeAll('iframe');
+            });
         }
     }
 });

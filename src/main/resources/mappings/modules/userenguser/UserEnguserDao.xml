@@ -44,6 +44,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
+				order by a.create_date_,a.blank_one_
 			</otherwise>
 		</choose>
 	</select>

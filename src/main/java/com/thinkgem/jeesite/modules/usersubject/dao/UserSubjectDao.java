@@ -6,6 +6,9 @@ package com.thinkgem.jeesite.modules.usersubject.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.usersubject.entity.UserSubject;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户语法题DAO接口
@@ -14,5 +17,6 @@ import com.thinkgem.jeesite.modules.usersubject.entity.UserSubject;
  */
 @MyBatisDao
 public interface UserSubjectDao extends CrudDao<UserSubject> {
-	
+
+    List<UserSubject> findErrorList(UserSubject userSubject);
 }

@@ -3,8 +3,19 @@
  */
 package com.thinkgem.jeesite.modules.userenguser.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
+import com.thinkgem.jeesite.modules.enguser.service.EnguserService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import com.thinkgem.jeesite.modules.usercourse.pojo.CourseIsOpen;
+import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
+import com.thinkgem.jeesite.modules.userenguser.pojo.EngUserJoinCourses;
+import com.thinkgem.jeesite.modules.userenguser.pojo.UserEngUserPojo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +54,5 @@ public class UserEnguserService extends CrudService<UserEnguserDao, UserEnguser>
 	public void delete(UserEnguser userEnguser) {
 		super.delete(userEnguser);
 	}
-
 
 }

@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.subject.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.subject.entity.Subject;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ import java.util.List;
 public interface SubjectDao extends CrudDao<Subject> {
 
     public List<String> getSubjectVersion();
+
+    List<String> getSubjectSort(@Param("version")String version);
 }

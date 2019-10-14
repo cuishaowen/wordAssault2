@@ -32,4 +32,11 @@ public interface UserChapterWordDao extends CrudDao<UserChapterWord> {
             @Param("isMemo") String isMemo,
             @Param("updateDate") Date updateDate
             );
+
+    List<UserChapterWord> findListByDate(
+            @Param("courseId")String courseId,
+            @Param("engUserId")String userId,
+            @Param("startDate")Date startDate,
+            @Param("endDate")Date endDate
+    );
 }

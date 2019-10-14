@@ -49,6 +49,33 @@
     /*    margin-bottom: 10px;*/
     /*    height: 30px;*/
     /*}*/
+    button:hover{
+        border-radius: 5px;
+        -moz-box-shadow:2px 2px 5px #999999;
+        -webkit-box-shadow:2px 2px 5px #999999;
+        box-shadow:2px 2px 5px #999999;
+    }
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        color: black;
+    }
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 450px;
+        background-color: rgba(200, 200, 200,0.85);
+        color: black;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* 定位 */
+        position: absolute;
+        z-index: 1;
+    }
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
 </style>
 <body>
     <div class="xt xuanyi" id="xuanyiBox">
@@ -104,8 +131,8 @@
                 <form id="pinxie-form" class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item lfi">
                         <div class="layui-input-block">
-                            <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
-                        </div>
+                        <input id="aaaa"  type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" style="text-align: center;">
+                    </div>
                     </div>
                     <div id="a-word-form" class="layui-form-item lfii" style="">
                         <div class="layui-input-block">
@@ -187,43 +214,20 @@
         }
     });
 
-    /**
-     * 每点击一次按钮触发一次事件，当达到
-     */
-    // var index = 0;
-    // var word = "";
-    // $(document).on('click','.lfii .layui-input-block ul li',function(){
-
-        // var a = $(this).text();
-        // $('.lfiii .layui-input-block ul li').eq(index).text(a);
-        // word += a;
-        // console.log('word:  ',word);
-        // index++;
-        // if (index >= engRight.length) {
-        //     pageNum++;
-        //     console.log('pageNum',pageNum);
-        //     if (word == engRight) {
-        //         pinxieAnsRight();
-        //         var userChapterWord = alreadyLearn();
-        //         updateWord(userChapterWord);
-        //         if (pageNum > result.length) {
-        //             errorSubjects.shift();
-        //             console.log('errorSubjectsRight',errorSubjects);
-        //         }
-        //     }else{
-        //         pinxieAnsError();
-        //         var userChapterWord = HardWord();
-        //         updateWord(userChapterWord);
-        //         if (pageNum < result.length) {
-        //             errorSubjects.push(result[pageNum-1]);
-        //         }else {
-        //             errorSubjects.push(errorSubjects[0]);
-        //             errorSubjects.shift();
-        //             console.log('errorSubjectsError',errorSubjects);
-        //         }
-        //     }
-        // }
-    // });
+    function exampleOut(e,f){
+        var tip = $('.tooltiptext');
+        tip.show();
+        var html = '';
+        if (e.length > 29){
+            $('.lj1').text(e.split(',')[0] + '. . . . . . . . ');
+            html += '<p>'+ e +'</p>';
+            tip.html(html);
+        }
+        tip.html(html);
+        if (html == ''){
+            tip.hide();
+        }
+    }
 </script>
 <script src="./js/kcxy.js"></script>
 </html>

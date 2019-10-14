@@ -81,7 +81,7 @@
                             <div id="wordId-right" style="display: none;"></div>
                             <div class="fayin"></div>
                             <div class="yb"></div>
-                            <div style="display: inline-block">
+                            <div style="display: inline-block;margin-left:0;margin-right: 0;">
                             <a href="javascript:void(0)" class="wordvoice" id="fayin">
                                 <audio class="voicebox" controls="" autoplay="" preload="auto" style="display: none;">
                                     <source src="">
@@ -149,31 +149,20 @@
 <script src="../static/common/website.js"></script>
 <script src="js/common.js"></script>
 <script>
-   // $('.lj1').on('mouseover',function () {
-   //     var text = $('.li-active .lj_dis .lj_dis1').text();
-   //     console.log(text);
-   //     tooltip(text);
-   // });
    function exampleOut(e,f){
        var tip = $('.tooltiptext');
        tip.show();
        var html = '';
        if (e.length > 64){
            $('.lj1').text(e.split(',')[0] + '. . . . . . . . ');
+           $('.lj2').text('');
            html += '<p>'+ e +'</p><br>';
-           tip.html(html);
-       }else{
-           $('.lj1').text(e);
-       }
-
-       if (f.length > 30){
-           $('.lj2').text(f.split('，')[0] + '. . . . . . . .');
            html += '<p>'+ f +'</p>';
            tip.html(html);
        }else{
+           $('.lj1').text(e);
            $('.lj2').text(f);
        }
-       tip.html(html);
        if (html == ''){
            tip.hide();
        }
@@ -193,12 +182,12 @@
             var img = $(el).find('.dc_img').attr('src');
             
             var arr = a.split(' ');
+            updateStr1(a);
             var html = '<p style="font-size: 23px">';
             if (arr.length > 1){
                 for (i = 0; i < arr.length; i++){
                     html += ''+ arr[i] + '&nbsp;'
                 }
-                $('.yb').hide();
                 html += '</p>';
                 $('.fayin').html(html);
             }else{
@@ -208,9 +197,9 @@
             exampleOut(e,f);
             $('.dc_img img').attr('src',img);
             $('#wordId-right').text(wordId);
+            yb = updateStr(yb);
             $('.yb').text(yb);
             $('.jieshi').text(b);
-
 
             $('.gj span b').text(c+1);
             $('.btns audio ').attr('src',d);
@@ -240,7 +229,6 @@
 
         //监听导航点击
         element.on('nav(demo)', function(elem){
-            //console.log(elem)
             layer.msg(elem.text());
         });
         form.on('switch(switchTest)', function(data){
@@ -263,7 +251,6 @@
     }
     function bobo(){
         if(!play) {
-            console.log($('.dc-left ul li').length);
             if((bfindex+1)>=$('.dc-left ul li').length){
                 play = !play;
                 $('.play').text("自动播放");
@@ -303,12 +290,12 @@
         var img = $(this).find('.dc_img').attr('src');
 
         var arr = a.split(' ');
+        updateStr1(a);
         var html = '<p style="font-size: 23px">';
         if (arr.length > 1){
             for (i = 0; i < arr.length; i++){
                 html += ''+ arr[i] + '&nbsp;'
             }
-            $('.yb').hide();
             html += '</p>';
             $('.fayin').html(html);
         }else{
@@ -316,7 +303,7 @@
         }
         $('.dc_img img').attr('src',img);
         $('#wordId-right').text(wordId);
-        // $('.fayin').text(a);
+        yb = updateStr(yb);
         $('.yb').text(yb);
         $('.jieshi').text(b);
         exampleOut(e,f);
@@ -360,18 +347,18 @@
             $('.btns audio ').attr('src',d);
             $('.wordvoice audio source').attr('src',d);
             var arr = a.split(' ');
+            updateStr1(a);
             var html = '<p style="font-size: 23px">';
             if (arr.length > 1){
                 for (i = 0; i < arr.length; i++){
                     html += ''+ arr[i] + '&nbsp;'
                 }
-                $('.yb').hide();
                 html += '</p>';
                 $('.fayin').html(html);
             }else{
                 $('.fayin').html(a);
             }
-            // $('.fayin').text(a);
+            yb = updateStr(yb);
             $('.yb').text(yb);
             $('.jieshi').text(b);
             exampleOut(e,f);
@@ -409,18 +396,18 @@
             $('.btns audio ').attr('src',d);
             $('.wordvoice audio source').attr('src',d);
             var arr = a.split(' ');
+            updateStr1(a);
             var html = '<p style="font-size: 23px">';
             if (arr.length > 1){
                 for (i = 0; i < arr.length; i++){
                     html += ''+ arr[i] + '&nbsp;'
                 }
-                $('.yb').hide();
                 html += '</p>';
                 $('.fayin').html(html);
             }else{
                 $('.fayin').html(a);
             }
-            // $('.fayin').text(a);
+            yb = updateStr(yb);
             $('.yb').text(yb);
             $('.jieshi').text(b);
             exampleOut(e,f);
@@ -433,7 +420,6 @@
             }
             getStatus();
         }
-        console.log(ii);
     })
 </script>
 <script>
@@ -475,80 +461,72 @@
     // 获取该章节下的所有单词
     function chapterWord(){
         var chapterId = GetQueryString("chapterId");
-        console.log('chapterId:',chapterId);
         var url = getContextPath() + '/userchapterword/getWordInformation';
         var data = {};
         data.chapterId = chapterId;
-        $.post(
-            url,
-            data,
-            function(res){
-                u.setStorage('result',res);
-                for (var i = 0; i < res.length; i++ ){
-                    var  wordId = res[i].word.id;
-                    var english = res[i].word.english;
-                    var phoneticTranscription = res[i].word.phoneticTranscription;
-                    var chinese = res[i].word.chinese;
-                    var exampleArr = '';
-                    if (res[i].wordExample != null){
-                        exampleArr = res[i].wordExample.example.split("$$$");
-                    }else{
-                        exampleArr = '***$$$***';
-                    }
-                    var exampleEng = exampleArr[0];
-                    var exampleCh  = exampleArr[1];
-                    var img = res[i].word.img;
-                    var engVoice = res[i].word.engVoice;
-                    var ameVoice = res[i].word.ameVoice;
-                    var voice = ameVoice ? ameVoice : engVoice ;
-                    console.log('voice:',voice);
-                    if (i == 0){
-                        $('#chapterWord').append('<li class="li-active">\n' +
-                            '<div class="wordId-left" style="display: none;">' + wordId + '</div>' +
-                            '<i>'+ english + '</i>\n' +
-                            '<p class="yinbiao_dis">' + phoneticTranscription +'</p>\n' +
-                            '<span style="display: none">'+ chinese +'</span>\n' +
-                            '<div class="lj_dis">\n' +
-                            '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
-                            '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
-                            '</div>\n' +
-                            '<img class="dc_img" src="'+ img +'" style="display: none">\n' +
-                            '<audio controls preload="auto" style="display: none;">\n' +
-                            '<source src="'+ voice +'" type="audio/mpeg">\n' +
-                            '您的浏览器不支持 audio 元素。\n' +
-                            '</audio>\n' +
-                            '</li>')
-                    }else {
-                        $('#chapterWord').append('<li>\n' +
-                            '<div class="wordId-left" style="display:none;">' + wordId + '</div>' +
-                            '<i>'+ english + '</i>\n' +
-                            '<p class="yinbiao_dis">' + phoneticTranscription +'</p>\n' +
-                            '<span style="display: none">'+ chinese +'</span>\n' +
-                            '<div class="lj_dis">\n' +
-                            '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
-                            '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
-                            '</div>\n' +
-                            '<img class="dc_img" src="'+ img +'" style="display: none;">\n' +
-                            '<audio controls preload="auto" style="display: none;">\n' +
-                            '<source src="'+ voice +'" type="audio/mpeg">\n' +
-                            '您的浏览器不支持 audio 元素。\n' +
-                            '</audio>\n' +
-                            '</li>')
-                    }
+        $.post(url, data, function(res){
+            u.setStorage('result',res);
+            for (var i = 0; i < res.length; i++ ){
+                var  wordId = res[i].word.id;
+                var english = res[i].word.english;
+                var phoneticTranscription = res[i].word.phoneticTranscription;
+                var chinese = res[i].word.chinese;
+                var exampleArr = '';
+                if (res[i].wordExample != null){
+                    exampleArr = res[i].wordExample.example.split("$$$");
+                }else{
+                    exampleArr = '***$$$***';
                 }
-                asd();
+                var exampleEng = exampleArr[0];
+                var exampleCh  = exampleArr[1];
+                var img = res[i].word.img;
+                var engVoice = res[i].word.engVoice;
+                var ameVoice = res[i].word.ameVoice;
+                var voice = ameVoice ? ameVoice : engVoice ;
+                if (i == 0){
+                    $('#chapterWord').append('<li class="li-active">\n' +
+                        '<div class="wordId-left" style="display: none;">' + wordId + '</div>' +
+                        '<i>'+ english + '</i>\n' +
+                        '<p class="yinbiao_dis">' + phoneticTranscription +'</p>\n' +
+                        '<span style="display: none">'+ chinese +'</span>\n' +
+                        '<div class="lj_dis">\n' +
+                        '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
+                        '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
+                        '</div>\n' +
+                        '<img class="dc_img" src="'+ img +'" style="display: none">\n' +
+                        '<audio controls preload="auto" style="display: none;">\n' +
+                        '<source src="'+ voice +'" type="audio/mpeg">\n' +
+                        '您的浏览器不支持 audio 元素。\n' +
+                        '</audio>\n' +
+                        '</li>')
+                }else {
+                    $('#chapterWord').append('<li>\n' +
+                        '<div class="wordId-left" style="display:none;">' + wordId + '</div>' +
+                        '<i>'+ english + '</i>\n' +
+                        '<p class="yinbiao_dis">' + phoneticTranscription +'</p>\n' +
+                        '<span style="display: none">'+ chinese +'</span>\n' +
+                        '<div class="lj_dis">\n' +
+                        '<p class="lj_dis1">'+ exampleEng +'</p>\n' +
+                        '<p class="lj_dis2">'+ exampleCh +'</p>\n' +
+                        '</div>\n' +
+                        '<img class="dc_img" src="'+ img +'" style="display: none;">\n' +
+                        '<audio controls preload="auto" style="display: none;">\n' +
+                        '<source src="'+ voice +'" type="audio/mpeg">\n' +
+                        '您的浏览器不支持 audio 元素。\n' +
+                        '</audio>\n' +
+                        '</li>')
+                }
             }
-        )
+            asd();
+        })
     }
 
     // 获取当前操作对象
     function getUserChapterWord(){
         var wordId = $('#wordId-right').text();
-        console.log('wordId',wordId);
         var userChapterWords = u.getStorage('userChapterWords');
         for (i = 0; i < userChapterWords.length; i++){
             if (wordId == userChapterWords[i].wordId) {
-                console.log('userchapterword:',userChapterWords[i]);
                 return userChapterWords[i];
             }
         }
@@ -576,6 +554,21 @@
         var userChapterWord = getUserChapterWord();
         userChapterWord.skilledWord = 'F';
         updateWord(userChapterWord);
+    }
+
+    function updateStr(str){
+        //去掉空格（两种方法都可以）
+        str = str.replace(/[ ]/g,"");
+        str = str.replace(/[ˈ]/g,"'");
+        return str;
+    }
+
+    function updateStr1(str){
+        if (str.length > 10){
+            $('.fayin').css('font-size', '23px');
+        }else{
+            $('.fayin').css('font-size', '30px');
+        }
     }
 
     getUserChapterWords();

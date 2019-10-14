@@ -3,8 +3,17 @@
  */
 package com.thinkgem.jeesite.test.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
+import com.thinkgem.jeesite.modules.usercourse.dao.UserCourseDao;
+import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
+import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
+import com.thinkgem.jeesite.modules.usercourse.service.userCourseTaskService;
+import org.apache.log4j.Logger;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +37,12 @@ public class TestDataMainService extends CrudService<TestDataMainDao, TestDataMa
 
 	@Autowired
 	private TestDataChildDao testDataChildDao;
+	@Autowired
+	private userCourseTaskService userCourseTaskService;
+
+	private final static String IS_OPEN_OPEN = "1";
+	private final static String IS_OPEN_CLOSE = "1";
+	private final static Logger log = Logger.getLogger(userCourseTaskService.class);
 	
 	public TestDataMain get(String id) {
 		TestDataMain testDataMain = super.get(id);
@@ -70,5 +85,5 @@ public class TestDataMainService extends CrudService<TestDataMainDao, TestDataMa
 		super.delete(testDataMain);
 		testDataChildDao.delete(new TestDataChild(testDataMain));
 	}
-	
+
 }

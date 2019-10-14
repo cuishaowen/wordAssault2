@@ -79,7 +79,13 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">姓名 <span>*</span></label>
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="name" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名 <span>*</span></label>
                         <div class="layui-input-block">
                             <input type="text" name="title" id="loginName" lay-verify="title"  autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
@@ -245,6 +251,7 @@
 
     //修改个人信息
     function updateUserInfo() {
+        var name = $('#name').val();
         var xuexiao=$('#xuexiao').val();
         var city=$('#city').val();
         var province=$('#province').val();
@@ -259,13 +266,21 @@
             url: getContextPath() +"/enguser/enguser/updateUserInfo",
             cache:false,
             async:false,
-            data:{xuexiao:xuexiao,province:province,city:city,weixin:weixin,banji:banji,phone:phone,sex:sex,jpanType:jpanType,mapType:mapType},
+            data:{xuexiao:xuexiao,province:province,city:city,weixin:weixin,banji:banji,phone:phone,sex:sex,jpanType:jpanType,mapType:mapType,name:name},
             success:function (data) {
                 if (data.code==0){
-                    alert(data.msg)
-                    window.location.reload();
+                    layer.open({
+                        content: '修改成功',
+                        yes: function(index, layero){
+                            getSession();
+                            window.location.reload();
+                        }
+                    });
                 }else{
-                    alert(data.msg);
+                    layui.use(['layer'], function () {
+                        var layer = layui.layer;
+                        layer.msg(data.msg);
+                    });
                 }
             },
             error:function () {
@@ -278,28 +293,23 @@
     function updatePassword() {
         var loginName=  $('#loginName').val();
         var newPassword=  $('#newPassword').val();
-        if (loginName==""||newPassword==""){
-            alert("请检验登录账号和密码");
-        }else {
-            $.ajax({
-                type:'post',
-                url: getContextPath() +"/enguser/enguser/updatePassword",
-                cache:false,
-                async:false,
-                data:{loginName:loginName,newPassword:newPassword},
-                success:function (data) {
-                    if (data.code==0){
-                        alert(data.msg)
-                        window.location.href="Login.html";
-                    }else{
-                        alert(data.msg);
+        var url = getContextPath() +"/enguser/enguser/updatePassword"
+            ,data ={loginName:loginName,newPassword:newPassword};
+        $.post(url,data,function (res) {
+            if (res.code==0) {
+                layer.open({
+                    content: '密码修改成功，请重新登录',
+                    yes: function(index, layero){
+                        window.location.href = "Login.html";
                     }
-                },
-                error:function () {
-                    alert("操作失败,请练习客服");
-                }
-            });
-        }
+                });
+            }else{
+                layui.use(['layer'], function () {
+                    var layer = layui.layer;
+                    layer.msg(res.msg);
+                });
+            }
+        });
     }
 
     //获取用户的基本信息进行展示
@@ -308,12 +318,14 @@
             "url" : getContextPath() +"/enguser/enguser/getUserInfo",
             "method" : "POST",
             "cache" : false,
-            "async" : false,
+            "async" : false
         }).success(function(data){
             if (data.code==1){
                 //未能获取到用户信息，跳转至登录页面，重新登录
                 window.location.href="Login.html";
             } else {
+                console.log(data);
+                $('#name').val(data.name);
                 $('#kahao').val("ZHS"+data.kahao);
                 $('#xuexiao').val(data.xuexiao);
                 $('#city').val(data.city);
@@ -327,6 +339,5 @@
             }
         });
     }
-
 </script>
 </html>

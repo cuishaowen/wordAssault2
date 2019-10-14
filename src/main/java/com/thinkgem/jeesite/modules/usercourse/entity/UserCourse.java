@@ -29,6 +29,15 @@ public class UserCourse extends DataEntity<UserCourse> {
 	private String blankOne;		// blank_one_
 	private String blankTwo;		// blank_two_
 	private String score;		// 刷题测试分数
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getScore() {
 		return score;
@@ -91,7 +100,7 @@ public class UserCourse extends DataEntity<UserCourse> {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getEndDate() {
 		return endDate;

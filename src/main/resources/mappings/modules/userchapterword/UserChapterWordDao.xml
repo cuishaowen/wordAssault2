@@ -90,6 +90,27 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="findListByDate" resultType="UserChapterWord">
+		SELECT
+		<include refid="userChapterWordColumns"/>
+		FROM user_chapter_word a
+		<include refid="userChapterWordJoins"/>
+		<where>
+			<if test="engUserId != null and engUserId != ''">
+				AND a.user_id_ = #{engUserId}
+			</if>
+			<if test="courseId != null and courseId != ''">
+				AND a.course_id_ = #{courseId}
+			</if>
+			<if test="startDate != null and startDate != ''">
+				AND DATE_FORMAT(a.update_date_ , '%Y-%m-%d %T') &gt;= DATE_FORMAT(#{startDate}, '%Y-%m-%d %T')
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND DATE_FORMAT(a.update_date_ , '%Y-%m-%d %T') &lt;= DATE_FORMAT(#{endDate}, '%Y-%m-%d %T')
+			</if>
+		</where>
+	</select>
 	
 	<select id="findAllList" resultType="UserChapterWord">
 		SELECT 

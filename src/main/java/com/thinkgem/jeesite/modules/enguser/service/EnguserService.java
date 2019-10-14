@@ -131,11 +131,17 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 	@Transactional(readOnly = false)
 	public void insertEnguserForUser(String userId, String loginName, int insertNum){
 		//查询所有学生用户个数
+		Enguser enguserAdd = new Enguser();
+		enguserAdd.setLoginName(loginName);
+		List<Enguser> engusers = this.findList(enguserAdd);
+		int numMx = engusers.size();
+
 		for (int i = 0; i < insertNum; i++){
 			Enguser enguser = new Enguser();
 			String id = IdGen.uuid();
 			String password = MD5Util.encode2hex("1111") ;
-			String login = loginName + "00" + i;
+			int loginNum = numMx + i;
+			String login = loginName + loginNum;
 
 			// 新增用户
 			enguser.setLoginName(login);
@@ -158,6 +164,8 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 			userEnguser.setUserId(userId);
 			userEnguser.setEnguserId(id);
 			userEnguser.setId(IdGen.uuid());
+			userEnguser.setBlankOne(String.valueOf(i*10));
+			userEnguser.setCreateDate(new Date());
 			userEnguserDao.insert(userEnguser);
 
 			Course course = new Course();
@@ -174,6 +182,7 @@ public class EnguserService extends CrudService<EnguserDao, Enguser> {
 				userCourse.setIsOpen("1");
 				userCourse.setEngUserId(id);
 				userCourse.setCourseId(courseFree.getId());
+
 				userCourseService.openCourse(userCourse);
 			}
 		}

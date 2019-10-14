@@ -120,7 +120,7 @@
     var index =0;
     function bofang(){
         $('#auto-play').text('暂停播放').removeAttr('onclick').attr("onclick",'stopPlay()');
-        timeoutindex=  setInterval('bobo()',1000);
+        timeoutindex=  setInterval('bobo()',autoPlay);
     }
     function bobo(){
         index++;

@@ -38,7 +38,6 @@
 </span>
         <form class="layui-form" action="" style="background-color:rgba(255,255,255,0.5);height:480px;border-radius: 5px;padding-top:20px;">
             <div class="layui-form-item" style="width:94%;margin:0 auto;">
-
                 <div class="layui-inline">
                     <a id="auto-play" class="sub"  onclick="bofang()" style="margin:0 auto;float:inherit;">自动跟读</a>
                 </div>
@@ -48,9 +47,9 @@
                 <div class="layui-inline">
                     <a class="sub"  href="javascript:void(0)" style="margin:0 auto;float:inherit;" onclick="killHardWord()">消灭生词</a>
                 </div>
-<!--                <div class="layui-inline">-->
-<!--                    <a class="sub"  href="javascript:void(0)" style="margin:0 auto;float:inherit;">导出生词</a>-->
-<!--                </div>-->
+                <div class="layui-inline">
+                    <a class="sub" id="exportWord"  href="javascript:void(0)" style="margin:0 auto;float:inherit;">导出生词</a>
+                </div>
                 <div class="layui-inline" style="float:right;height:43px;line-height: 43px;">
                     <div id="today" class="layui-input-inline" style="width: 300px">
                         2019-07-19  共学习了4个词汇
@@ -59,7 +58,7 @@
             </div>
 
             <div class="table1">
-                <table class="layui-table">
+                <table class="layui-table" id="strangeWord">
                     <colgroup>
                         <col width="150">
                         <col width="150">
@@ -116,9 +115,15 @@
             elem: '#date'
         });
     });
-    
+
     function killHardWord() {
+        stopPlay();
         window.open('killhardword.html?val=' + jPanType + '&courseId=' + GetQueryString('courseId'))
+    }
+
+    function exportWord() {
+        stopPlay();
+
     }
 
     function detail() {
@@ -143,7 +148,7 @@
     var index =0;
     function bofang(){
         $('#auto-play').text('暂停播放').removeAttr('onclick').attr("onclick",'stopPlay()');
-        timeoutindex=  setInterval('bobo()',1500);
+        timeoutindex=  setInterval('bobo()',autoPlay);
     }
     function bobo(){
         // $('.sub').removeAttr('onclick');
@@ -169,4 +174,158 @@
     }
 </script>
 <script src="js/njch.js"></script>
+<script type="text/javascript" src="./js/xsl.js"></script>
+<script>
+    // 导出伪excel
+    // $('#exportWord').attr('disabled',true);
+    // // 这里将table和style组成一个html，使用模板字符串
+    // var excelHtml =
+    //     '<html>\n' +
+    //     '      <head>\n' +
+    //     '        <meta charset=\'utf-8\' />\n' +
+    //     '        <style>\n' +
+    //     '          .tableA {\n' +
+    //     '            border-collapse: collapse;\n' +
+    //     '          }\n' +
+    //     '          .tableA .title th{\n' +
+    //     '            height: 50px;\n' +
+    //     '            font-size: 24px;\n' +
+    //     '            font-family: \'微软雅黑\';\n' +
+    //     '            font-weight: 700;\n' +
+    //     '          }\n' +
+    //     '          .tableA tr th {\n' +
+    //     '            border: 1px #000 solid;\n' +
+    //     '            height: 40px;\n' +
+    //     '            background: #efefef;\n' +
+    //     '          }\n' +
+    //     '          .tableA tr td {\n' +
+    //     '            padding: 0 40px;\n' +
+    //     '            border: 1px #000 solid;\n' +
+    //     '            height: 40px;\n' +
+    //     '            text-align: center;\n' +
+    //     '          }\n' +
+    //     '          .tableA .footer td {\n' +
+    //     '            font-size: 20px;\n' +
+    //     '            font-weight: 700;\n' +
+    //     '          }\n' +
+    //     '        </style>\n' +
+    //     '      </head>\n' +
+    //     '      <body>\n';
+    //     // 生成xls文件并通过a标签下载到本地
+    //     var url = getContextPath() + '/userchapterword/getCourseHard';
+    //     var data = {};
+    //     data.courseId = GetQueryString("courseId");
+    //     data.userId = sessionId;
+    //     $.post(url, data, function (res) {
+    //         var ohtml =
+    //             '<table class="layui-table" id="strangeWord" style="text-align: center">\n' +
+    //             '                    <colgroup>\n' +
+    //             '                        <col width="150">\n' +
+    //             '                        <col width="150">\n' +
+    //             '                        <col width="200">\n' +
+    //             '                        <col>\n' +
+    //             '                    </colgroup>\n' +
+    //             '                    <thead>\n' +
+    //             '                    <tr>\n' +
+    //             '                        <th>词汇</th>\n' +
+    //             '                        <th>音标</th>\n' +
+    //             '                        <th>中文释义</th>\n' +
+    //             '                    </tr>\n' +
+    //             '                    </thead>\n' +
+    //             '                    <tbody>';
+    //         for (i = 0; i < res.length; i++) {
+    //             ohtml += '<tr style="text-align: center">' +
+    //                 '<td>' + res[i].word.english + '</td>' +
+    //                 '<td>' + res[i].word.phoneticTranscription + '</td>' +
+    //                 '<td>' + res[i].word.chinese + '</td>' +
+    //                 '</tr>'
+    //         }
+    //         ohtml += '</tbody></table>';
+    //         excelHtml += ohtml;
+    //         excelHtml += '</body></html>';
+    //         // 生成Excel
+    //         var excelBlob = new Blob([excelHtml], {
+    //             type: 'application/vnd.ms-excel'
+    //         });
+    //         var OA = $('#exportWord');
+    //         // 利用URL.createObjectURL()方法为a元素生成blob URL
+    //         OA.attr('href', URL.createObjectURL(excelBlob));
+    //         OA.download = 'strangeWord.html';
+    //         OA.attr('disabled',false);
+    //     });
+
+    var url = getContextPath() + '/userchapterword/getCourseHard';
+    var data ={};
+    data.courseId = GetQueryString("courseId");
+    data.userId = sessionId;
+    $.post(url, data, function (res) {
+        console.log(res);
+        var aoe = [];
+        aoe.push(['生词本']);
+        var head = ['词汇','音标','中文释义','例句'];
+        aoe.push(head);
+        for (i = 0; i < res.length; i++){
+            var word = [];
+            word.push(res[i].word.english);
+            word.push(res[i].word.phoneticTranscription);
+            word.push(res[i].word.chinese);
+            word.push(res[i].wordExample.example);
+            aoe.push(word);
+        }
+        var sheet = XLSX.utils.aoa_to_sheet(aoe);
+        sheet['!merges'] = [
+            // 设置A1-C1的单元格合并
+            {s: {r: 0, c: 0}, e: {r: 0, c: 3}}
+        ];
+        openDownloadDialog(sheet2blob(sheet), '生词.xlsx');
+    });
+
+    // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
+    function sheet2blob(sheet, sheetName) {
+        sheetName = sheetName || 'sheet1';
+        var workbook = {
+            SheetNames: [sheetName],
+            Sheets: {}
+        };
+        workbook.Sheets[sheetName] = sheet;
+        // 生成excel的配置项
+        var wopts = {
+            bookType: 'xlsx', // 要生成的文件类型
+            bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+            type: 'binary'
+        };
+        var wbout = XLSX.write(workbook, wopts);
+        var blob = new Blob([s2ab(wbout)], {type: "application/octet-stream"});
+
+        // 字符串转ArrayBuffer
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+        return blob;
+    }
+
+    function openDownloadDialog(url, saveName)
+    {
+        if(typeof url == 'object' && url instanceof Blob)
+        {
+            url = URL.createObjectURL(url); // 创建blob地址
+        }
+        var aLink = $('#exportWord');
+        aLink.attr('href',url);
+        aLink.attr('download',saveName || '');// HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+        // var event;
+        // if(window.MouseEvent) event = new MouseEvent('click');
+        // else
+        // {
+        //     event = document.createEvent('MouseEvents');
+        //     event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        // }
+        // aLink.get(0).dispatchEvent(event);
+    }
+
+</script>
+
 </html>

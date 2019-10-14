@@ -47,19 +47,18 @@ layui.use(['layer','form','jquery'],function () {
             url = getContextPath() + '/userchapterword/getWordInformation';
             data.chapterId = chapterId;
             $.post(url, data, function(res) {
-                // 动态添加数据
-                console.log('数据',res);
                 getWord(res);
+                loading();
             });
         }else{
             // 查全书
             if (courseId != null && courseId != undefined){
-                url = getContextPath() + '/userchapterword/getCourseWordInformation';
+                url = getContextPath() + '/userchapterword/getAllCourseWordInformation';
                 data.courseId = courseId;
                 $.post(url, data, function(res) {
                     // 动态添加数据
-                    console.log('数据',res);
                     getWord100(res);
+                    loading();
                 });
             }
         }
@@ -68,7 +67,8 @@ layui.use(['layer','form','jquery'],function () {
     // 动态添加元素
     function getWord100(res){
         var result = res;
-        shuffle(res);
+        console.log('res',res);
+        shuffle(result);
         var i = 0;
         if (result.length > 100){
             if (val == 1){
@@ -149,10 +149,11 @@ layui.use(['layer','form','jquery'],function () {
         var arr = valueInf.split('$$$');
         var english = arr[0];
         var chinese = arr[1];
+        var id = arr[2];
         if (chinese == selectValue){
-            correctAnswer(english);
+            correctAnswer(english,id);
         }else {
-            wrongAnswer(english);
+            wrongAnswer(english,id);
         }
         console.log('答对的题目',rightclicked);
         console.log('答错的题目',errorclicked);
@@ -220,42 +221,57 @@ layui.use(['layer','form','jquery'],function () {
 
     // 获取错题
     function getErrorSubject(){
-        for (i = 0; i < testSubject.length; i++){
-            var object = testSubject[i];
-            var english = object.word.english;
-            for (j = 0; j < errorclicked.length; j ++){
-                if (english == errorclicked[j]){
-                    errorSubject.push(object);
-                }
-            }
+        for (i = 0; i < rightclicked.length; i++){
+            var id = rightclicked[i];
+            $('#'+id).hide();
         }
-        for (n = 0; n < errorSubject.length; n++){
-            $('#container').html('');
-            if (val == 1) {
-                for (n = 0; n < errorSubject.length; n++) {
-                    addContentThree(n, true);
-                }
-                $('.xianshi').hide();
-                $('.yinbiao').hide();
-                $('.answer').show();
-            }else if(val == 2){
-                for (n = 0; n < errorSubject.length; n++) {
-                    addContentTwo(n, true);
-                }
-                $('.xianshi').hide();
-                $('.yinbiao').hide();
-                $('.answer').show();
-            } else{
-                for (n = 0; n < errorSubject.length; n++){
-                    layui.use(['form'],function () {
-                        var form = layui.form;
-                        addContentOne(n,true);
-                        form.render();
-                    });
-                }
-                $('.da').show();
-            }
+        if (val == 3) {      // 选择题
+            $('.da').show();
+        }else if (val == 2) {
+            $('.xianshi').hide();
+            $('.yinbiao').hide();
+            $('.answer').show();
+        }else if (val == 1){
+            $('.xianshi').hide();
+            $('.yinbiao').hide();
+            $('.answer').show();
         }
+        // for (i = 0; i < testSubject.length; i++){
+        //     var object = testSubject[i];
+        //     var english = object.word.english;
+        //     for (j = 0; j < errorclicked.length; j ++){
+        //         if (english == errorclicked[j]){
+        //             errorSubject.push(object);
+        //         }
+        //     }
+        // }
+        // for (n = 0; n < errorSubject.length; n++){
+        //     $('#container').html('');
+        //     if (val == 1) {
+        //         for (n = 0; n < errorSubject.length; n++) {
+        //             addContentThree(n, true);
+        //         }
+        //         $('.xianshi').hide();
+        //         $('.yinbiao').hide();
+        //         $('.answer').show();
+        //     }else if(val == 2){
+        //         for (n = 0; n < errorSubject.length; n++) {
+        //             addContentTwo(n, true);
+        //         }
+        //         $('.xianshi').hide();
+        //         $('.yinbiao').hide();
+        //         $('.answer').show();
+        //     } else{
+        //         for (n = 0; n < errorSubject.length; n++){
+        //             layui.use(['form'],function () {
+        //                 var form = layui.form;
+        //                 addContentOne(n,true);
+        //                 form.render();
+        //             });
+        //         }
+        //         $('.da').show();
+        //     }
+        // }
         $('.btn2').html('');
     }
 
@@ -274,6 +290,7 @@ layui.use(['layer','form','jquery'],function () {
             object = result[num];
             testSubject.push(object);
         }
+        var id = object.word.id;
         var english = object.word.english;
         var engVoice = object.word.engVoice;
         var ameVoice = object.word.ameVoice;
@@ -294,7 +311,7 @@ layui.use(['layer','form','jquery'],function () {
         errorCh.push(chinese);
         shuffle(errorCh);
         $('#container').append(
-            '<div class="xt">\n' +
+            '<div class="xt" id="'+ id +'">\n' +
             '<div class="xt-title">\n' +
             '                <span>'+ (num+1) +')</span>\n' +
             '                <span>'+ english + '</span>&nbsp;&nbsp;<span>[ '+  phoneticTranscription +' ]</span>\n' +
@@ -308,24 +325,25 @@ layui.use(['layer','form','jquery'],function () {
             '                <form class="layui-form layui-form-pane" action="">\n' +
             '                    <div class="layui-form-item">\n' +
             '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'" title="'+ errorCh[0] +'">\n' +
+            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'$$$'+ id +'" title="'+ errorCh[0] +'">\n' +
             '                        </div>\n' +
             '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'"  title="'+ errorCh[1] +'">\n' +
+            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'$$$'+ id +'"  title="'+ errorCh[1] +'">\n' +
             '                        </div>\n' +
             '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'"  title="'+ errorCh[2] +'">\n' +
+            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'$$$'+ id +'"  title="'+ errorCh[2] +'">\n' +
             '                        </div>\n' +
             '                        <div class="layui-input-block">\n' +
-            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'"  title="'+ errorCh[3] +'">\n' +
+            '                            <input type="radio" name="xt" value="'+ english + '$$$'+chinese +'$$$'+ id +'"  title="'+ errorCh[3] +'">\n' +
             '                        </div>\n' +
             '                    </div>\n' +
             '                </form>\n' +
             '            </div>\n' +
-            '       </div>\n' +
             '       <div id="ch-right" class="da" style="color:#d81e06;font-size: 24px;display: none;">\n' +
             '           <span>正确答案：<i>'+ chinese +'</i></span>\n' +
+            '       </div>\n' +
             '       </div>'
+
         );
         form.render();
     }
@@ -340,6 +358,7 @@ layui.use(['layer','form','jquery'],function () {
             object = result[num];
             testSubject.push(object);
         }
+        var id = object.word.id;
         var english = object.word.english;
         var engVoice = object.word.engVoice;
         var ameVoice = object.word.ameVoice;
@@ -359,7 +378,7 @@ layui.use(['layer','form','jquery'],function () {
         errorCh.push(chinese);
         shuffle(errorCh);
         $('#container').append(
-            '<div class="xt">\n' +
+            '<div class="xt" id="'+ id +'">\n' +
             '            <div class="xt-title">\n' +
             '                <span>'+ (num + 1) +')</span>\n' +
             '                <span class="xianshi">词义显示</span>\n' +
@@ -377,7 +396,7 @@ layui.use(['layer','form','jquery'],function () {
             '                        <div class="layui-form-item">\n' +
             '                            <div class="layui-input-block" style="margin-left:0;">\n' +
             '                                <input id="aaaa" onblur="yingJianPan(this)" onkeypress="enter()" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input input-value" style="text-align: center;" >\n' +
-            '                                <span style="display: none">' + english+'</span>\n' +
+            '                                <span style="display: none">' + english +'$$$'+ id +'</span>\n' +
             '                            </div>\n' +
             '                        </div>\n' +
             '                    </form>\n' +
@@ -390,6 +409,7 @@ layui.use(['layer','form','jquery'],function () {
 
     // 听写逻辑 软键盘
     function addContentThreeBefore(num,object){
+        var id = object.word.id;
         var english = object.word.english;
         var ameVoice = object.word.ameVoice;
         var engVoice = object.word.engVoice;
@@ -397,7 +417,7 @@ layui.use(['layer','form','jquery'],function () {
         ameVoice ? voice = ameVoice : voice = engVoice;
         var chinese = object.word.chinese;
         $('#container').append(
-            '        <div class="xt">\n' +
+            '        <div class="xt" id="'+ id +'">\n' +
             '            <div class="xt-title">\n' +
             '                <span>'+ (num + 1) +')</span>\n' +
             '                <span class="xianshi">词义显示</span>\n' +
@@ -434,14 +454,9 @@ layui.use(['layer','form','jquery'],function () {
     function addContentThree(num,error,res){
         var object;
         error ? object = errorSubject[num] : [object = res[num],testSubject.push(object)];
-        // if (error){
-        //     object = errorSubject[num];
-        // } else {
-        //     object = ;
-        //     ;
-        // }
         addContentThreeBefore(num, object);
         var english = object.word.english;
+        var id = object.word.id;
         var arr = [];
         for (var i = 0; i < english.length; i++) {
             arr.push(english.charAt(i))
@@ -452,13 +467,13 @@ layui.use(['layer','form','jquery'],function () {
             var flag = randNum();
             shuffle(abc);
             if (flag == 'T'){
-                $('#a-word-'+ num).append('<li class="lfi1 word-btn-'+ english + j +' " onclick="keybroad_select_word(this,\''+ english + '\')">' + arr[j] + '</li>\n');
-                $('#aa-word-'+ num).append('<li class="lfi1 word-btn-'+ english + j +'" onclick="keybroad_select_word(this,\''+ english + '\')">' + abc[j] + '</li>\n');
+                $('#a-word-'+ num).append('<li class="lfi1 word-btn-'+ id + j +' " onclick="keybroad_select_word(this,\''+ english + '\',\''+ id +'\')">' + arr[j] + '</li>\n');
+                $('#aa-word-'+ num).append('<li class="lfi1 word-btn-'+ id + j +'" onclick="keybroad_select_word(this,\''+ english + '\',\''+ id +'\')">' + abc[j] + '</li>\n');
             }else{
-                $('#a-word-'+ num).append('<li class="lfi1 word-btn-'+ english + j +'" onclick="keybroad_select_word(this,\''+ english + '\')">' + abc[j] + '</li>\n');
-                $('#aa-word-'+ num).append('<li class="lfi1 word-btn-'+ english + j +'" onclick="keybroad_select_word(this,\''+ english + '\')">' + arr[j] + '</li>\n');
+                $('#a-word-'+ num).append('<li class="lfi1 word-btn-'+ id + j +'" onclick="keybroad_select_word(this,\''+ english + '\',\''+ id +'\')">' + abc[j] + '</li>\n');
+                $('#aa-word-'+ num).append('<li class="lfi1 word-btn-'+ id + j +'" onclick="keybroad_select_word(this,\''+ english + '\',\''+ id +'\')">' + arr[j] + '</li>\n');
             }
-            $('#a-word-click-'+ num).append('<li id="li-'+ english + '-'+ j +'" style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
+            $('#a-word-click-'+ num).append('<li id="li-'+ id + '-'+ j +'" style="width:auto!important;height:auto!important;padding:0;float:inherit;display: inline-block;"></li>\n')
         }
         $('.lfi').hide();
         $('.lfii').show();
@@ -471,10 +486,13 @@ function yingJianPan(o) {
     console.log('111');
     var inputValue = $(o).val();
     var rightValue = $(o).next().text();
-    if (inputValue == rightValue){
-        correctAnswer(rightValue);
+    var arr = rightValue.split('$$$');
+    var english = arr[0];
+    var id = arr[1];
+    if (inputValue == english){
+        correctAnswer(english,id);
     }else {
-        wrongAnswer(rightValue);
+        wrongAnswer(english,id);
     }
     console.log('答对的题目',rightclicked);
     console.log('答错的题目',errorclicked);
@@ -488,7 +506,7 @@ function enter(){
 }
 
 // 软键盘
-function keybroad_select_word(o,english) {
+function keybroad_select_word(o,english,id) {
     var oclass = $(o).attr('class');
     var arr = oclass.split(' ');
     var lastClass = arr[1];
@@ -499,15 +517,15 @@ function keybroad_select_word(o,english) {
     var length = $('.lfii div ul li').length;
     var select = '';
     for (i = 0; i < length; i++) {
-        var text = $('.word-btn-'+ english + i + '.selected').text();
-        $('#li-'+ english + '-' + i).text(text);
+        var text = $('.word-btn-'+ id + i + '.selected').text();
+        $('#li-'+ id + '-' + i).text(text);
         select += text;
     }
     if(select.length == english.length){
         if (select == english) {
-            correctAnswer(english);
+            correctAnswer(english,id);
         }else {
-            wrongAnswer(english);
+            wrongAnswer(english,id);
         }
         console.log('答对的题目',rightclicked);
         console.log('答错的题目',errorclicked);
@@ -515,40 +533,40 @@ function keybroad_select_word(o,english) {
 }
 
 // 答对 添加答对队列
-function correctAnswer(english){
+function correctAnswer(english,id){
     if (rightclicked.length < 1){
-        rightclicked.push(english);
+        rightclicked.push(id);
     }else{
         // 校验 是否存在 , 不存在就push  已经存在就什么都不做
-        if ($.inArray(english,rightclicked) < 0) {
-            rightclicked.push(english);
+        if ($.inArray(id,rightclicked) < 0) {
+            rightclicked.push(id);
         }
     }
     // 答对逻辑中，如果存在就移除，如果不存在就什么也不做
     if (errorclicked.length >= 1){
-        if ($.inArray(english,errorclicked) >= 0) {
-            errorclicked.splice($.inArray(english,errorclicked),1);
+        if ($.inArray(id,errorclicked) >= 0) {
+            errorclicked.splice($.inArray(id,errorclicked),1);
         }
     }
 }
 
 // 答错 添加答错队列
-function wrongAnswer(english){
+function wrongAnswer(english,id){
     // 答错添加答错列表
     if (errorclicked.length < 1){
-        errorclicked.push(english);
+        errorclicked.push(id);
     }else{
         // 校验 是否存在 , 不存在就push  已经存在就什么都不做
-        if ($.inArray(english,errorclicked) < 0) {
-            errorclicked.push(english);
+        if ($.inArray(id,errorclicked) < 0) {
+            errorclicked.push(id);
         }
     }
     // 移除答对列表
     if (rightclicked.length >= 1){
         // 校验是否存在，如果存在就移除，如果不存在就什么也不做
-        console.log($.inArray(english,rightclicked));
-        if ($.inArray(english,rightclicked) >= 0) {
-            rightclicked.splice($.inArray(english,rightclicked),1);
+        console.log($.inArray(id,rightclicked));
+        if ($.inArray(id,rightclicked) >= 0) {
+            rightclicked.splice($.inArray(id,rightclicked),1);
         }
     }
 }
@@ -571,6 +589,11 @@ function playMp3(o) {
     console.log(src);
     var audio=new Audio(src);
     audio.play();
+}
+
+function loading(){
+    $('#loading').hide();
+    $('#submit-paper').show();
 }
 
 

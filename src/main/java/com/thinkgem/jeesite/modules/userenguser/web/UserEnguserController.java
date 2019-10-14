@@ -6,7 +6,18 @@ package com.thinkgem.jeesite.modules.userenguser.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
+import com.thinkgem.jeesite.modules.enguser.service.EnguserService;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import com.thinkgem.jeesite.modules.usercourse.pojo.CourseIsOpen;
+import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
+import com.thinkgem.jeesite.modules.userenguser.pojo.EngUserJoinCourses;
+import com.thinkgem.jeesite.modules.userenguser.pojo.UserEngUserPojo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +34,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.userenguser.entity.UserEnguser;
 import com.thinkgem.jeesite.modules.userenguser.service.UserEnguserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +48,7 @@ public class UserEnguserController extends BaseController {
 
 	@Autowired
 	private UserEnguserService userEnguserService;
+
 	
 	@ModelAttribute
 	public UserEnguser get(@RequestParam(required=false) String id) {
@@ -52,7 +65,7 @@ public class UserEnguserController extends BaseController {
 	@RequiresPermissions("userenguser:userEnguser:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(UserEnguser userEnguser, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<UserEnguser> page = userEnguserService.findPage(new Page<UserEnguser>(request, response), userEnguser); 
+		Page<UserEnguser> page = userEnguserService.findPage(new Page<UserEnguser>(request, response), userEnguser);
 		model.addAttribute("page", page);
 		return "modules/userenguser/userEnguserList";
 	}

@@ -23,6 +23,10 @@
 	
 	<sql id="subjectJoins">
 	</sql>
+
+	<select id="getSubjectSort" resultType="java.lang.String">
+		select distinct sort_ from subject where VERSION_ = #{version}
+	</select>
     
 	<select id="get" resultType="Subject">
 		SELECT 

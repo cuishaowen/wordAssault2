@@ -92,7 +92,7 @@
         var a = $('.dc').height();
         var b = $('.dc').width();
         $('.layui-form').width(b);
-        $('.layui-form').height(a - 60)
+        $('.layui-form').height(a - 60);
         var c =  $('.layui-form').width();
         var d = $('.layui-form').height();
         $('.table1').height(d-148)
@@ -111,15 +111,6 @@
         element.on('nav(demo)', function(elem){
             //console.log(elem)
             layer.msg(elem.text());
-        });
-        //日期
-        laydate.render({
-            elem: '#date'
-        });
-        //总页数低于页码总数
-        laypage.render({
-            elem: 'demo0'
-            ,count: 50 //数据总数
         });
     });
 
@@ -141,7 +132,7 @@
     var index =0;
     function bofang(){
         $('#auto-play').text('暂停播放').removeAttr('onclick').attr("onclick",'stopPlay()');
-        timeoutindex=  setInterval('bobo()',1000);
+        timeoutindex=  setInterval('bobo()',autoPlay);
     }
     function bobo(){
         index++;

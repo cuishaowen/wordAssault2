@@ -6,6 +6,9 @@ package com.thinkgem.jeesite.modules.usersubject.entity;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * 用户语法题Entity
@@ -24,7 +27,31 @@ public class UserSubject extends DataEntity<UserSubject> {
 	private String wrongTime;		// 错误次数
 	private String blankOne;		// blank_one_
 	private String blankTwo;		// blank_two_
-	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date updateDate;
+
+	@Override
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	@Override
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	@Override
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	public UserSubject() {
 		super();
 	}

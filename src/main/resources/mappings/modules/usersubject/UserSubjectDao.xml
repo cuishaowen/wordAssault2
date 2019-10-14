@@ -27,7 +27,7 @@
 			<include refid="userSubjectColumns"/>
 		FROM user_subject a
 		<include refid="userSubjectJoins"/>
-		WHERE a.id = #{id}
+		WHERE a.id_ = #{id}
 	</select>
 	
 	<select id="findList" resultType="UserSubject">
@@ -58,12 +58,53 @@
 			<if test="wrongTime != null and wrongTime != ''">
 				AND a.wrong_time_ = #{wrongTime}
 			</if>
+			<if test="delFlag != null and delFlag != ''">
+				and a.del_flag_ = #{delFlag}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+			ORDER BY ${page.orderBy}
+		</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findErrorList" resultType="UserSubject">
+		SELECT
+		<include refid="userSubjectColumns"/>
+		FROM user_subject a
+		<include refid="userSubjectJoins"/>
+		<where>
+			<if test="id != null and id != ''">
+				AND a.id_ = #{id}
+			</if>
+			<if test="userId != null and userId != ''">
+				AND a.user_id_ = #{userId}
+			</if>
+			<if test="subjectVersionId != null and subjectVersionId != ''">
+				AND a.subject_version_id_ = #{subjectVersionId}
+			</if>
+			<if test="subjectId != null and subjectId != ''">
+				AND a.subject_id_ = #{subjectId}
+			</if>
+			<if test="studyStatus != null and studyStatus != ''">
+				AND a.study_status_ = #{studyStatus}
+			</if>
+			<if test="isWrong != null and isWrong != ''">
+				AND a.is_wrong_ = #{isWrong}
+			</if>
+			<if test="wrongTime != null and wrongTime != ''">
+				AND a.wrong_time_ = #{wrongTime}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
+			group by a.subject_id_
 			</otherwise>
 		</choose>
 	</select>
@@ -135,12 +176,12 @@
 			del_flag_ = #{delFlag},
 			blank_one_ = #{blankOne},
 			blank_two_ = #{blankTwo}
-		WHERE id = #{id}
+		WHERE id_ = #{id}
 	</update>
 	
 	<update id="delete">
 		DELETE FROM user_subject
-		WHERE id = #{id}
+		WHERE id_ = #{id}
 	</update>
 	
 </mapper>

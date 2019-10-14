@@ -132,6 +132,8 @@
         </div>
     </div>
 </div>
+</body>
+<script src="./js/common.js"></script>
 <script>
 
     /**
@@ -144,20 +146,15 @@
         var data = {};
         data.loginName = loginName;
         data.password = password;
-        $.post(
-            url,
-            data,
-            function (res) {
-                console.log(res);
-                if (res == null || res == undefined || res == ''){
-                    // $('#errorMesg').append('<span>账号或密码错误</span>');
-                    $('#errorMesg').show();
-                } else {
-                    window.location.href = getContextPath() + '/webclient/index.html?id=' + res.id;
-                }
+        $.post(url, data, function (res) {
+            getSession();
+            if (res == null || res == undefined || res == ''){
+                // $('#errorMesg').append('<span>账号或密码错误</span>');
+                $('#errorMesg').show();
+            } else {
+                window.location.href = getContextPath() + '/webclient/index.html?id=' + res.id;
             }
-        )
+        })
     })
 </script>
-</body>
 </html>

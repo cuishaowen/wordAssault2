@@ -4,8 +4,11 @@
 package com.thinkgem.jeesite.modules.userchapter.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.chapter.entity.Chapter;
 import com.thinkgem.jeesite.modules.chapter.pojo.ChapterInformation;
 import com.thinkgem.jeesite.modules.chapter.service.ChapterService;
@@ -69,7 +72,14 @@ public class UserChapterService extends CrudService<UserChapterDao, UserChapter>
 
 			// 获取用户章节信息
 			UserChapter userChapterInf = userChapterDao.getByChapterIdAndUserId(chapterInf.getId(),userId);
-
+			Date date = userChapterInf.getCreateDate();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.DAY_OF_MONTH, +120);
+			String dateOpen = DateUtils.formatDate(date);
+			String dateClose = DateUtils.formatDate(calendar.getTime());
+			userChapterInf.setBlankOne(dateOpen);
+			userChapterInf.setBlankTwo(dateClose);
 			chapterInformation.setChapter(chapterInf);
 			chapterInformation.setUserChapter(userChapterInf);
 			chapterInformations.add(chapterInformation);
@@ -81,23 +91,5 @@ public class UserChapterService extends CrudService<UserChapterDao, UserChapter>
 	public void updateStatus(String chapterId, String userId, String studyStatus, String isOpen){
 		userChapterDao.updateStatus(chapterId,userId,studyStatus,isOpen);
 	}
-
-
-//		// 获取所有用户章节信息
-//		UserChapter userChapter = new UserChapter();
-//		userChapter.setEngUserId(userId);
-//		List<UserChapter> userChapters = this.findList(userChapter);
-//
-//		// 获取每个章节信息,以及每个章节的学习进度信息
-//		for (UserChapter userChapterInf : userChapters){
-//
-//			// 查询章节信息
-//			Chapter chapter = chapterService.get(userChapterInf.getChapterId());
-//
-//			ChapterInformation chapterInformation = new ChapterInformation();
-//			chapterInformation.setChapter(chapter);
-//			chapterInformation.setUserChapter(userChapterInf);
-//			chapterInformations.add(chapterInformation);
-//		}
 
 }

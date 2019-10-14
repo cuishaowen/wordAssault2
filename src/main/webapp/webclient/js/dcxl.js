@@ -131,11 +131,12 @@ function getSkilled() {
     )
 }
 
-function loadPage() {
-    getCourseHard();
-    getKillCourseHard();
-    getStrengthenMemoryWord();
-    getSkilled();
-    waitLearn();
-    completeWord();
-}
+// function loadPage() {
+    // getCourseHard();
+    // getKillCourseHard();
+    // getStrengthenMemoryWord();
+    // getSkilled();
+    // waitLearn();
+    // completeWord();
+    // $.get()
+// }

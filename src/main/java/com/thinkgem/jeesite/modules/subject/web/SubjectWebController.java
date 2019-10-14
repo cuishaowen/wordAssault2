@@ -38,4 +38,9 @@ public class SubjectWebController {
         return subjectService.getDictList(type);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "getSubjectSort")
+    public List<String> getSubjectSort(String version){
+        return subjectService.getSubjectSort(version);
+    }
 }

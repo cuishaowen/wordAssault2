@@ -6,7 +6,14 @@ package com.thinkgem.jeesite.modules.sys.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.modules.enguser.entity.Enguser;
+import com.thinkgem.jeesite.modules.enguser.service.EnguserService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
+import com.thinkgem.jeesite.modules.usercourse.pojo.CourseIsOpen;
+import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
+import com.thinkgem.jeesite.modules.userenguser.pojo.EngUserJoinCourses;
+import com.thinkgem.jeesite.modules.userenguser.pojo.UserEngUserPojo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -40,6 +47,9 @@ public class UserUtils {
 	private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
 	private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
 	private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
+	private static SystemService systemService = SpringContextHolder.getBean(SystemService.class);
+	private static EnguserService enguserService = SpringContextHolder.getBean(EnguserService.class);
+	private static UserCourseService userCourseService = SpringContextHolder.getBean(UserCourseService.class);
 
 	public static final String USER_CACHE = "userCache";
 	public static final String USER_CACHE_ID_ = "id_";
@@ -309,5 +319,19 @@ public class UserUtils {
 //		}
 //		return new HashMap<String, Object>();
 //	}
+
+	// 获取代理用户及系统用户下所有用户及学生的信息
+	public static List<EngUserJoinCourses> getEngUserJoinCourse(String userId){
+		List<EngUserJoinCourses> engUserJoinCoursesList = new ArrayList<EngUserJoinCourses>();
+		List<Enguser> engusers = enguserService.getAllEnguserByUserId(userId);
+		for (Enguser enguser : engusers){
+			EngUserJoinCourses engUserJoinCourses = new EngUserJoinCourses();
+			engUserJoinCourses.setEnguser(enguser);
+			CourseIsOpen courseIsOpen = userCourseService.getUserOpenCoursesAndNot(enguser.getId());
+			engUserJoinCourses.setCourseIsOpen(courseIsOpen);
+			engUserJoinCoursesList.add(engUserJoinCourses);
+		}
+		return engUserJoinCoursesList;
+	}
 	
 }

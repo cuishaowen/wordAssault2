@@ -6,15 +6,15 @@ import java.util.List;
 
 public class CourseIsOpen {
 
-    private List<Course> OpenCourseList;
+    private List<CourseAndUserCourse> OpenCourseList;
 
     private List<Course> NotOpenCouseList;
 
-    public List<Course> getOpenCourseList() {
+    public List<CourseAndUserCourse> getOpenCourseList() {
         return OpenCourseList;
     }
 
-    public void setOpenCourseList(List<Course> openCourseList) {
+    public void setOpenCourseList(List<CourseAndUserCourse> openCourseList) {
         OpenCourseList = openCourseList;
     }
 

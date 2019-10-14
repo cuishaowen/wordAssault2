@@ -135,9 +135,9 @@ public class EnguserWebController {
         try {
             if (StringUtils.isEmpty(newPassword)||StringUtils.isEmpty(loginName)){
                 resultMap.put("code",1);//操作失败
-                resultMap.put("msg","参数为空");
+                resultMap.put("msg","请输入用户名和密码");
+                return resultMap;
             }
-
             String userId=httpSession.getAttribute("id").toString();//获取到用户的id
             String SessionloginName=httpSession.getAttribute("loginName").toString();//原本登录名
             String oldPassword=httpSession.getAttribute("password").toString();//原本密码
@@ -149,17 +149,18 @@ public class EnguserWebController {
                 logger.info("loginName:" + loginName + "password:" + newPassword);
                 enguser.setPassword(MD5Util.encode2hex(newPassword));
                 enguserService.update(enguser);
+                resultMap.put("code",0);//操作失败
+                resultMap.put("msg","修改密码成功，请重新登录");
+            }else{
+                resultMap.put("code",1);//操作失败
+                resultMap.put("msg","用户名输入有误，请重新输入");
             }
-            resultMap.put("code",0);//操作失败
-            resultMap.put("msg","修改密码成功，请重新登录");
-            return resultMap;
-
         }catch (Exception e){
             e.printStackTrace();
             resultMap.put("code",1);//操作失败
             resultMap.put("msg","操作失败");
-            return resultMap;
         }
+        return resultMap;
     }
 
     @ResponseBody
@@ -184,6 +185,7 @@ public class EnguserWebController {
             }else {
                 resultmap.put("code",0);
                 resultmap.put("msg","查询成功");
+                resultmap.put("name",entity.getName());
                 resultmap.put("kahao",entity.getNum());
                 resultmap.put("xuexiao",entity.getSchool());
                 resultmap.put("city",entity.getCity());
@@ -204,6 +206,7 @@ public class EnguserWebController {
     public Map<String,Object> updateUserInfo(HttpServletRequest request, HttpSession httpSession) {
         Map<String,Object> resultMap=new HashMap<String, Object>();
     try {
+        String name = request.getParameter("name");
         String xuexiao = request.getParameter("xuexiao");
         String province = request.getParameter("province");
         String city = request.getParameter("city");
@@ -226,12 +229,14 @@ public class EnguserWebController {
             entity.setTel(phone);
             entity.setProvince(province);
             entity.setSchool(xuexiao);
+            entity.setName(name);
             enguserService.update(entity);
         }
 
         //更新httpSession里面的软键盘和发音类型
         httpSession.setAttribute("Mp2Type",entity.getMp3Type());//发音模式
         httpSession.setAttribute("JpanType",entity.getjPanType());//键盘模式
+        httpSession.setAttribute("name",entity.getName());//姓名
 
         resultMap.put("code",0);//操作成功
         resultMap.put("msg","操作成功");

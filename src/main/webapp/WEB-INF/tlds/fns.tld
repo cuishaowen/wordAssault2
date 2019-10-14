@@ -57,6 +57,13 @@
   </function>
 
   <function>
+      <description>获取所有用户及用户相关信息</description>
+      <name>getEngUserJoinCourses</name>
+      <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
+      <function-signature>java.util.List getEngUserJoinCourse(java.lang.String)</function-signature>
+  </function>
+
+  <function>
     <description>获取所有用户</description>
     <name>getAllUser</name>
     <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
@@ -323,4 +330,5 @@
     <function-class>com.thinkgem.jeesite.modules.wordexample.untils.WordExampleUtils</function-class>
     <function-signature>java.util.List getExamples(java.lang.String)</function-signature>
   </function>
+
 </taglib>

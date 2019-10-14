@@ -10,14 +10,15 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="format-detection" content="email=no" />
     <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
-    <title>测试</title>
+    <title>刷题测试</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loading.css">
 </head>
 <style>
     body{background: linear-gradient(right,#00061a,#000a3c,#00061a);  background: -ms-linear-gradient(right,#00061a,#000a3c,#00061a);
         background: -webkit-linear-gradient(right,#00061a,#000a3c,#00061a); background: -o-linear-gradient(right,#00061a,#000a3c,#00061a);}
-.content{height: 100%; width: 100%;}
+    .content{height: 100%; width: 100%;}
     .content .dttop{background: url(images/datitop.png) no-repeat; background-size: 100% 100%; height: 100px;}
     .dttop h3{text-align: center; color: #fff; padding-top: 10px;}
     .layui-form-pane .layui-input-block{margin-left: 30px; color: #fff;}
@@ -41,6 +42,24 @@
     .selected {
         background-color: rgba(29, 129, 131, 0.5);
         color: #ff5614;
+    }
+    #divcss5{margin:0 auto;display: inline-block;width: 180px;}
+    #divcss5{
+        float: right;
+    }
+    .xt {
+        height: 300px;
+    }
+    .timer{
+        color: white;
+        text-align: center;
+        font-size: 30px;
+        height: 50px;
+    }
+    .timerOut {
+        position: fixed;
+        left: 150px;
+        top: 350px;
     }
 </style>
 <body>
@@ -86,10 +105,30 @@
             <span id="chapter"></span>
         </h3>
     </div>
+    <div class="timer">
+        <span id="something"></span>
+        <strong id="minute">0分</strong>
+        <strong id="second">0秒</strong>
+    </div>
+    <div id="test" ></div>
     <fieldset id="container" class="layui-elem-field site-demo-button" style='border:none;'></fieldset>
+    <div id="loading" class="container layui-clear" style="width: 300px;">
+        <span style="color: white;float: left;margin-top: 22px;font-size: 20px">智能组卷中  ·  </span>
+        <div id="divcss5" class="loader loader-17">
+            <div class="css-square square1"></div>
+            <div class="css-square square2"></div>
+            <div class="css-square square3"></div>
+            <div class="css-square square4"></div>
+            <div class="css-square square5"></div>
+            <div class="css-square square6"></div>
+            <div class="css-square square7"></div>
+            <div class="css-square square8"></div>
+        </div>
+    </div>
+
     <div class="btn2" style="margin-top:20px;">
         <div class="btn21" style="text-align: center;">
-            <button id="submit-paper" class="btn3" type="button">交卷</button>
+            <button id="submit-paper" class="btn3" type="button" style="display: none">交卷</button>
             <button id="error-subject" type="button" class="btn3 lb" style="display: none">查看错题</button>
         </div>
     </div>
@@ -130,4 +169,5 @@
     });
 
 </script>
+<script src="js/time.js"></script>
 </html>

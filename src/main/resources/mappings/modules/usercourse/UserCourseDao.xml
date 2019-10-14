@@ -15,11 +15,12 @@
 		a.del_flag_ AS "delFlag",
 		a.blank_one_ AS "blankOne",
 		a.blank_two_ AS "blankTwo",
-		a.score AS "score"
+		a.score AS "score",
+		c.name_ as "name"
 	</sql>
 	
 	<sql id="userCourseJoins">
-		LEFT JOIN sys_user u2 ON u2.id = a.user_id_
+		LEFT JOIN course c ON c.id_ = a.course_id_
 	</sql>
     
 	<select id="get" resultType="UserCourse">
@@ -38,7 +39,6 @@
 		FROM user_course a
 		<include refid="userCourseJoins"/>
 		<where>
-			
 			<if test="engUserId != null and engUserId != ''">
 				AND a.user_id_ = #{engUserId}
 			</if>
@@ -59,6 +59,21 @@
 			<otherwise>
 			</otherwise>
 		</choose>
+	</select>
+
+	<select id="findExpiredCourses" resultType="UserCourse">
+		select
+			<include refid="userCourseColumns"/>
+		from user_course a
+		<include refid="userCourseJoins"/>
+		<where>
+			<if test="createDate != null and createDate != ''">
+				DATE_FORMAT(a.create_date_,'%Y-%m-%d') &gt;= DATE_FORMAT(#{createDate},'%Y-%m-%d')
+			</if>
+			<if test="isOpen != null and isOpen != ''">
+				a.is_open_  = #{isOpen};
+			</if>
+		</where>
 	</select>
 	
 	<select id="findAllList" resultType="UserCourse">

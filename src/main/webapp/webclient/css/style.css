@@ -575,9 +575,9 @@ a.wordvoice {float: left;line-height: 23px;display: inline-block;width: 25px;hei
     display: inline-block;
     position: relative;
 }
-.state1 .outline-outward:before{ border: #43A3E8 solid 4px;}
-.state2 .outline-outward:before{ border: #F39612 solid 4px;}
-.state3 .outline-outward:before{ border: #AAB3BD solid 4px;}
+.state1.outline-outward:before{ border: #43A3E8 solid 4px;}
+.state2.outline-outward:before{ border: #F39612 solid 4px;}
+.state3.outline-outward:before{ border: #AAB3BD solid 4px;}
 
 .outline-outward:before {
     content: '';
@@ -645,5 +645,11 @@ a.wordvoice {float: left;line-height: 23px;display: inline-block;width: 25px;hei
 }
 .tx-img {
     margin-right: 35px;
+}
+
+.nav-fixed {
+    left: 26rem;
+    position: fixed;
+    width:20%;
 }
 

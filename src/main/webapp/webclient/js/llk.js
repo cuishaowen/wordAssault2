@@ -3,6 +3,7 @@ var curWwwPath=window.document.location.href;
 var pathName=window.document.location.pathname;
 var pos=curWwwPath.indexOf(pathName);
 var localhostPaht=curWwwPath.substring(0,pos);
+var selectCourse = '';
 var path="";
 
 var rightcount = 0;
@@ -149,7 +150,7 @@ function gameover() {
     html += '    <div class="over_img"></div>';
     html += '    <div class="over_3">共用时<span>' + usedtime + '</span>秒</div>';
     html+='    <div class="over_4">总点击次数<span>'+(rightcount+errorcount)+'</span>,点对<span>'+rightcount+'</span>次,点错<span>'+errorcount+'</span>次</div>';
-    html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);" onclick="openlianliankan()">继续游戏</a> </div>';
+    html += '    <div class="over_btn"><a class="faguanbtn" href="javascript:void(0);" onclick="openlianliankan(selectCourse)">继续游戏</a> </div>';
     html+=' </div>';
     $('.container').html(html);
     clearInterval(timer);
@@ -170,7 +171,7 @@ function init() {
     }
 
     list1.sort(randomsort);
-    list = list1.slice(0, 10)
+    list = list1.slice(0, 10);
     list2 = list1.slice(0, 10);
     list.sort(randomsort);
     list2.sort(randomsort);
@@ -338,10 +339,10 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'jquery'],function 
 
 function getWords(courseId) {
     var url = getContextPath() + '/word/selectTenRandWord';
-    $('.container').html('');
     var data = {};
     data.courseId = courseId;
     $.post(url, data, function (res) {
+        $('.container').html('');
         for (i = 0; i < res.length; i++) {
             // array_e.push(res[i].english);
             $('.container').append(
@@ -372,7 +373,7 @@ $(function() {
             var openCourses = res.openCourseList;
             u.setStorage('openCourses',openCourses);
             for (var i = 0; i < openCourses.length; i++){
-                $('#alreadyPurchase').append('<li onclick="openlianliankan(\''+ openCourses[i].id +'\')">' + openCourses[i].name + '<i></i></li>');
+                $('#alreadyPurchase').append('<li onclick="openlianliankan(\''+ openCourses[i].course.id +'\')">' + openCourses[i].course.name + '<i></i></li>');
             }
         }
     )
@@ -381,6 +382,7 @@ var maxtime = 2 * 60; //
 
 // 打开连连看
 function openlianliankan(courseId){
+    selectCourse = courseId;
     usedtime = 0;
     errorcount = 0;
     rightcount = 0;
