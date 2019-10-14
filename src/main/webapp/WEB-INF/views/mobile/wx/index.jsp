@@ -45,16 +45,16 @@
                 <span>课本名称</span>
                 <span>学习情况</span>
             </div>
-            <c:forEach var="course" items="${enguserEntity.courseInfoEntityList}">
+            <c:forEach var="course" items="${allInfo}">
                 <div class="list firt_list">
                     <span>${course.courseName}</span>
                     <span>
-                        本书已学单词：${course.completeword}；
-                        未学单词：${course.waitLearningword}；
-                        生词本：${course.courseHardWord}；
-                        熟词：${course.skilledWord}；
-                        备忘单词：${course.strengthenMemoryWord}；
-                        已消灭生词：${course.killCourseHard}
+                        本书已学单词：${course.completionWords}；
+                        未学单词：${course.waitLearningWords}；
+                        生词本：${course.hardWords}；
+                        熟词：${course.skilledWords}；
+                        备忘单词：${course.strengthenMemoryWords}；
+                        已消灭生词：${course.hardKilledWords}
                     </span>
                 </div>
             </c:forEach>
@@ -72,7 +72,7 @@
                 <%--<span>测试名称</span>--%>
                 <span>分数</span>
             </div>
-            <c:forEach var="course" items="${enguserEntity.courseInfoEntityList}">
+            <c:forEach var="course" items="${allInfo}">
                 <div class="list">
                     <span>${course.courseName}</span>
                     <%--<span>单元测试</span>--%>

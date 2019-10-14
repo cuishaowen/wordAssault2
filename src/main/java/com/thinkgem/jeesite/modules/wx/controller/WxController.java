@@ -6,6 +6,9 @@ import com.thinkgem.jeesite.modules.enguser.service.EnguserService;
 import com.thinkgem.jeesite.modules.enguseroption.service.EnguserOptionService;
 import com.thinkgem.jeesite.modules.sys.utils.MD5Util;
 import com.thinkgem.jeesite.modules.userchapterword.service.UserChapterWordService;
+import com.thinkgem.jeesite.modules.usercourse.entity.UserCourse;
+import com.thinkgem.jeesite.modules.usercourse.service.UserCourseService;
+import com.thinkgem.jeesite.modules.word.pojo.AllWordInfomation;
 import com.thinkgem.jeesite.modules.word.pojo.CompletionWord;
 import com.thinkgem.jeesite.modules.word.pojo.HardWord;
 import com.thinkgem.jeesite.modules.wx.base.AppController;
@@ -35,6 +38,9 @@ public class WxController extends AppController {
     @Autowired
     private EnguserOptionService enguserOptionService;
 
+    @Autowired
+    UserCourseService userCourseService;
+
     /**
      * 跳转到微信登录页面
      */
@@ -51,47 +57,61 @@ public class WxController extends AppController {
     public ModelAndView toIndex(@PathVariable String id){
         ModelAndView mv=new ModelAndView("wx/index");
         try {
-           //根据学生id填充学生信息,以及对应的所有课程学习情况
-            enguserEntity enguserEntity=enguserService.getEntityByUserId(id);
-            if (enguserEntity==null){
-                mv=new ModelAndView("wx/login");
-                return mv;
+            List<AllWordInfomation> allWordInfomations = new ArrayList<AllWordInfomation>();
+            UserCourse userCourse = new UserCourse();
+            userCourse.setEngUserId(id);
+            userCourse.setIsOpen("1");
+            List<UserCourse> userCourses = userCourseService.findList(userCourse);
+            for (UserCourse userCourseInf : userCourses) {
+                AllWordInfomation allWordInfomation = userCourseService.getwordInformation(userCourseInf.getCourseId(),userCourseInf.getEngUserId());
+                allWordInfomation.setCourseName(userCourseInf.getName());
+                allWordInfomation.setScore(userCourseInf.getScore());
+                String courseScore = userChapterWordService.getCourseScoreByIds(id, userCourseInf.getCourseId());//测试分数
+                allWordInfomation.setCourseScore(courseScore);
+                allWordInfomations.add(allWordInfomation);
             }
-
-            //根据学生id查询出所有的课程
-            if (enguserEntity.getCourseNum()>0){
-                //课程详情集合声明
-                List<courseInfoEntity> courseInfoEntities=new ArrayList<courseInfoEntity>();
-                //查询所有的课程，通过学生id和课程id进行循环查询对应的学习情况
-                List<Map<String,String>> courseMapList=enguserService.findCourseMapById(id);
-                if (courseMapList.size()==0){
-                    mv=new ModelAndView("wx/login");
-                    return mv;
-                }else {
-                    //循环课程
-                    for (Map<String,String> map:courseMapList
-                         ) {
-                        String courseName=map.get("courseName");
-                        String courseId=map.get("courseId");
-                        courseInfoEntity courseInfoEntity=new courseInfoEntity();
-                        courseInfoEntity.setCourseName(courseName);//课程名字
-                        courseInfoEntity.setCompleteword(userChapterWordService.getCompletionWord(id,courseId).size()+"");//已学词汇
-                        courseInfoEntity.setWaitLearningword(userChapterWordService.getWaitLearningWord(id,courseId).size()+"");//未学词汇
-                        courseInfoEntity.setSkilledWord(userChapterWordService.getSkilledWord(id,courseId).size()+"");//熟记词汇
-                        courseInfoEntity.setStrengthenMemoryWord(userChapterWordService.getStrengthenMemoryWord(id,courseId).size()+"");//备忘词汇
-                        courseInfoEntity.setKillCourseHard(userChapterWordService.getKillCourseHardWord(id,courseId).size()+"");//消灭词汇
-                        courseInfoEntity.setCourseHardWord(userChapterWordService.getCourseHardWord(id,courseId).size()+"");//难记词汇
-                        courseInfoEntity.setCourseScore(userChapterWordService.getCourseScoreByIds(id,courseId));//测试分数
-                        courseInfoEntities.add(courseInfoEntity);
-                    }
-                }
-
-                //将课程详情集合对象放到enguserEntity中
-                enguserEntity.setCourseInfoEntityList(courseInfoEntities);
-
-            }
-            mv.addObject("enguserEntity",enguserEntity);
-            mv.addObject("id",id);
+            mv.addObject("allInfo",allWordInfomations);
+//           //根据学生id填充学生信息,以及对应的所有课程学习情况
+//            enguserEntity enguserEntity=enguserService.getEntityByUserId(id);
+//            if (enguserEntity==null){
+//                mv=new ModelAndView("wx/login");
+//                return mv;
+//            }
+//
+//            //根据学生id查询出所有的课程
+//            if (enguserEntity.getCourseNum()>0){
+//                //课程详情集合声明
+//                List<courseInfoEntity> courseInfoEntities=new ArrayList<courseInfoEntity>();
+//                //查询所有的课程，通过学生id和课程id进行循环查询对应的学习情况
+//                List<Map<String,String>> courseMapList=enguserService.findCourseMapById(id);
+//                if (courseMapList.size()==0){
+//                    mv=new ModelAndView("wx/login");
+//                    return mv;
+//                }else {
+//                    //循环课程
+//                    for (Map<String,String> map:courseMapList
+//                         ) {
+//                        String courseName=map.get("courseName");
+//                        String courseId=map.get("courseId");
+//                        courseInfoEntity courseInfoEntity=new courseInfoEntity();
+//                        courseInfoEntity.setCourseName(courseName);//课程名字
+//                        courseInfoEntity.setCompleteword(userChapterWordService.getCompletionWord(id,courseId).size()+"");//已学词汇
+//                        courseInfoEntity.setWaitLearningword(userChapterWordService.getWaitLearningWord(id,courseId).size()+"");//未学词汇
+//                        courseInfoEntity.setSkilledWord(userChapterWordService.getSkilledWord(id,courseId).size()+"");//熟记词汇
+//                        courseInfoEntity.setStrengthenMemoryWord(userChapterWordService.getStrengthenMemoryWord(id,courseId).size()+"");//备忘词汇
+//                        courseInfoEntity.setKillCourseHard(userChapterWordService.getKillCourseHardWord(id,courseId).size()+"");//消灭词汇
+//                        courseInfoEntity.setCourseHardWord(userChapterWordService.getCourseHardWord(id,courseId).size()+"");//难记词汇
+//                        courseInfoEntity.setCourseScore(userChapterWordService.getCourseScoreByIds(id,courseId));//测试分数
+//                        courseInfoEntities.add(courseInfoEntity);
+//                    }
+//                }
+//
+//                //将课程详情集合对象放到enguserEntity中
+//                enguserEntity.setCourseInfoEntityList(courseInfoEntities);
+//
+//            }
+//            mv.addObject("enguserEntity",enguserEntity);
+//            mv.addObject("id",id);
 
         }catch (Exception e){
             e.printStackTrace();

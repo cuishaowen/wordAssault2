@@ -8,6 +8,16 @@ public class AllWordInfomation {
 
     private String courseName;
 
+    private String courseScore;//测试分数
+
+    public String getCourseScore() {
+        return courseScore;
+    }
+
+    public void setCourseScore(String courseScore) {
+        this.courseScore = courseScore;
+    }
+
     private int waitLearningWords;
 
     // 完成单词
