@@ -19,7 +19,7 @@ public class Chapter extends DataEntity<Chapter> {
 	
 	private static final long serialVersionUID = 1L;
 	private String parentId;	// 父级id (课程id)
-	private String sort;		// 排序
+	private Integer sort;		// 排序
 	private String name;		// 章节名称
 	private String detail;		// 简述
 	private String status;		// 章节状态
@@ -35,11 +35,11 @@ public class Chapter extends DataEntity<Chapter> {
 		super(id);
 	}
 
-	public String getSort() {
+	public Integer getSort() {
 		return sort;
 	}
 
-	public void setSort(String sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
 

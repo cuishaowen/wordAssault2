@@ -85,12 +85,15 @@
                         <li class="layui-this">
                             <img class="tab_img" src="images/10.png">
                             单词数量</li>
-                        <li >
+                        <li>
                             <img class="tab_img" src="images/11-1.png">
                             学习时间</li>
-                        <li >
+                        <li>
                             <img class="tab_img" src="images/12-1.png">
                             课程详情</li>
+<!--                        <li>-->
+<!--                            <img class="tab_img" src="images/12-1.png">-->
+<!--                            测试成绩</li>-->
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
@@ -119,6 +122,9 @@
                                 </table>
                             </div>
                         </div>
+<!--                        <div class="layui-tab-item">-->
+<!--                            <div id="test-paper">开发中</div>-->
+<!--                        </div>-->
                     </div>
                 </div>
 
@@ -207,7 +213,13 @@
 
 </script>
 <script type="text/javascript">
-    getStudyWordsCount();
+
+    $(document).ready(function(){
+        // alert('load complete');
+        getStudyWordsCount();
+        getStudyTime();
+        getCourseInfo();
+    });
     function getStudyWordsCount() {
         $.ajax({
             type:'post',
@@ -316,19 +328,17 @@
                                         color: function (params) {
                                             // var colorList = colorlist;
                                             // return colorList[params.dataIndex];
-                                            var colorList = colorlist
+                                            var colorList = colorlist;
 
                                             var index = params.dataIndex;
                                             // if(params.dataIndex >= colorList.length){
                                             //         index=params.dataIndex-colorList.length;
                                             // }
                                             return new echarts.graphic.LinearGradient(0, 0, 0, 1,
-                                                [
-                                                    { offset: 1, color: colorList[index][0] },
-                                                    { offset: 0, color: colorList[index][1] }
-                                                ]);
-
-
+                                            [
+                                                { offset: 1, color: colorList[index][0] },
+                                                { offset: 0, color: colorList[index][1] }
+                                            ]);
                                         }
                                     }
                                 }
@@ -353,7 +363,6 @@
 
 <script type="text/javascript">
     //获取用户的学习时间方法
-    getStudyTime();
 
     function getStudyTime() {
         $.ajax({
@@ -363,6 +372,7 @@
             async:false,
             data:{},
             success:function (data) {
+                u.setStorage('studyTime',data);
                 if (data.code==0){
 
                     var dom = document.getElementById("container1");
@@ -472,8 +482,6 @@
                                                     { offset: 1, color: colorList[index][0] },
                                                     { offset: 0, color: colorList[index][1] }
                                                 ]);
-
-
                                         }
                                     }
                                 }
@@ -514,7 +522,6 @@
 <script>
 
     //获取该用户课程详情
-    getCourseInfo();
     function getCourseInfo() {
         var tbodyHtml="";
         $.ajax({

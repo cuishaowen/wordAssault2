@@ -85,6 +85,7 @@
 	<insert id="insert">
 		INSERT INTO chapter(
 			id_,
+			sort_,
 			parent_id_,
 			name_,
 			detail_,
@@ -97,6 +98,7 @@
 			blank_two_
 		) VALUES (
 			#{id},
+			#{sort},
 			#{parentId},
 			#{name},
 			#{detail},

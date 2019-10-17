@@ -89,7 +89,7 @@ public class ChapterService extends CrudService<ChapterDao, Chapter> {
 			Chapter chapterInf = new Chapter();
 			chapterInf.setParentId(chapter.getParentId());
 			chapterInf.setName(chapter.getName() + countI);
-			chapterInf.setSort(String.valueOf(countI*5));
+			chapterInf.setSort(countI*10);
 			this.save(chapterInf);
 		}
 	}

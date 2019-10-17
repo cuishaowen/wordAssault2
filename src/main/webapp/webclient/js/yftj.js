@@ -157,7 +157,8 @@ layui.use(['form', 'layedit', 'laydate', 'laypage', 'layer', 'element'],function
                 '<div class="layui-input-block">\n' +
                 '<input type="radio" name="xt" value="' + id + '$$$' + answer + '" title="'+ selectD +'">\n' +
                 '</div>'
-            )
+            );
+            // $('.layui-input-block').addClass('layui-col-md4');
         }
         $('.tj_da').hide();
         $('#indexS').text(index + 1);

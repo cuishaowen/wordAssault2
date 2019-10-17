@@ -106,21 +106,21 @@ layui.use(['layer','form','jquery'],function () {
         var result = res;
         shuffle(res);
         var i = 0;
-        if (result.length > 10){
-            if (val == 1){
-                for (i = 0;i < 10; i ++){
-                    addContentThree(i,false,res);
-                }
-            } else if (val == 2) {
-                for (i = 0;i < 10; i ++){
-                    addContentTwo(i,false,res);
-                }
-            }else{
-                for (i = 0;i < 10; i ++){
-                    addContentOne(i,false,res);
-                }
-            }
-        } else {
+        // if (result.length > 10){
+        //     if (val == 1){
+        //         for (i = 0;i < 10; i ++){
+        //             addContentThree(i,false,res);
+        //         }
+        //     } else if (val == 2) {
+        //         for (i = 0;i < 10; i ++){
+        //             addContentTwo(i,false,res);
+        //         }
+        //     }else{
+        //         for (i = 0;i < 10; i ++){
+        //             addContentOne(i,false,res);
+        //         }
+        //     }
+        // } else {
             if (val == 1){
                 for (i = 0; i < result.length; i++){
                     addContentThree(i,false,res);
@@ -134,7 +134,7 @@ layui.use(['layer','form','jquery'],function () {
                     addContentOne(i,false,res);
                 }
             }
-        }
+        // }
     }
 
     /**
@@ -457,6 +457,8 @@ layui.use(['layer','form','jquery'],function () {
         addContentThreeBefore(num, object);
         var english = object.word.english;
         var id = object.word.id;
+        english = english.replace('\'','`');
+        console.log(english);
         var arr = [];
         for (var i = 0; i < english.length; i++) {
             arr.push(english.charAt(i))

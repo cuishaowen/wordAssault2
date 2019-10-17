@@ -397,6 +397,9 @@ function CountDown() {
     if (maxtime >= 0) {
         minutes = Math.floor(maxtime / 60);
         seconds = Math.floor(maxtime % 60);
+        if (seconds == 0){
+            seconds = '00';
+        }
         msg = minutes + ":" + seconds;
         $('#mytime').text("0" + msg);
         --maxtime;
